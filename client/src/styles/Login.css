@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.login-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  background: url('https://images.unsplash.com/photo-1505932794465-147d1f1b2c97?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+}
+
+.login-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.4), rgba(240, 135, 135, 0.3));
+  z-index: 0;
+}
+
+.glass-card {
+  position: relative;
+  width: 90%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+  backdrop-filter: blur(12px); /* The Blur Effect */
+  -webkit-backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  z-index: 1;
+  animation: floatUp 0.8s ease-out;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.2rem !important;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 16px 16px 16px 45px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.input-container input:focus {
+  background: #fff;
+  border-color: #F08787;
+  box-shadow: 0 0 0 4px rgba(240, 135, 135, 0.1);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+}
+
+.remember-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #555;
+}
+
+.form-footer a {
+  color: #F08787;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.glass-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #F08787 0%, #FFC7A7 100%);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 15px rgba(240, 135, 135, 0.3);
+}
+
+.glass-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(240, 135, 135, 0.4);
+}
+
+.divider {
+  text-align: center;
+  margin: 25px 0;
+  color: #999;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #e0e0e0;
+}
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.social-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.social-glass {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #555;
+  font-weight: 500;
+}
+
+.social-glass:hover {
+  transform: translateY(-2px);
+  background: #fdfdfd;
+  border-color: #ccc;
+}
+
+.signup-link {
+  text-align: center;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.signup-link a {
+  color: #F08787;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 500px) {
+  .glass-card {
+    width: 95%;
+    padding: 30px 20px;
+  }
+}

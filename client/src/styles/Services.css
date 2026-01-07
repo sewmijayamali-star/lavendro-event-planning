@@ -1,0 +1,225 @@
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+.services-page {
+  font-family: 'Poppins', sans-serif;
+}
+
+.services-hero {
+  font-family: 'Playfair Display', serif;
+
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--tertiary-color) 100%);
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.services-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1920') center/cover;
+  opacity: 0.15;
+}
+
+.services-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.services-hero h1 {
+  font-family: 'Playfair Display', serif;
+
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--light-color);
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.services-hero p {
+  font-size: 1.6rem;
+  color: var(--light-color);
+  font-weight: 300;
+}
+
+.packages-section {
+  padding: 100px 70px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.package-card {
+  background: var(--light-color);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(240, 135, 135, 0.2);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.package-card.popular {
+  border: 3px solid var(--primary-color);
+  transform: scale(1.05);
+}
+
+.popular-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--primary-color);
+  color: var(--light-color);
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(240, 135, 135, 0.4);
+}
+
+.package-card:hover {
+  box-shadow: 0 25px 70px rgba(240, 135, 135, 0.3);
+}
+
+.package-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.package-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.package-card:hover .package-image img {
+  transform: scale(1.1);
+}
+
+.package-content {
+  padding: 30px 24px;
+}
+
+.package-content h3 {
+  font-size: 1.6rem;
+  color: var(--dark-color);
+   margin-bottom: 12px;
+  font-weight: 800;
+}
+
+.package-price {
+  font-size: 1.9rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.package-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 35px 0;
+}
+
+.package-features li {
+  padding: 10px 0;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.package-features li:last-child {
+  border-bottom: none;
+}
+
+.checkmark {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-right: 12px;
+  font-size: 1.3rem;
+}
+
+.btn-package {
+  display: block;
+  text-align: center;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--light-color);
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(240, 135, 135, 0.3);
+}
+
+.btn-package:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(240, 135, 135, 0.4);
+}
+
+.book-cta-section {
+  
+  padding: 100px 20px;
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--tertiary-color) 100%);
+  text-align: center;
+}
+
+.book-cta-content h2 {
+  font-family: 'Playfair Display', serif;
+
+  font-size: 3rem;
+  color: var(--dark-color);
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.book-cta-content p {
+  font-size: 1.3rem;
+  color: var(--dark-color);
+  margin-bottom: 40px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .services-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .services-hero p {
+    font-size: 1.2rem;
+  }
+
+  .packages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .package-card.popular {
+    transform: scale(1);
+  }
+
+  .package-content h3 {
+    font-size: 1.7rem;
+  }
+
+  .package-price {
+    font-size: 1.8rem;
+  }
+}
