@@ -105,12 +105,15 @@ Create `.env` file in `server/` directory:
 
 ```
 PORT=5000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+MONGODB_URI=mongodb+srv://avendro_user:Admin12345@cluster0.zaijv5m.mongodb.net/avendro?retryWrites=true&w=majority&appName=Cluster0
+JWT_SECRET=avendro_event_planning_secret_key_2025
 EMAIL_USERNAME=your_email@gmail.com
 EMAIL_PASSWORD=your_app_password
 CLIENT_URL=https://lavendroeventplanning.vercel.app
 CORS_ORIGIN=https://lavendroeventplanning.vercel.app
+REACT_APP_API_URL=http://localhost:5000 
+
+
 ```
 
 Start backend server:
@@ -124,13 +127,16 @@ npm start
 ```bash
 cd client
 npm install
-npm run dev
+npm start
 ```
 
 Create `.env` file in `client/` directory:
 
 ```
 REACT_APP_API_URL=https://lavendro-event-planning-2.onrender.com
+
+**Note:** You can use `http://localhost:5000` if running backend locally.
+
 ```
 
 ---
