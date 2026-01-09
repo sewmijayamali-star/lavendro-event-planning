@@ -177,11 +177,8 @@ lavendro-event-planning/
 ### 1. Clone the Repository
 
 ```bash
-
 git clone https://github.com/sewmijayamali-star/lavendro-event-planning.git
-
 cd lavendro-event-planning
-
 
 
 ## 2. Backend Setup
@@ -190,53 +187,27 @@ cd server
 
 npm install
 
-
-
 Create .env file in server/ directory:
 
-
-
 PORT=5000
-
 MONGODB\_URI=mongodb+srv://avendro\_user:Admin12345@cluster0.zaijv5m.mongodb.net/avendro?retryWrites=true\&w=majority\&appName=Cluster0
-
 JWT\_SECRET=avendro\_event\_planning\_secret\_key\_2025
-
 EMAIL\_USERNAME=your\_email@gmail.com
-
 EMAIL\_PASSWORD=your\_app\_password
-
 REACT\_APP\_API\_URL=https://lavendro-event-planning-2.onrender.com
 
-
-
 Start backend server:
-
-
-
 npm start
-
-
 
 ## 3. Frontend Setup
 
-
-
 cd client
-
 npm install
-
 npm run dev
-
-
 
 ## Environment Variables
 
-
-
 ###Backend (.env)
-
-
 
 CLIENT\_URL-https://lavendroeventplanning.vercel.app
 
@@ -254,124 +225,52 @@ origin-process.env.CLIENT\_URL || 'http://localhost:3000',
 
 PORT-5000
 
-
-
 ###Frontend (.env)
-
-
 
 REACT\_APP\_API\_URL-https://lavendro-event-planning-2.onrender.com
 
-
-
 ## API Endpoints
 
+### Authentication
+- POST /api/auth/register - Register new user
+- POST /api/auth/login - User login
+- POST /api/auth/google - Google OAuth login
 
+### Inquiries
+- GET /api/inquiries - Get all inquiries
+- POST /api/inquiries - Create new inquiry
 
-Authentication
+### Packages
+- GET /api/packages - Get all packages
+- GET /api/packages/:id - Get package by ID
 
-&nbsp;POST /api/auth/register - Register new user
-
-
-
-&nbsp;POST /api/auth/login - User login
-
-
-
-&nbsp;POST /api/auth/google - Google OAuth login
-
-
-
-Inquiries
-
-&nbsp;GET /api/inquiries - Get all inquiries
-
-
-
-&nbsp;POST /api/inquiries - Create new inquiry
-
-
-
-Packages
-
-&nbsp;GET /api/packages - Get all packages
-
-
-
-&nbsp;GET /api/packages/:id - Get package by ID
-
-
-
-Menus
-
-&nbsp;GET /api/menus - Get all menus
-
-
-
-&nbsp;GET /api/menus/:id - Get menu by ID
-
+### Menus
+- GET /api/menus - Get all menus
+- GET /api/menus/:id - Get menu by ID
 
 
 ## Known Issues
-
-
-
 Render free tier: Backend may sleep after 15 minutes of inactivity (50-second wake-up time)
-
-
-
 First request after deployment may be slower
 
-
-
 ##Future Enhancements
-
-
-
 Real-time chat support
-
-
-
 Payment gateway integration
-
-
-
 Email notifications for bookings
-
-
-
 Admin analytics dashboard
-
-
-
 Event calendar integration
-
-
 
 ## Contributors
 
 Group Members:
-
-
-
 S.J.Samarasinghe - ICT23921
-
 S.H. Imasha Sayakkara-ICT23927
-
 H.S.D.Gunarathna-ICT23835
-
 M.A.V.V.M.Arachchi-ICT23809
-
 G.A.G.R.P.Nawarathne-ICT23885
 
-
-
 ##Contact
-
-
-
 Email: sewmijayamali369@gmail.com
-
 GitHub: @sewmijayamali-star
 
 
