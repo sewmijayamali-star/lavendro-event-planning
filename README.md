@@ -1,4 +1,4 @@
-\# Lavendro Event Planning System
+# Lavendro Event Planning System
 
 
 
@@ -10,49 +10,13 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application for m
 
 
 
-\## Live Deployment
+## Live Deployment
 
 
 
-\- \*\*Frontend:\*\* \[https://lavendroeventplanning.vercel.app](https://lavendroeventplanning.vercel.app)
+- **Frontend:** \[https://lavendroeventplanning.vercel.app](https://lavendroeventplanning.vercel.app)
 
-\- \*\*Backend API:\*\* \[https://lavendro-event-planning-2.onrender.com](https://lavendro-event-planning-2.onrender.com)
-
-
-
----
-
-
-
-\## Features
-
-
-
-\### User Features
-
-\- User authentication (Email/Password \& Google OAuth)
-
-\- Browse event planning services
-
-\- View and select menus
-
-\- Explore available venues
-
-\- Submit inquiries for events
-
-\- Read blogs and event planning tips
-
-
-
-\### Admin Features
-
-\-  User management
-
-\-  Package management
-
-\-  Menu customization
-
-\-  Inquiry handling
+- **Backend API:** \[https://lavendro-event-planning-2.onrender.com](https://lavendro-event-planning-2.onrender.com)
 
 
 
@@ -60,49 +24,35 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application for m
 
 
 
-\##  Technologies Used
+## Features
 
 
 
-\### Frontend
+### User Features
 
-\- \*\*React.js\*\* - UI library
+- User authentication (Email/Password \& Google OAuth)
 
-\- \*\*Vite\*\* - Build tool
+- Browse event planning services
 
-\- \*\*React Router\*\* - Navigation
+- View and select menus
 
-\- \*\*CSS3\*\* - Styling
+- Explore available venues
 
-\- \*\*Google OAuth\*\* - Third-party authentication
+- Submit inquiries for events
 
-
-
-\### Backend
-
-\- \*\*Node.js\*\* - Runtime environment
-
-\- \*\*Express.js\*\* - Web framework
-
-\- \*\*MongoDB\*\* - NoSQL database
-
-\- \*\*Mongoose\*\* - ODM for MongoDB
-
-\- \*\*JWT\*\* - Authentication tokens
-
-\- \*\*bcrypt\*\* - Password hashing
-
-\- \*\*CORS\*\* - Cross-origin resource sharing
+- Read blogs and event planning tips
 
 
 
-\### Deployment
+### Admin Features
 
-\- \*\*Vercel\*\* - Frontend hosting
+-  User management
 
-\- \*\*Render\*\* - Backend hosting
+-  Package management
 
-\- \*\*MongoDB Atlas\*\* - Database hosting
+-  Menu customization
+
+-  Inquiry handling
 
 
 
@@ -110,7 +60,57 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application for m
 
 
 
-\##  Project Structure
+##  Technologies Used
+
+
+
+### Frontend
+
+- **React.js** - UI library
+
+- **Vite** - Build tool
+
+- **React Router** - Navigation
+
+- **CSS3** - Styling
+
+- **Google OAuth** - Third-party authentication
+
+
+
+### Backend
+
+- **Node.js** - Runtime environment
+
+- **Express.js** - Web framework
+
+- **MongoDB** - NoSQL database
+
+- **Mongoose** - ODM for MongoDB
+
+- **JWT** - Authentication tokens
+
+- **bcrypt** - Password hashing
+
+- **CORS** - Cross-origin resource sharing
+
+
+
+### Deployment
+
+- **Vercel** - Frontend hosting
+
+- **Render** - Backend hosting
+
+- **MongoDB Atlas** - Database hosting
+
+
+
+---
+
+
+
+##  Project Structure
 
 
 
@@ -160,21 +160,21 @@ lavendro-event-planning/
 
 
 
-\## Installation \& Setup
+## Installation \& Setup
 
 
 
-\### Prerequisites
+### Prerequisites
 
-\- Node.js (v16 or higher)
+- Node.js (v16 or higher)
 
-\- MongoDB Atlas account
+- MongoDB Atlas account
 
-\- Google Cloud Console project (for OAuth)
+- Google Cloud Console project (for OAuth)
 
 
 
-\### 1. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 
@@ -184,7 +184,7 @@ cd lavendro-event-planning
 
 
 
-\## 2. Backend Setup
+## 2. Backend Setup
 
 cd server
 
@@ -218,7 +218,7 @@ npm start
 
 
 
-\## 3. Frontend Setup
+## 3. Frontend Setup
 
 
 
@@ -230,11 +230,11 @@ npm run dev
 
 
 
-\## Environment Variables
+## Environment Variables
 
 
 
-\###Backend (.env)
+###Backend (.env)
 
 
 
@@ -256,7 +256,7 @@ PORT-5000
 
 
 
-\###Frontend (.env)
+###Frontend (.env)
 
 
 
@@ -264,7 +264,7 @@ REACT\_APP\_API\_URL-https://lavendro-event-planning-2.onrender.com
 
 
 
-\## API Endpoints
+## API Endpoints
 
 
 
@@ -312,7 +312,7 @@ Menus
 
 
 
-\## Known Issues
+## Known Issues
 
 
 
@@ -324,7 +324,7 @@ First request after deployment may be slower
 
 
 
-\##Future Enhancements
+##Future Enhancements
 
 
 
@@ -348,7 +348,7 @@ Event calendar integration
 
 
 
-\## Contributors
+## Contributors
 
 Group Members:
 
@@ -366,7 +366,7 @@ G.A.G.R.P.Nawarathne-ICT23885
 
 
 
-\##Contact
+##Contact
 
 
 
