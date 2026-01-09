@@ -15,7 +15,8 @@ const Services = () => {
 
   const fetchPackages = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/packages');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/packages`);
+
       const data = await response.json();
       setEventPackages(data);
     } catch (error) {

@@ -38,7 +38,8 @@ const Profile = () => {
 
   const fetchInquiries = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/inquiries');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/inquiries`);
+
       const data = await response.json();
       
       const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -61,7 +62,8 @@ const Profile = () => {
       console.log('Clicking inquiry:', inquiry); // Debug log
       console.log('Inquiry ID:', inquiry._id); // Debug log
       
-      const response = await fetch(`http://localhost:5000/api/inquiries/${inquiry._id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/inquiries/${inquiry._id}`);
+
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -99,9 +101,10 @@ const Profile = () => {
       console.log('Inquiry ID:', selectedInquiry._id);
       console.log('Sender:', senderType);
       console.log('Message:', replyMessage);
-      console.log('URL:', `http://localhost:5000/api/inquiries/${selectedInquiry._id}/reply`);
+      console.log('URL:', `${process.env.REACT_APP_API_URL}/api/inquiries/${selectedInquiry._id}/reply`);
       
-      const response = await fetch(`http://localhost:5000/api/inquiries/${selectedInquiry._id}/reply`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/inquiries/${selectedInquiry._id}/reply`, {
+
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

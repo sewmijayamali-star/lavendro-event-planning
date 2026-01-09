@@ -23,7 +23,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, formData);
+
       handleLoginSuccess(res.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
@@ -37,7 +38,8 @@ const Login = () => {
           headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
         });
 
-        const res = await axios.post('http://localhost:5000/api/auth/google', {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/google`, {
+
           email: userInfo.data.email,
           fullName: userInfo.data.name,
           googleId: userInfo.data.sub,
