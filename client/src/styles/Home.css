@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap');
 
+
 :root {
   --primary-color: #F08787;
   --secondary-color: #FFC7A7;
@@ -44,7 +45,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/images/home/homebg.jpg') center/cover;
+  background: url('/images/public/home/homebg.jpg') center/cover;
   opacity: 0.61;
   z-index: 0;
 }
