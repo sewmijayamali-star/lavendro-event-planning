@@ -17,9 +17,9 @@ const userSchema = new mongoose.Schema({
     required: false 
   },
   role: {
-    type: String,
-    enum: ['user', 'planner', 'admin'],
-    default: 'user'
+  type: String,
+  enum: ['customer', 'event_planner', 'admin'],
+  default: 'customer'
   },
   googleId: { type: String },
   facebookId: { type: String },

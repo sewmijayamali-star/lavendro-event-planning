@@ -7,7 +7,7 @@ const sendEmail = require('../utils/sendEmail'); // Ensure this file exists and 
 // --- REGISTER ---
 exports.register = async (req, res) => {
   try {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, email, password } = req.body;
 
     let user = await User.findOne({ email });
     if (user) {
@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
-      role: role || 'user'
+       role: 'customer'
     });
 
     await user.save();
@@ -159,7 +159,7 @@ exports.googleLogin = async (req, res) => {
         email,
         password: '',
         googleId,
-        role: 'user'
+        role: 'customer'
       });
       await user.save();
     }
@@ -192,7 +192,7 @@ exports.facebookLogin = async (req, res) => {
         email,
         password: '',
         facebookId,
-        role: 'user'
+        role: 'customer'
       });
       await user.save();
     }

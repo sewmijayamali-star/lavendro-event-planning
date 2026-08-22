@@ -31,6 +31,8 @@ app.use('/api/packages', packageRoutes);
 const menuRoutes = require('./routes/menus');
 app.use('/api/menus', menuRoutes);
 
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
 
 
 
