@@ -4,13 +4,13 @@ const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'sewmijayamali@gmail.com',
-      pass: 'mvyf vjhb uxtf uqpz'
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
 
   const mailOptions = {
-    from: 'Lavendro Support <sewmijayamali369@gmail.com>',
+    from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USERNAME}>`,
     to: options.email,
     subject: options.subject,
     html: options.message

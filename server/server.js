@@ -34,6 +34,10 @@ app.use('/api/menus', menuRoutes);
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
 
+const adminInvitationRoutes = require('./routes/adminInvitationRoutes');
+
+app.use('/api/admin/invitations', adminInvitationRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;
