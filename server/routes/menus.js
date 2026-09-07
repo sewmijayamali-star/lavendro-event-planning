@@ -1,42 +1,28 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Menu = require('../models/Menu');
 
-router.get('/', async (req, res) => {
-  try {
-    const menus = await Menu.find({ isActive: true }).sort({ createdAt: -1 });
-    res.json(menus);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+const upload = require("../middleware/upload");
+const {
+  createMenu,
+  getMenus,
+  getMenuById,
+  updateMenu,
+  deleteMenu,
+} = require("../controllers/menuController");
 
-router.post('/', async (req, res) => {
-  try {
-    const newMenu = new Menu(req.body);
-    await newMenu.save();
-    res.status(201).json(newMenu);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+// Get all menus
+router.get("/", getMenus);
 
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedMenu = await Menu.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updatedMenu);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+// Get menu by ID
+router.get("/:id", getMenuById);
 
-router.delete('/:id', async (req, res) => {
-  try {
-    await Menu.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Menu deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// Create menu with image
+router.post("/", upload.single("image"), createMenu);
+
+// Update menu with optional new image
+router.put("/:id", upload.single("image"), updateMenu);
+
+// Delete menu
+router.delete("/:id", deleteMenu);
 
 module.exports = router;

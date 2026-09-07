@@ -1,5 +1,6 @@
 const {
-  createAdminInvitation
+  createAdminInvitation,
+  acceptAdminInvitation
 } = require('../services/adminInvitationService');
 
 const inviteAdmin = async (req, res) => {
@@ -32,6 +33,40 @@ const inviteAdmin = async (req, res) => {
   }
 };
 
+const acceptInvitation = async (req, res) => {
+  try {
+    const { token, fullName, password } = req.body;
+
+    if (!token || !fullName || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Token, full name and password are required'
+      });
+    }
+
+    const invitation = await acceptAdminInvitation(
+      token,
+      fullName,
+      password
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Admin invitation accepted successfully',
+      invitationId: invitation._id
+    });
+
+  } catch (error) {
+    console.error('Accept invitation error:', error);
+
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
-  inviteAdmin
+  inviteAdmin,
+  acceptInvitation
 };

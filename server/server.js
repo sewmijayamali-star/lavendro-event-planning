@@ -34,9 +34,22 @@ app.use('/api/menus', menuRoutes);
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
 
-const adminInvitationRoutes = require('./routes/adminInvitationRoutes');
+const venueRoutes = require("./routes/venues");
+app.use("/api/venues", venueRoutes);
 
+const adminInvitationRoutes = require('./routes/adminInvitationRoutes');
 app.use('/api/admin/invitations', adminInvitationRoutes);
+
+const supportRoutes = require("./routes/supportRoutes");
+app.use("/api/support", supportRoutes);
+
+// Temporary test route
+app.get('/api/admin/invitations/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Admin invitation routes are working'
+  });
+});
 
 
 

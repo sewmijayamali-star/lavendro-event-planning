@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const AdminInvitation = require('../models/AdminInvitation');
 const sendEmail = require('../utils/sendEmail');
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
 const createAdminInvitation = async (email, invitedBy) => {
   // 1. Generate a secure random token
@@ -92,6 +94,63 @@ const createAdminInvitation = async (email, invitedBy) => {
   };
 };
 
+
+const acceptAdminInvitation = async (rawToken, fullName, password) => {
+  // 1. Hash the token received from the invitation link
+  const tokenHash = crypto
+    .createHash('sha256')
+    .update(rawToken)
+    .digest('hex');
+
+  // 2. Find the invitation
+  const invitation = await AdminInvitation.findOne({
+    tokenHash
+  });
+
+  if (!invitation) {
+    throw new Error('Invalid invitation token');
+  }
+
+  // 3. Check invitation status
+  if (invitation.status !== 'pending') {
+    throw new Error('Invitation is no longer valid');
+  }
+
+  // 4. Check expiration
+  if (invitation.expiresAt < new Date()) {
+    invitation.status = 'expired';
+    await invitation.save();
+
+    throw new Error('Invitation has expired');
+  }
+ let user = await User.findOne({
+  email: invitation.email
+});
+
+if (user) {
+  user.role = 'admin';
+  await user.save();
+} else {
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  user = await User.create({
+    fullName,
+    email: invitation.email,
+    password: hashedPassword,
+    role: 'admin'
+  });
+}
+invitation.status = 'accepted';
+invitation.acceptedAt = new Date();
+
+await invitation.save();
+
+
+  // 5. Return invitation for the next step
+  return invitation;
+};
+ 
 module.exports = {
-  createAdminInvitation
+  createAdminInvitation,
+  acceptAdminInvitation
 };

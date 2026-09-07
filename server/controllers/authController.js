@@ -207,3 +207,62 @@ exports.facebookLogin = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+ 
+// --- CREATE SUPPORT USER ---
+exports.createSupportUser = async (req, res) => {
+  try {
+    const { fullName, email, password } = req.body;
+
+    // Validate required fields
+    if (!fullName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Full name, email and password are required'
+      });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'User with this email already exists'
+      });
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create support user
+    const supportUser = new User({
+      fullName,
+      email,
+      password: hashedPassword,
+      role: 'support'
+    });
+
+    await supportUser.save();
+
+    return res.status(201).json({
+      success: true,
+      message: 'Support staff created successfully',
+      user: {
+        id: supportUser._id,
+        name: supportUser.fullName,
+        email: supportUser.email,
+        role: supportUser.role
+      }
+    });
+
+  } catch (error) {
+    console.error('Create support user error:', error);
+
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};

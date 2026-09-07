@@ -1,0 +1,769 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =====================================================
+   LAVENDRO ADMIN INVITATION PAGE
+===================================================== */
+
+.admin-invite-page {
+  min-height: 100vh;
+  width: 100%;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 90px 20px 60px;
+
+  overflow: hidden;
+
+  font-family: 'Poppins', sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(240, 135, 135, 0.13),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(255, 199, 167, 0.20),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #fff8f5 0%,
+      #ffffff 50%,
+      #fff8f5 100%
+    );
+}
+
+
+/* =====================================================
+   DECORATIVE BACKGROUND
+===================================================== */
+
+.invite-bg-shape {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.invite-bg-shape-one {
+  width: 280px;
+  height: 280px;
+
+  top: -130px;
+  left: -100px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(240, 135, 135, 0.18),
+      rgba(255, 199, 167, 0.08)
+    );
+}
+
+.invite-bg-shape-two {
+  width: 360px;
+  height: 360px;
+
+  right: -180px;
+  bottom: -150px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 199, 167, 0.18),
+      rgba(254, 226, 173, 0.20)
+    );
+}
+
+.invite-bg-shape-three {
+  width: 100px;
+  height: 100px;
+
+  right: 12%;
+  top: 18%;
+
+  border: 2px solid rgba(240, 135, 135, 0.15);
+}
+
+
+/* =====================================================
+   MAIN CARD
+===================================================== */
+
+.admin-invite-card {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  max-width: 620px;
+
+  padding: 48px 55px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid rgba(240, 135, 135, 0.12);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 25px 80px rgba(44, 62, 80, 0.08),
+    0 8px 30px rgba(240, 135, 135, 0.08);
+
+  text-align: center;
+
+  animation: invitationCardAppear 0.7s ease-out;
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.admin-invite-brand {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+}
+
+.admin-invite-brand-mark {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #F08787,
+      #FFC7A7
+    );
+
+  color: #ffffff;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 1.5rem;
+  font-weight: 800;
+
+  box-shadow:
+    0 8px 25px rgba(240, 135, 135, 0.25);
+}
+
+.admin-invite-brand-name {
+  color: #F08787;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 2rem;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+}
+
+
+/* =====================================================
+   INVITATION ICON
+===================================================== */
+
+.admin-invite-icon {
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 25px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(240, 135, 135, 0.12),
+      rgba(255, 199, 167, 0.25)
+    );
+
+  border: 1px solid rgba(240, 135, 135, 0.12);
+
+  box-shadow:
+    0 10px 35px rgba(240, 135, 135, 0.10);
+
+  color: #F08787;
+
+  font-size: 2rem;
+}
+
+.admin-invite-icon span {
+  animation: sparkle 2.5s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   HEADING
+===================================================== */
+
+.admin-invite-eyebrow {
+  margin: 0 0 8px;
+
+  color: #F08787;
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.admin-invite-heading h1 {
+  margin: 0;
+
+  color: #2C3E50;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 3rem;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.admin-invite-divider {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 18px 0;
+}
+
+.admin-invite-divider span {
+  width: 50px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #FFC7A7
+    );
+}
+
+.admin-invite-divider span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      #FFC7A7,
+      transparent
+    );
+}
+
+.admin-invite-divider i {
+  color: #FFC7A7;
+
+  font-size: 0.9rem;
+
+  font-style: normal;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.admin-invite-message {
+  margin: 0 auto 8px;
+
+  color: #2C3E50;
+
+  font-size: 1rem;
+
+  line-height: 1.8;
+}
+
+.admin-invite-message strong {
+  color: #F08787;
+
+  font-weight: 700;
+}
+
+.admin-invite-description {
+  max-width: 480px;
+
+  margin: 0 auto 32px;
+
+  color: #777;
+
+  font-size: 0.88rem;
+
+  line-height: 1.8;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.admin-invite-form {
+  width: 100%;
+
+  text-align: left;
+}
+
+.invite-form-group {
+  margin-bottom: 20px;
+}
+
+.invite-form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #2C3E50;
+
+  font-size: 0.88rem;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.invite-input-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  background: #fffdfc;
+
+  border: 1.5px solid #eadfd9;
+
+  border-radius: 13px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.invite-input-wrapper:focus-within {
+  background: #ffffff;
+
+  border-color: #F08787;
+
+  box-shadow:
+    0 0 0 4px rgba(240, 135, 135, 0.10);
+}
+
+.invite-input-wrapper.has-error {
+  border-color: #d9534f;
+}
+
+.invite-input-icon {
+  width: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #F08787;
+
+  font-size: 0.95rem;
+}
+
+.invite-input-wrapper input {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 14px 15px 14px 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #2C3E50;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 0.9rem;
+}
+
+.invite-input-wrapper input::placeholder {
+  color: #aaa;
+}
+
+
+/* =====================================================
+   PASSWORD TOGGLE
+===================================================== */
+
+.password-toggle {
+  margin-right: 12px;
+
+  padding: 5px 7px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #F08787;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: #2C3E50;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.invite-error {
+  margin: 6px 0 0;
+
+  color: #d9534f;
+
+  font-size: 0.75rem;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   SUBMIT BUTTON
+===================================================== */
+
+.admin-invite-submit {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 8px;
+
+  padding: 15px 25px;
+
+  border: none;
+
+  border-radius: 50px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #F08787 0%,
+      #FFC7A7 100%
+    );
+
+  color: #ffffff;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px rgba(240, 135, 135, 0.28);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.admin-invite-submit:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 32px rgba(240, 135, 135, 0.38);
+}
+
+.admin-invite-submit:active {
+  transform: translateY(-1px);
+}
+
+.submit-arrow {
+  font-size: 1.1rem;
+
+  transition: transform 0.3s ease;
+}
+
+.admin-invite-submit:hover .submit-arrow {
+  transform: translateX(5px);
+}
+
+
+/* =====================================================
+   VALIDITY
+===================================================== */
+
+.invite-validity {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-top: 24px;
+
+  padding: 15px 17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff9f5,
+      #fffdfb
+    );
+
+  border: 1px solid rgba(240, 135, 135, 0.10);
+
+  border-radius: 14px;
+
+  text-align: left;
+}
+
+.validity-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #F08787;
+
+  box-shadow:
+    0 4px 15px rgba(240, 135, 135, 0.10);
+
+  font-size: 0.95rem;
+}
+
+.invite-validity strong {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #2C3E50;
+
+  font-size: 0.78rem;
+
+  font-weight: 600;
+}
+
+.invite-validity p {
+  margin: 0;
+
+  color: #888;
+
+  font-size: 0.7rem;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.invite-back-button {
+  margin-top: 22px;
+
+  padding: 5px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #F08787;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.invite-back-button:hover {
+  color: #2C3E50;
+
+  transform: translateX(-3px);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.admin-invite-footer {
+  margin: 25px 0 0;
+
+  color: #aaa;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 0.78rem;
+
+  font-style: italic;
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes invitationCardAppear {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(30px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media screen and (max-width: 768px) {
+
+  .admin-invite-page {
+    padding: 80px 15px 50px;
+  }
+
+  .admin-invite-card {
+    padding: 42px 35px;
+
+    border-radius: 24px;
+  }
+
+  .admin-invite-heading h1 {
+    font-size: 2.6rem;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 480px) {
+
+  .admin-invite-page {
+    padding: 70px 12px 40px;
+  }
+
+  .admin-invite-card {
+    padding: 35px 20px;
+
+    border-radius: 22px;
+  }
+
+  .admin-invite-brand-name {
+    font-size: 1.7rem;
+  }
+
+  .admin-invite-heading h1 {
+    font-size: 2.2rem;
+  }
+
+  .admin-invite-message {
+    font-size: 0.9rem;
+  }
+
+  .admin-invite-description {
+    font-size: 0.8rem;
+  }
+
+  .admin-invite-icon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .invite-validity {
+    padding: 13px;
+  }
+
+}

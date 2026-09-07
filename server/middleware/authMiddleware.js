@@ -45,6 +45,22 @@ const protect = async (req, res, next) => {
   }
 };
 
+const supportOnly = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      message: 'Not authenticated.'
+    });
+  }
+
+  if (req.user.role !== 'support') {
+    return res.status(403).json({
+      message: 'Access denied. Support privileges required.'
+    });
+  }
+
+  next();
+};
+
 const adminOnly = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
@@ -58,10 +74,13 @@ const adminOnly = (req, res, next) => {
     });
   }
 
+  
+
   next();
 };
 
 module.exports = {
   protect,
-  adminOnly
+  adminOnly,
+  supportOnly
 };

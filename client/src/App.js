@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
+
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -13,31 +15,58 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
-import Dashboard from './pages/Dashboard';
+
+import AcceptAdminInvite from './pages/AcceptAdminInvite';
+
+import Dashboard from './pages/admin/dashboard.js';
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/about" element={<About />} />
+
         <Route path="/services" element={<Services />} />
+
         <Route path="/menu" element={<Menu />} />
+
         <Route path="/venues" element={<Venues />} />
+
         <Route path="/blogs" element={<Blogs />} />
+
         <Route path="/contact" element={<Contact />} />
+
         <Route path="/support" element={<Support />} />
+
         <Route path="/login" element={<Login />} />
+
         <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
+
+        <Route
+          path="/forgot-password"
+          element={<ForgotPassword />}
+        />
+
+        <Route
+          path="/reset-password/:resetToken"
+          element={<ResetPassword />}
+        />
+
+       <Route
+  path="/admin/dashboard"
+  element={<Dashboard />}
+/>
+        <Route
+          path="/admin/accept-invite/:token"
+          element={<AcceptAdminInvite />}
+        />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

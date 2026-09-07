@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const packageSchema = new mongoose.Schema(
+const venueSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -14,31 +14,25 @@ const packageSchema = new mongoose.Schema(
       trim: true,
     },
 
-    category: {
+    location: {
       type: String,
       required: true,
       trim: true,
     },
 
-    price: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-
-    duration: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    guests: {
+    capacity: {
       type: Number,
       required: true,
       min: 1,
     },
 
-    features: {
+    pricePerDay: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    amenities: {
       type: [String],
       default: [],
     },
@@ -58,4 +52,4 @@ const packageSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Package", packageSchema);
+module.exports = mongoose.model("Venue", venueSchema);
