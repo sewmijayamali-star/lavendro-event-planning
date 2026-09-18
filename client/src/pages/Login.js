@@ -15,10 +15,27 @@ const Login = () => {
   };
 
   const handleLoginSuccess = (data) => {
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('user', JSON.stringify(data.user));
+
+  const role = data.user?.role;
+
+  console.log('Logged in user:', data.user);
+  console.log('User role:', role);
+
+  if (role === 'admin') {
+    navigate('/admin/dashboard');
+  } else if (role === 'support') {
+    navigate('/support/dashboard');
+  } else if (role === 'event_planner') {
+    navigate('/planner/dashboard');
+  } else if (role === 'customer') {
     navigate('/');
-  };
+  } else {
+    // Unknown role
+    navigate('/');
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();

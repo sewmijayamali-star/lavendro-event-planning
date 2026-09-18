@@ -1,0 +1,371 @@
+/* ==========================================
+   ACCEPT SUPPORT INVITATION
+   ========================================== */
+
+.accept-support-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(237, 123, 130, 0.15),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #fff8f6,
+      #ffffff
+    );
+
+  font-family: "Inter", Arial, sans-serif;
+}
+
+
+/* ==========================================
+   CARD
+   ========================================== */
+
+.accept-support-card {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 42px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid rgba(237, 123, 130, 0.15);
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 20px 60px rgba(91, 58, 58, 0.10);
+
+  backdrop-filter: blur(10px);
+}
+
+
+/* ==========================================
+   LOGO
+   ========================================== */
+
+.support-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 35px;
+}
+
+.support-logo-mark {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #ed7b82;
+  color: #ffffff;
+
+  border-radius: 12px;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  box-shadow:
+    0 8px 20px rgba(237, 123, 130, 0.25);
+}
+
+.support-logo h2 {
+  margin: 0;
+
+  color: #3f3030;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.support-logo span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #9b8585;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.support-header {
+  margin-bottom: 28px;
+}
+
+.support-label {
+  margin: 0 0 8px;
+
+  color: #ed7b82;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.support-header h1 {
+  margin: 0 0 12px;
+
+  color: #342828;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.support-header p {
+  margin: 0;
+
+  color: #7e6c6c;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* ==========================================
+   FORM
+   ========================================== */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #493838;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  border: 1px solid #eadede;
+
+  border-radius: 10px;
+
+  background: #fffdfc;
+
+  color: #3f3030;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #b7a6a6;
+}
+
+.form-group input:focus {
+  border-color: #ed7b82;
+
+  box-shadow:
+    0 0 0 3px rgba(237, 123, 130, 0.10);
+}
+
+
+/* ==========================================
+   INVITATION INFO
+   ========================================== */
+
+.invitation-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  margin: 5px 0 22px;
+
+  padding: 14px 16px;
+
+  background: #fff5f3;
+
+  border-left: 4px solid #ed7b82;
+
+  border-radius: 8px;
+}
+
+.invitation-info strong {
+  color: #594141;
+
+  font-size: 13px;
+}
+
+.invitation-info span {
+  color: #8e7b7b;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================
+   MESSAGES
+   ========================================== */
+
+.support-message {
+  margin-bottom: 20px;
+
+  padding: 13px 15px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.support-message.error {
+  background: #fff0f0;
+
+  border: 1px solid #f3caca;
+
+  color: #b33b3b;
+}
+
+.support-message.success {
+  background: #eefaf2;
+
+  border: 1px solid #c9e8d2;
+
+  color: #287844;
+}
+
+
+/* ==========================================
+   ACCEPT BUTTON
+   ========================================== */
+
+.accept-support-button {
+  width: 100%;
+
+  padding: 14px 20px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #ed7b82;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.accept-support-button:hover {
+  background: #df6873;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(237, 123, 130, 0.25);
+}
+
+.accept-support-button:disabled {
+  background: #d9b6b8;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+.support-footer {
+  margin-top: 25px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #eee3e3;
+
+  text-align: center;
+}
+
+.support-footer p {
+  margin: 0 0 6px;
+
+  color: #958282;
+
+  font-size: 12px;
+}
+
+.support-footer button {
+  border: none;
+
+  background: transparent;
+
+  color: #ed7b82;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.support-footer button:hover {
+  text-decoration: underline;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 600px) {
+  .accept-support-page {
+    padding: 25px 15px;
+  }
+
+  .accept-support-card {
+    padding: 30px 22px;
+
+    border-radius: 18px;
+  }
+
+  .support-header h1 {
+    font-size: 26px;
+  }
+}

@@ -1,4 +1,4 @@
-const SupportConversation = require("../models/SupportConversation.js.js");
+const SupportConversation = require("../models/SupportConversation");
 const SupportMessage = require("../models/SupportMessage");
 
 // ==========================================
@@ -31,7 +31,7 @@ exports.createOrGetConversation = async (req, res) => {
       status: "open",
     });
 
-    // Get populated conversation
+    // Populate conversation details
     conversation = await SupportConversation.findById(conversation._id)
       .populate("customer", "fullName email")
       .populate("assignedSupport", "fullName email");
@@ -41,6 +41,7 @@ exports.createOrGetConversation = async (req, res) => {
       message: "Support conversation created successfully",
       conversation,
     });
+
   } catch (error) {
     console.error("Create conversation error:", error);
 
@@ -51,6 +52,7 @@ exports.createOrGetConversation = async (req, res) => {
     });
   }
 };
+
 
 // ==========================================
 // GET CUSTOMER'S CONVERSATION
@@ -77,6 +79,7 @@ exports.getMyConversation = async (req, res) => {
       success: true,
       conversation,
     });
+
   } catch (error) {
     console.error("Get conversation error:", error);
 
@@ -88,8 +91,9 @@ exports.getMyConversation = async (req, res) => {
   }
 };
 
+
 // ==========================================
-// GET ALL OPEN CONVERSATIONS FOR SUPPORT
+// GET ALL OPEN CONVERSATIONS FOR SUPPORT STAFF
 // ==========================================
 exports.getSupportConversations = async (req, res) => {
   try {
@@ -98,13 +102,17 @@ exports.getSupportConversations = async (req, res) => {
     })
       .populate("customer", "fullName email")
       .populate("assignedSupport", "fullName email")
-      .sort({ lastMessageAt: -1, createdAt: -1 });
+      .sort({
+        lastMessageAt: -1,
+        createdAt: -1,
+      });
 
     return res.status(200).json({
       success: true,
       count: conversations.length,
       conversations,
     });
+
   } catch (error) {
     console.error("Get support conversations error:", error);
 
@@ -115,6 +123,7 @@ exports.getSupportConversations = async (req, res) => {
     });
   }
 };
+
 
 // ==========================================
 // ASSIGN CONVERSATION TO SUPPORT STAFF
@@ -132,48 +141,57 @@ exports.assignConversation = async (req, res) => {
       });
     }
 
-    // Check whether another support staff already accepted it
+    // Check whether conversation is already assigned
     if (conversation.assignedSupport) {
       return res.status(400).json({
         success: false,
-        message: "This conversation is already assigned to another support staff.",
+        message:
+          "This conversation is already assigned to another support staff.",
       });
     }
 
-    // Assign current logged-in support staff
+    // Assign current support staff
     conversation.assignedSupport = req.user._id;
 
     await conversation.save();
 
-    res.status(200).json({
+    // Populate details before returning
+    await conversation.populate(
+      "assignedSupport",
+      "fullName email role"
+    );
+
+    return res.status(200).json({
       success: true,
       message: "Conversation assigned successfully.",
       conversation,
     });
+
   } catch (error) {
     console.error("Assign conversation error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Server error.",
+      error: error.message,
     });
   }
 };
 
-// ============================================
-// SEND MESSAGE
-// ============================================
 
+// ==========================================
+// SEND MESSAGE
+// ==========================================
 exports.sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
     const conversationId = req.params.id;
 
-    // Check message
+    // Validate message
     if (!message || !message.trim()) {
       return res.status(400).json({
         success: false,
-        message: "Message cannot be empty."
+        message: "Message cannot be empty.",
       });
     }
 
@@ -185,7 +203,15 @@ exports.sendMessage = async (req, res) => {
     if (!conversation) {
       return res.status(404).json({
         success: false,
-        message: "Conversation not found."
+        message: "Conversation not found.",
+      });
+    }
+
+    // Check if conversation is closed
+    if (conversation.status === "closed") {
+      return res.status(400).json({
+        success: false,
+        message: "This conversation is closed.",
       });
     }
 
@@ -193,8 +219,14 @@ exports.sendMessage = async (req, res) => {
     const newMessage = await SupportMessage.create({
       conversation: conversationId,
       sender: req.user._id,
-      message: message.trim()
+      message: message.trim(),
     });
+
+    // Populate sender information
+    await newMessage.populate(
+      "sender",
+      "fullName email role"
+    );
 
     // Update conversation
     conversation.lastMessage = message.trim();
@@ -202,26 +234,41 @@ exports.sendMessage = async (req, res) => {
 
     await conversation.save();
 
-    res.status(201).json({
+    // Get Socket.IO instance
+    const io = req.app.get("io");
+
+    // Send real-time message
+    io.to(conversationId.toString()).emit(
+      "receive_message",
+      newMessage
+    );
+
+    console.log(
+      `💬 Real-time message sent to conversation: ${conversationId}`
+    );
+
+    // Return API response
+    return res.status(201).json({
       success: true,
       message: "Message sent successfully.",
-      data: newMessage
+      data: newMessage,
     });
 
   } catch (error) {
     console.error("Send message error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Failed to send message."
+      message: "Failed to send message.",
+      error: error.message,
     });
   }
 };
 
-// ========================================
-// GET ALL MESSAGES OF A CONVERSATION
-// ========================================
 
+// ==========================================
+// GET ALL MESSAGES OF A CONVERSATION
+// ==========================================
 exports.getConversationMessages = async (req, res) => {
   try {
     const { id } = req.params;
@@ -232,21 +279,23 @@ exports.getConversationMessages = async (req, res) => {
     if (!conversation) {
       return res.status(404).json({
         success: false,
-        message: "Conversation not found."
+        message: "Conversation not found.",
       });
     }
 
     // Get all messages
     const messages = await SupportMessage.find({
-      conversation: id
+      conversation: id,
     })
       .populate("sender", "fullName email role")
-      .sort({ createdAt: 1 });
+      .sort({
+        createdAt: 1,
+      });
 
     return res.status(200).json({
       success: true,
       count: messages.length,
-      messages
+      messages,
     });
 
   } catch (error) {
@@ -254,7 +303,8 @@ exports.getConversationMessages = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Server error."
+      message: "Server error.",
+      error: error.message,
     });
   }
 };
