@@ -104,6 +104,15 @@ app.use(
   '/api/support/invitations',
   supportInvitationRoutes
 );
+
+const eventPlannerInvitationRoutes = require('./routes/eventPlannerInvitationRoutes');
+app.use(
+  '/api/admin/event-planners',
+  eventPlannerInvitationRoutes
+);
+
+
+
 const PORT = process.env.PORT || 5000;
 
 // IMPORTANT: Use server.listen(), NOT app.listen()

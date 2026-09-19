@@ -35,9 +35,13 @@ import UserDashboard from './pages/Dashboard';
 
 // Support
 import SupportChat from './pages/SupportChat';
-
-
 import AcceptSupportInvite from "./pages/AcceptSupportInvite";
+import SupportDashboard from './pages/support/SupportDashboard';
+
+
+
+import EventPlannerManagement from "./pages/admin/EventPlannerManagement";
+
 
 
 /* =========================================
@@ -48,17 +52,18 @@ const AppContent = () => {
 
   const location = useLocation();
 
-  /*
-    Hide the public Navbar on Admin Dashboard.
-    Admin Dashboard has its own sidebar and topbar.
-  */
-
   const isAdminDashboard =
     location.pathname === '/admin/dashboard';
 
+  const isSupportDashboard =
+    location.pathname.startsWith('/support/dashboard');
+
+  const hideNavbar =
+    isAdminDashboard || isSupportDashboard;
+
   return (
     <>
-      {!isAdminDashboard && <Navbar />}
+      {!hideNavbar && <Navbar />}
 
       <Routes>
 
@@ -184,6 +189,10 @@ const AppContent = () => {
           />
 
         </Route>
+                <Route
+          path="/admin/event-planners"
+          element={<EventPlannerManagement />}
+        />
 
 
         {/* =====================================
@@ -191,12 +200,12 @@ const AppContent = () => {
             Will be added next
         ====================================== */}
 
-        {/* 
+        {
         <Route
           path="/support/dashboard"
           element={<SupportDashboard />}
         />
-        */}
+        }
 
 
         {/* =====================================

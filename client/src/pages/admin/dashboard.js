@@ -111,7 +111,7 @@ const AdminDashboard = () => {
             <span>Support Staff</span>
           </a>
 
-          <a href="#planners" className="admin-nav-item">
+          <a href="/admin/event-planners" className="admin-nav-item">
             <CalendarMonth />
             <span>Event Planners</span>
           </a>
@@ -554,8 +554,9 @@ const AdminDashboard = () => {
                 <div className="quick-icon">
                   <CalendarMonth />
                 </div>
-
-                <span>Event Planners</span>
+                <a href="/admin/event-planners" className="admin-nav-item">
+                  <span>Event Planners</span>
+                </a>
               </button>
 
             </div>
