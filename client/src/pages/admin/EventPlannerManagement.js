@@ -7,6 +7,11 @@ const EventPlannerManagement = () => {
   const navigate = useNavigate();
 
   const [eventPlanners, setEventPlanners] = useState([]);
+
+  // Add Event Planner options modal
+  const [showAddOptionsModal, setShowAddOptionsModal] = useState(false);
+
+  // Invite by Email modal
   const [showInviteModal, setShowInviteModal] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -14,6 +19,10 @@ const EventPlannerManagement = () => {
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  // --------------------------------------------------
+  // Check Admin Access
+  // --------------------------------------------------
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,6 +45,10 @@ const EventPlannerManagement = () => {
     }
   }, [navigate]);
 
+  // --------------------------------------------------
+  // Send Event Planner Invitation
+  // --------------------------------------------------
+
   const handleSendInvitation = async (e) => {
     e.preventDefault();
 
@@ -55,12 +68,12 @@ const EventPlannerManagement = () => {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/admin/event-planners/invite`,
         {
-          email: email.trim()
+          email: email.trim(),
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -71,9 +84,11 @@ const EventPlannerManagement = () => {
 
       setEmail("");
       setShowInviteModal(false);
-
     } catch (error) {
-      console.error("Event planner invitation error:", error);
+      console.error(
+        "Event planner invitation error:",
+        error
+      );
 
       setError(
         error.response?.data?.message ||
@@ -84,14 +99,47 @@ const EventPlannerManagement = () => {
     }
   };
 
+  // --------------------------------------------------
+  // Close Add Options Modal
+  // --------------------------------------------------
+
+  const handleCloseAddOptions = () => {
+    setShowAddOptionsModal(false);
+  };
+
+  // --------------------------------------------------
+  // Open Invite Modal
+  // --------------------------------------------------
+
+  const handleInviteByEmail = () => {
+    setShowAddOptionsModal(false);
+    setShowInviteModal(true);
+    setMessage("");
+    setError("");
+  };
+
+  // --------------------------------------------------
+  // Add Directly
+  // --------------------------------------------------
+
+  const handleAddDirectly = () => {
+    setShowAddOptionsModal(false);
+
+    // EventPlannerForm will be connected here next.
+    console.log("Add Event Planner Directly selected");
+  };
+
   return (
-    <div className="event-planner-management">
+    <div className="event-planner-management-page">
 
-      {/* Header */}
-      <div className="event-planner-header">
+      {/* --------------------------------------------------
+          Page Header
+      -------------------------------------------------- */}
 
+      <div className="event-planner-page-header">
         <div>
           <h1>Event Planners</h1>
+
           <p>
             Manage Lavendro event planning professionals
           </p>
@@ -100,35 +148,45 @@ const EventPlannerManagement = () => {
         <button
           className="add-planner-btn"
           onClick={() => {
+            setShowAddOptionsModal(true);
             setMessage("");
             setError("");
-            setShowInviteModal(true);
           }}
         >
           + Add Event Planner
         </button>
-
       </div>
 
-      {/* Messages */}
+      {/* --------------------------------------------------
+          Success Message
+      -------------------------------------------------- */}
+
       {message && (
-        <div className="success-message">
+        <div className="planner-success-message">
           {message}
         </div>
       )}
 
-      {error && (
-        <div className="error-message">
+      {/* --------------------------------------------------
+          Error Message
+      -------------------------------------------------- */}
+
+      {error && !showInviteModal && (
+        <div className="planner-error-message">
           {error}
         </div>
       )}
 
-      {/* Planner List */}
-      <div className="event-planner-card">
+      {/* --------------------------------------------------
+          Current Event Planners
+      -------------------------------------------------- */}
 
-        <div className="card-header">
+      <div className="event-planner-management-card">
+
+        <div className="management-card-header">
           <div>
             <h2>Current Event Planners</h2>
+
             <p>
               View and manage your event planning team.
             </p>
@@ -136,121 +194,217 @@ const EventPlannerManagement = () => {
         </div>
 
         {eventPlanners.length === 0 ? (
-          <div className="empty-planner-state">
-            <div className="empty-icon">👤</div>
+          <div className="empty-planners-state">
+
+            <div className="empty-planner-icon">
+              👤
+            </div>
 
             <h3>No Event Planners Yet</h3>
 
             <p>
-              Add an event planner by sending an invitation.
+              Add an event planner to your Lavendro
+              planning team.
             </p>
 
             <button
-              onClick={() => setShowInviteModal(true)}
-              className="empty-add-btn"
+              className="add-planner-empty-btn"
+              onClick={() => {
+                setShowAddOptionsModal(true);
+                setMessage("");
+                setError("");
+              }}
             >
               Add Event Planner
             </button>
+
           </div>
         ) : (
-          <div className="planner-list">
+          <div className="event-planners-list">
+
+            {/* Planner list will be connected to API next */}
 
             {eventPlanners.map((planner) => (
               <div
-                className="planner-item"
+                className="event-planner-item"
                 key={planner._id}
               >
-                <div className="planner-info">
+                <div>
+                  <strong>{planner.fullName}</strong>
 
-                  <div className="planner-avatar">
-                    {planner.profilePhoto ? (
-                      <img
-                        src={planner.profilePhoto}
-                        alt={planner.fullName}
-                      />
-                    ) : (
-                      "👤"
-                    )}
-                  </div>
-
-                  <div>
-                    <h3>{planner.fullName}</h3>
-
-                    <p>
-                      {planner.qualifications ||
-                        "Qualifications not added"}
-                    </p>
-                  </div>
-
+                  <p>{planner.email}</p>
                 </div>
 
-                <div className="planner-actions">
-                  <button>View</button>
-                  <button className="remove-btn">
-                    Remove
-                  </button>
-                </div>
-
+                <span>
+                  {planner.isActive
+                    ? "Active"
+                    : "Inactive"}
+                </span>
               </div>
             ))}
 
           </div>
         )}
-
       </div>
 
-      {/* Invitation Modal */}
-      {showInviteModal && (
-        <div
-          className="modal-overlay"
-          onClick={() => setShowInviteModal(false)}
-        >
+      {/* ==================================================
+          ADD EVENT PLANNER OPTIONS MODAL
+      ================================================== */}
 
-          <div
-            className="invite-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
+      {showAddOptionsModal && (
+        <div className="planner-modal-overlay">
+
+          <div className="add-planner-options-modal">
 
             <button
-              className="modal-close"
-              onClick={() => setShowInviteModal(false)}
+              className="planner-modal-close"
+              onClick={handleCloseAddOptions}
+              type="button"
             >
               ×
             </button>
 
-            <div className="modal-icon">
-              👤
+            <div className="add-planner-options-header">
+
+              <h2>Add Event Planner</h2>
+
+              <p>
+                How would you like to add?
+              </p>
+
             </div>
 
-            <h2>Add Event Planner</h2>
+            <div className="add-planner-options">
 
-            <p>
-              Send an invitation to a new event planner
-              to join Lavendro.
-            </p>
+              {/* --------------------------------------------------
+                  Invite by Email
+              -------------------------------------------------- */}
+
+              <div className="add-planner-option-card">
+
+                <div className="option-icon">
+                  📧
+                </div>
+
+                <h3>
+                  Invite by Email
+                </h3>
+
+                <p>
+                  Send an invitation to the planner.
+                </p>
+
+                <button
+                  className="option-select-btn"
+                  onClick={handleInviteByEmail}
+                  type="button"
+                >
+                  Select
+                </button>
+
+              </div>
+
+              {/* --------------------------------------------------
+                  Add Directly
+              -------------------------------------------------- */}
+
+              <div className="add-planner-option-card">
+
+                <div className="option-icon">
+                  👤
+                </div>
+
+                <h3>
+                  Add Directly
+                </h3>
+
+                <p>
+                  Enter planner details and create
+                  account.
+                </p>
+
+                <button
+                  className="option-select-btn"
+                  onClick={handleAddDirectly}
+                  type="button"
+                >
+                  Select
+                </button>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================
+          INVITE BY EMAIL MODAL
+      ================================================== */}
+
+      {showInviteModal && (
+        <div className="planner-modal-overlay">
+
+          <div className="invite-planner-modal">
+
+            <button
+              className="planner-modal-close"
+              onClick={() =>
+                setShowInviteModal(false)
+              }
+              type="button"
+            >
+              ×
+            </button>
+
+            <div className="invite-modal-header">
+
+              <h2>
+                Invite Event Planner
+              </h2>
+
+              <p>
+                Send an invitation to the event
+                planner's email address.
+              </p>
+
+            </div>
+
+            {error && (
+              <div className="planner-error-message">
+                {error}
+              </div>
+            )}
 
             <form onSubmit={handleSendInvitation}>
 
-              <div className="form-group">
+              <div className="planner-form-group">
 
-                <label>Email Address</label>
+                <label>
+                  Email Address
+                  <span>*</span>
+                </label>
 
                 <input
                   type="email"
-                  placeholder="Enter event planner email"
+                  placeholder="Enter planner email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) =>
+                    setEmail(e.target.value)
+                  }
                   disabled={loading}
                 />
 
               </div>
 
-              <div className="modal-actions">
+              <div className="invite-modal-actions">
 
                 <button
                   type="button"
-                  className="cancel-btn"
-                  onClick={() => setShowInviteModal(false)}
+                  className="planner-cancel-btn"
+                  onClick={() =>
+                    setShowInviteModal(false)
+                  }
                   disabled={loading}
                 >
                   Cancel
@@ -258,7 +412,7 @@ const EventPlannerManagement = () => {
 
                 <button
                   type="submit"
-                  className="send-invite-btn"
+                  className="planner-submit-btn"
                   disabled={loading}
                 >
                   {loading
@@ -271,7 +425,6 @@ const EventPlannerManagement = () => {
             </form>
 
           </div>
-
         </div>
       )}
 

@@ -42,6 +42,9 @@ import SupportDashboard from './pages/support/SupportDashboard';
 
 import EventPlannerManagement from "./pages/admin/EventPlannerManagement";
 
+import AcceptEventPlannerInvite
+  from "./pages/eventPlanner/AcceptEventPlannerInvite";
+
 
 
 /* =========================================
@@ -52,14 +55,11 @@ const AppContent = () => {
 
   const location = useLocation();
 
-  const isAdminDashboard =
-    location.pathname === '/admin/dashboard';
-
-  const isSupportDashboard =
-    location.pathname.startsWith('/support/dashboard');
-
-  const hideNavbar =
-    isAdminDashboard || isSupportDashboard;
+ const hideNavbar =
+  location.pathname === "/admin/dashboard" ||
+  location.pathname.startsWith("/admin/event-planners") ||
+  location.pathname.startsWith("/support/dashboard");
+  
 
   return (
     <>
@@ -213,12 +213,10 @@ const AppContent = () => {
             Will be added later
         ====================================== */}
 
-        {/* 
         <Route
-          path="/planner/dashboard"
-          element={<PlannerDashboard />}
-        />
-        */}
+  path="/event-planner/accept-invite/:token"
+  element={<AcceptEventPlannerInvite />}
+/>
 
       </Routes>
     </>
