@@ -81,12 +81,7 @@ app.use('/api/menus', menuRoutes);
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
 
-const eventPlannerRoutes =
-  require('./routes/eventPlannerRoutes');
-  app.use(
-  '/api/admin/event-planners',
-  eventPlannerRoutes
-);
+
 
 const venueRoutes = require('./routes/venues');
 app.use('/api/venues', venueRoutes);
@@ -112,11 +107,19 @@ app.use(
   supportInvitationRoutes
 );
 
-const eventPlannerInvitationRoutes = require('./routes/eventPlannerInvitationRoutes');
+const eventPlannerInvitationRoutes =
+  require('./routes/eventPlannerInvitationRoutes');
+
 app.use(
   '/api/admin/event-planners',
   eventPlannerInvitationRoutes
 );
+
+app.use(
+  '/api/event-planner/invitations',
+  eventPlannerInvitationRoutes
+);
+
 
 
 

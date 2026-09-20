@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/admin/eventPlannerManagement.css";
+import EventPlannerForm from "../../components/EventPlannerForm";
 
 const EventPlannerManagement = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const EventPlannerManagement = () => {
 
   // Invite by Email modal
   const [showInviteModal, setShowInviteModal] = useState(false);
+
+  const [showDirectAddModal, setShowDirectAddModal] = useState(false);
 
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -123,11 +126,11 @@ const EventPlannerManagement = () => {
   // --------------------------------------------------
 
   const handleAddDirectly = () => {
-    setShowAddOptionsModal(false);
-
-    // EventPlannerForm will be connected here next.
-    console.log("Add Event Planner Directly selected");
-  };
+  setShowAddOptionsModal(false);
+  setShowDirectAddModal(true);
+  setMessage("");
+  setError("");
+};
 
   return (
     <div className="event-planner-management-page">
@@ -304,9 +307,7 @@ const EventPlannerManagement = () => {
 
               </div>
 
-              {/* --------------------------------------------------
-                  Add Directly
-              -------------------------------------------------- */}
+              
 
               <div className="add-planner-option-card">
 
@@ -319,8 +320,7 @@ const EventPlannerManagement = () => {
                 </h3>
 
                 <p>
-                  Enter planner details and create
-                  account.
+                  Create a planner profile manually.
                 </p>
 
                 <button
@@ -334,7 +334,40 @@ const EventPlannerManagement = () => {
               </div>
 
             </div>
+
           </div>
+        </div>
+      )}
+
+      {/* ==================================================
+          ADD EVENT PLANNER DIRECTLY
+      ================================================== */}
+
+      {showDirectAddModal && (
+        <div className="planner-modal-overlay">
+
+          <div className="direct-add-planner-modal">
+
+            <button
+              className="planner-modal-close"
+              onClick={() => setShowDirectAddModal(false)}
+              type="button"
+            >
+              ×
+            </button>
+
+            <EventPlannerForm
+              mode="admin"
+              onSuccess={() => {
+                setShowDirectAddModal(false);
+              }}
+              onCancel={() => {
+                setShowDirectAddModal(false);
+              }}
+            />
+
+          </div>
+
         </div>
       )}
 
@@ -349,9 +382,7 @@ const EventPlannerManagement = () => {
 
             <button
               className="planner-modal-close"
-              onClick={() =>
-                setShowInviteModal(false)
-              }
+              onClick={() => setShowInviteModal(false)}
               type="button"
             >
               ×
@@ -389,9 +420,7 @@ const EventPlannerManagement = () => {
                   type="email"
                   placeholder="Enter planner email"
                   value={email}
-                  onChange={(e) =>
-                    setEmail(e.target.value)
-                  }
+                  onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
                 />
 
@@ -402,9 +431,7 @@ const EventPlannerManagement = () => {
                 <button
                   type="button"
                   className="planner-cancel-btn"
-                  onClick={() =>
-                    setShowInviteModal(false)
-                  }
+                  onClick={() => setShowInviteModal(false)}
                   disabled={loading}
                 >
                   Cancel
@@ -415,9 +442,7 @@ const EventPlannerManagement = () => {
                   className="planner-submit-btn"
                   disabled={loading}
                 >
-                  {loading
-                    ? "Sending..."
-                    : "Send Invitation"}
+                  {loading ? "Sending..." : "Send Invitation"}
                 </button>
 
               </div>

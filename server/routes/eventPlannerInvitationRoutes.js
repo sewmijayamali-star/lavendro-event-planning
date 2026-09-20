@@ -1,20 +1,35 @@
-const express = require('express');
+const express = require("express");
+
 const router = express.Router();
+
+const {
+  inviteEventPlanner
+} = require("../controllers/eventPlannerInvitationController");
+
+const {
+  getEventPlannerInvitation
+} = require("../controllers/eventPlannerInvitationController");
 
 const {
   protect,
   adminOnly
-} = require('../middleware/authMiddleware');
+} = require("../middleware/authMiddleware");
 
-const {
-  inviteEventPlanner
-} = require('../controllers/eventPlannerInvitationController');
 
+// Admin sends invitation
 router.post(
-  '/invite',
+  "/invite",
   protect,
   adminOnly,
   inviteEventPlanner
 );
+
+
+// Event Planner verifies invitation
+router.get(
+  "/:token",
+  getEventPlannerInvitation
+);
+
 
 module.exports = router;

@@ -697,3 +697,32 @@
     width: 100%;
   }
 }
+/* =========================================================
+   DIRECT ADD EVENT PLANNER MODAL
+   ========================================================= */
+
+.direct-add-planner-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 720px;
+
+  max-height: 90vh;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+}
+
+.direct-add-planner-modal .event-planner-form-container {
+  margin: 0;
+  max-width: none;
+  box-shadow: none;
+  border-radius: 18px;
+}
