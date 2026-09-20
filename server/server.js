@@ -119,6 +119,18 @@ app.use(
   '/api/event-planner/invitations',
   eventPlannerInvitationRoutes
 );
+app.use(
+  '/api/event-planner/invitations',
+  eventPlannerInvitationRoutes
+);
+
+const eventPlannerRoutes =
+  require('./routes/eventPlannerRoutes');
+
+app.use(
+  '/api/admin/event-planners',
+  eventPlannerRoutes
+);
 
 
 

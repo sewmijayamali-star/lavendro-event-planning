@@ -9,23 +9,24 @@ const EventPlannerManagement = () => {
 
   const [eventPlanners, setEventPlanners] = useState([]);
 
-  // Add Event Planner options modal
+  // Modal states
   const [showAddOptionsModal, setShowAddOptionsModal] = useState(false);
-
-  // Invite by Email modal
   const [showInviteModal, setShowInviteModal] = useState(false);
-
   const [showDirectAddModal, setShowDirectAddModal] = useState(false);
 
+  // Invitation
   const [email, setEmail] = useState("");
+
+  // General states
   const [loading, setLoading] = useState(false);
+  const [loadingPlanners, setLoadingPlanners] = useState(true);
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  // --------------------------------------------------
-  // Check Admin Access
-  // --------------------------------------------------
+  // =========================================================
+  // CHECK ADMIN ACCESS
+  // =========================================================
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -41,16 +42,60 @@ const EventPlannerManagement = () => {
 
       if (parsedUser.role !== "admin") {
         navigate("/");
+        return;
       }
     } catch (error) {
+      console.error("User data error:", error);
+
       localStorage.removeItem("user");
       navigate("/login");
     }
   }, [navigate]);
 
-  // --------------------------------------------------
-  // Send Event Planner Invitation
-  // --------------------------------------------------
+  // =========================================================
+  // FETCH EVENT PLANNERS
+  // =========================================================
+
+  const fetchEventPlanners = async () => {
+    try {
+      setLoadingPlanners(true);
+      setError("");
+
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/admin/event-planners`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setEventPlanners(response.data.eventPlanners || []);
+    } catch (error) {
+      console.error("Get event planners error:", error);
+
+      setError(
+        error.response?.data?.message ||
+          "Failed to load event planners."
+      );
+    } finally {
+      setLoadingPlanners(false);
+    }
+  };
+
+  // =========================================================
+  // LOAD PLANNERS WHEN PAGE OPENS
+  // =========================================================
+
+  useEffect(() => {
+    fetchEventPlanners();
+  }, []);
+
+  // =========================================================
+  // SEND EVENT PLANNER INVITATION
+  // =========================================================
 
   const handleSendInvitation = async (e) => {
     e.preventDefault();
@@ -102,49 +147,153 @@ const EventPlannerManagement = () => {
     }
   };
 
-  // --------------------------------------------------
-  // Close Add Options Modal
-  // --------------------------------------------------
+  // =========================================================
+  // DEACTIVATE EVENT PLANNER
+  // =========================================================
+
+  const handleDeactivate = async (plannerId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to deactivate this event planner?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+      setError("");
+
+      const token = localStorage.getItem("token");
+
+      const response = await axios.patch(
+        `${process.env.REACT_APP_API_URL}/api/admin/event-planners/${plannerId}/deactivate`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setMessage(
+        response.data.message ||
+          "Event planner deactivated successfully."
+      );
+
+      // Reload planner list
+      await fetchEventPlanners();
+    } catch (error) {
+      console.error(
+        "Deactivate event planner error:",
+        error
+      );
+
+      setError(
+        error.response?.data?.message ||
+          "Failed to deactivate event planner."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // =========================================================
+  // CLOSE ADD OPTIONS MODAL
+  // =========================================================
 
   const handleCloseAddOptions = () => {
     setShowAddOptionsModal(false);
   };
 
-  // --------------------------------------------------
-  // Open Invite Modal
-  // --------------------------------------------------
+  // =========================================================
+  // OPEN INVITE MODAL
+  // =========================================================
 
   const handleInviteByEmail = () => {
     setShowAddOptionsModal(false);
     setShowInviteModal(true);
+
     setMessage("");
     setError("");
   };
 
-  // --------------------------------------------------
-  // Add Directly
-  // --------------------------------------------------
+  // =========================================================
+  // OPEN DIRECT ADD MODAL
+  // =========================================================
 
   const handleAddDirectly = () => {
-  setShowAddOptionsModal(false);
-  setShowDirectAddModal(true);
-  setMessage("");
-  setError("");
-};
+    setShowAddOptionsModal(false);
+    setShowDirectAddModal(true);
+
+    setMessage("");
+    setError("");
+  };
+
+  // =========================================================
+  // HANDLE DIRECT ADD SUCCESS
+  // =========================================================
+
+  const handleDirectAddSuccess = async () => {
+    setShowDirectAddModal(false);
+
+    setMessage("Event planner created successfully.");
+    setError("");
+
+    // Reload the planner list
+    await fetchEventPlanners();
+  };
+
+  // =========================================================
+  // STATISTICS
+  // =========================================================
+
+  const totalPlanners = eventPlanners.length;
+
+  const activePlanners = eventPlanners.filter(
+    (planner) => planner.isActive
+  ).length;
+
+  const inactivePlanners = eventPlanners.filter(
+    (planner) => !planner.isActive
+  ).length;
+
+  // =========================================================
+  // FORMAT DATE
+  // =========================================================
+
+  const formatDate = (date) => {
+    if (!date) return "N/A";
+
+    return new Date(date).toLocaleString("en-US", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  // =========================================================
+  // RENDER
+  // =========================================================
 
   return (
     <div className="event-planner-management-page">
 
-      {/* --------------------------------------------------
-          Page Header
-      -------------------------------------------------- */}
+      {/* =====================================================
+          PAGE HEADER
+      ===================================================== */}
 
       <div className="event-planner-page-header">
+
         <div>
           <h1>Event Planners</h1>
 
           <p>
-            Manage Lavendro event planning professionals
+            Manage your Lavendro event planning professionals
           </p>
         </div>
 
@@ -158,11 +307,13 @@ const EventPlannerManagement = () => {
         >
           + Add Event Planner
         </button>
+
       </div>
 
-      {/* --------------------------------------------------
-          Success Message
-      -------------------------------------------------- */}
+
+      {/* =====================================================
+          SUCCESS MESSAGE
+      ===================================================== */}
 
       {message && (
         <div className="planner-success-message">
@@ -170,9 +321,10 @@ const EventPlannerManagement = () => {
         </div>
       )}
 
-      {/* --------------------------------------------------
-          Error Message
-      -------------------------------------------------- */}
+
+      {/* =====================================================
+          ERROR MESSAGE
+      ===================================================== */}
 
       {error && !showInviteModal && (
         <div className="planner-error-message">
@@ -180,30 +332,103 @@ const EventPlannerManagement = () => {
         </div>
       )}
 
-      {/* --------------------------------------------------
-          Current Event Planners
-      -------------------------------------------------- */}
+
+      {/* =====================================================
+          STATISTICS
+      ===================================================== */}
+
+      <div className="planner-statistics">
+
+        {/* Total */}
+
+        <div className="planner-stat-card">
+
+          <div className="planner-stat-number">
+            {totalPlanners}
+          </div>
+
+          <div className="planner-stat-label">
+            TOTAL PLANNERS
+          </div>
+
+        </div>
+
+
+        {/* Active */}
+
+        <div className="planner-stat-card">
+
+          <div className="planner-stat-number">
+            {activePlanners}
+          </div>
+
+          <div className="planner-stat-label">
+            ACTIVE
+          </div>
+
+        </div>
+
+
+        {/* Inactive */}
+
+        <div className="planner-stat-card">
+
+          <div className="planner-stat-number">
+            {inactivePlanners}
+          </div>
+
+          <div className="planner-stat-label">
+            INACTIVE
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* =====================================================
+          PLANNER PROFILES
+      ===================================================== */}
 
       <div className="event-planner-management-card">
 
         <div className="management-card-header">
+
           <div>
-            <h2>Current Event Planners</h2>
+            <h2>Planner Profiles</h2>
 
             <p>
-              View and manage your event planning team.
+              View and manage your Lavendro planning team.
             </p>
           </div>
+
         </div>
 
-        {eventPlanners.length === 0 ? (
+
+        {/* Loading */}
+
+        {loadingPlanners ? (
+
+          <div className="planner-loading-state">
+            <div className="planner-loading-spinner"></div>
+            <p>Loading event planners...</p>
+          </div>
+
+        ) : eventPlanners.length === 0 ? (
+
+          /* =================================================
+             EMPTY STATE
+          ================================================= */
+
           <div className="empty-planners-state">
 
             <div className="empty-planner-icon">
               👤
             </div>
 
-            <h3>No Event Planners Yet</h3>
+            <h3>
+              No Event Planners Yet
+            </h3>
 
             <p>
               Add an event planner to your Lavendro
@@ -222,39 +447,290 @@ const EventPlannerManagement = () => {
             </button>
 
           </div>
+
         ) : (
+
+          /* =================================================
+             PLANNER CARDS
+          ================================================= */
+
           <div className="event-planners-list">
 
-            {/* Planner list will be connected to API next */}
-
             {eventPlanners.map((planner) => (
+
               <div
                 className="event-planner-item"
                 key={planner._id}
               >
-                <div>
-                  <strong>{planner.fullName}</strong>
 
-                  <p>{planner.email}</p>
+                {/* Planner information */}
+
+                <div className="planner-item-info">
+
+                  {/* Profile Photo */}
+
+                  <div className="planner-photo-wrapper">
+
+                    {planner.profilePhoto ? (
+
+                      <img
+                        src={planner.profilePhoto}
+                        alt={planner.fullName}
+                        className="planner-profile-photo"
+                      />
+
+                    ) : (
+
+                      <div className="planner-photo-placeholder">
+                        {planner.fullName
+                          ?.charAt(0)
+                          ?.toUpperCase() || "P"}
+                      </div>
+
+                    )}
+
+                  </div>
+
+
+                  {/* Details */}
+
+                  <div className="planner-profile-details">
+
+                    <strong>
+                      {planner.fullName}
+                    </strong>
+
+                    <p>
+                      {planner.email}
+                    </p>
+
+
+                    {/* Qualifications */}
+
+                    {planner.qualifications?.length > 0 && (
+
+                      <div className="planner-qualifications">
+
+                        {planner.qualifications.map(
+                          (qualification, index) => (
+
+                            <span
+                              key={index}
+                              className="qualification-tag"
+                            >
+                              {qualification}
+                            </span>
+
+                          )
+                        )}
+
+                      </div>
+
+                    )}
+
+
+                    {/* Joined date */}
+
+                    <small className="planner-joined-date">
+                      Joined:{" "}
+                      {formatDate(planner.createdAt)}
+                    </small>
+
+                  </div>
+
                 </div>
 
-                <span>
-                  {planner.isActive
-                    ? "Active"
-                    : "Inactive"}
-                </span>
+
+                {/* Actions */}
+
+                <div className="planner-item-actions">
+
+                  <span
+                    className={
+                      planner.isActive
+                        ? "planner-status active"
+                        : "planner-status inactive"
+                    }
+                  >
+                    {planner.isActive
+                      ? "Active"
+                      : "Inactive"}
+                  </span>
+
+
+                  {/* Deactivate */}
+
+                  {planner.isActive && (
+
+                    <button
+                      type="button"
+                      className="deactivate-planner-btn"
+                      onClick={() =>
+                        handleDeactivate(planner._id)
+                      }
+                      disabled={loading}
+                    >
+                      Deactivate
+                    </button>
+
+                  )}
+
+                </div>
+
               </div>
+
             ))}
 
           </div>
+
         )}
+
       </div>
 
-      {/* ==================================================
+
+      {/* =====================================================
+          DETAILS TABLE
+      ===================================================== */}
+
+      {eventPlanners.length > 0 && (
+
+        <div className="planner-details-table-card">
+
+          <div className="details-table-header">
+
+            <h2>Details Table</h2>
+
+          </div>
+
+
+          <div className="planner-table-wrapper">
+
+            <table className="planner-details-table">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    NAME
+                  </th>
+
+                  <th>
+                    EMAIL
+                  </th>
+
+                  <th>
+                    QUALIFICATIONS
+                  </th>
+
+                  <th>
+                    STATUS
+                  </th>
+
+                  <th>
+                    CREATED AT
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody>
+
+                {eventPlanners.map((planner) => (
+
+                  <tr key={planner._id}>
+
+                    <td>
+                      <div className="table-planner-name">
+
+                        {planner.profilePhoto ? (
+
+                          <img
+                            src={planner.profilePhoto}
+                            alt={planner.fullName}
+                            className="table-planner-photo"
+                          />
+
+                        ) : (
+
+                          <div className="table-planner-placeholder">
+                            {planner.fullName
+                              ?.charAt(0)
+                              ?.toUpperCase() || "P"}
+                          </div>
+
+                        )}
+
+                        <span>
+                          {planner.fullName}
+                        </span>
+
+                      </div>
+                    </td>
+
+
+                    <td>
+                      {planner.email}
+                    </td>
+
+
+                    <td>
+
+                      {planner.qualifications?.length > 0
+                        ? planner.qualifications.join(", ")
+                        : "No qualifications added"}
+
+                    </td>
+
+
+                    <td>
+
+                      <span
+                        className={
+                          planner.isActive
+                            ? "table-status active"
+                            : "table-status inactive"
+                        }
+                      >
+
+                        <span className="status-dot"></span>
+
+                        {planner.isActive
+                          ? "Active"
+                          : "Inactive"}
+
+                      </span>
+
+                    </td>
+
+
+                    <td>
+                      {formatDate(planner.createdAt)}
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* =====================================================
           ADD EVENT PLANNER OPTIONS MODAL
-      ================================================== */}
+      ===================================================== */}
 
       {showAddOptionsModal && (
+
         <div className="planner-modal-overlay">
 
           <div className="add-planner-options-modal">
@@ -267,21 +743,24 @@ const EventPlannerManagement = () => {
               ×
             </button>
 
+
             <div className="add-planner-options-header">
 
-              <h2>Add Event Planner</h2>
+              <h2>
+                Add Event Planner
+              </h2>
 
               <p>
-                How would you like to add?
+                How would you like to add an event planner?
               </p>
 
             </div>
 
+
             <div className="add-planner-options">
 
-              {/* --------------------------------------------------
-                  Invite by Email
-              -------------------------------------------------- */}
+
+              {/* Invite by Email */}
 
               <div className="add-planner-option-card">
 
@@ -294,7 +773,8 @@ const EventPlannerManagement = () => {
                 </h3>
 
                 <p>
-                  Send an invitation to the planner.
+                  Send an invitation to the planner's
+                  email address.
                 </p>
 
                 <button
@@ -307,7 +787,8 @@ const EventPlannerManagement = () => {
 
               </div>
 
-              
+
+              {/* Add Directly */}
 
               <div className="add-planner-option-card">
 
@@ -336,57 +817,71 @@ const EventPlannerManagement = () => {
             </div>
 
           </div>
+
         </div>
+
       )}
 
-      {/* ==================================================
-          ADD EVENT PLANNER DIRECTLY
-      ================================================== */}
+
+      {/* =====================================================
+          DIRECT ADD EVENT PLANNER MODAL
+      ===================================================== */}
 
       {showDirectAddModal && (
+
         <div className="planner-modal-overlay">
 
           <div className="direct-add-planner-modal">
 
             <button
               className="planner-modal-close"
-              onClick={() => setShowDirectAddModal(false)}
+              onClick={() =>
+                setShowDirectAddModal(false)
+              }
               type="button"
             >
               ×
             </button>
 
+
             <EventPlannerForm
               mode="admin"
-              onSuccess={() => {
-                setShowDirectAddModal(false);
-              }}
-              onCancel={() => {
-                setShowDirectAddModal(false);
-              }}
+
+              onSuccess={handleDirectAddSuccess}
+
+              onCancel={() =>
+                setShowDirectAddModal(false)
+              }
             />
 
           </div>
 
         </div>
+
       )}
 
-      {/* ==================================================
+
+      {/* =====================================================
           INVITE BY EMAIL MODAL
-      ================================================== */}
+      ===================================================== */}
 
       {showInviteModal && (
+
         <div className="planner-modal-overlay">
 
           <div className="invite-planner-modal">
 
             <button
               className="planner-modal-close"
-              onClick={() => setShowInviteModal(false)}
+              onClick={() => {
+                setShowInviteModal(false);
+                setError("");
+              }}
               type="button"
             >
               ×
             </button>
+
 
             <div className="invite-modal-header">
 
@@ -401,11 +896,15 @@ const EventPlannerManagement = () => {
 
             </div>
 
+
             {error && (
+
               <div className="planner-error-message">
                 {error}
               </div>
+
             )}
+
 
             <form onSubmit={handleSendInvitation}>
 
@@ -420,29 +919,38 @@ const EventPlannerManagement = () => {
                   type="email"
                   placeholder="Enter planner email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) =>
+                    setEmail(e.target.value)
+                  }
                   disabled={loading}
                 />
 
               </div>
+
 
               <div className="invite-modal-actions">
 
                 <button
                   type="button"
                   className="planner-cancel-btn"
-                  onClick={() => setShowInviteModal(false)}
+                  onClick={() => {
+                    setShowInviteModal(false);
+                    setError("");
+                  }}
                   disabled={loading}
                 >
                   Cancel
                 </button>
+
 
                 <button
                   type="submit"
                   className="planner-submit-btn"
                   disabled={loading}
                 >
-                  {loading ? "Sending..." : "Send Invitation"}
+                  {loading
+                    ? "Sending..."
+                    : "Send Invitation"}
                 </button>
 
               </div>
@@ -450,7 +958,9 @@ const EventPlannerManagement = () => {
             </form>
 
           </div>
+
         </div>
+
       )}
 
     </div>

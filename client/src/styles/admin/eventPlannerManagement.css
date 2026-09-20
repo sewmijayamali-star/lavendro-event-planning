@@ -1,220 +1,610 @@
 /* =========================================================
-   EVENT PLANNER MANAGEMENT PAGE
-   ========================================================= */
+   LAVENDRO - EVENT PLANNER MANAGEMENT
+   Admin Dashboard
+========================================================= */
 
 .event-planner-management-page {
   min-height: 100vh;
-  padding: 40px;
-  background: #fff8f7;
+  background: #fffaf8;
+  padding: 30px;
+  color: #2f2f2f;
   box-sizing: border-box;
 }
 
 
 /* =========================================================
    PAGE HEADER
-   ========================================================= */
+========================================================= */
 
 .event-planner-page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .event-planner-page-header h1 {
-  margin: 0 0 8px;
-  color: #333333;
+  margin: 0 0 7px;
   font-size: 30px;
   font-weight: 700;
+  color: #2f2f2f;
 }
 
 .event-planner-page-header p {
   margin: 0;
-  color: #777777;
-  font-size: 15px;
+  font-size: 14px;
+  color: #777;
 }
 
 
 /* =========================================================
    ADD EVENT PLANNER BUTTON
-   ========================================================= */
+========================================================= */
 
 .add-planner-btn {
   border: none;
+  border-radius: 9px;
+  padding: 12px 20px;
   background: #f58b8b;
   color: #ffffff;
-  padding: 13px 22px;
-  border-radius: 9px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
-  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(245, 139, 139, 0.22);
 }
 
 .add-planner-btn:hover {
-  background: #ed7474;
+  background: #ed7777;
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(245, 139, 139, 0.28);
 }
 
 
 /* =========================================================
-   SUCCESS / ERROR MESSAGES
-   ========================================================= */
+   SUCCESS MESSAGE
+========================================================= */
 
 .planner-success-message {
   margin-bottom: 20px;
-  padding: 13px 16px;
-  background: #eaf7ed;
-  border: 1px solid #ccebd3;
-  color: #2e7d32;
+  padding: 12px 16px;
+  border: 1px solid #b7e5c4;
   border-radius: 9px;
-  font-size: 14px;
-}
-
-.planner-error-message {
-  margin-bottom: 20px;
-  padding: 13px 16px;
-  background: #fff0f0;
-  border: 1px solid #f4cccc;
-  color: #c62828;
-  border-radius: 9px;
+  background: #effaf2;
+  color: #277a3f;
   font-size: 14px;
 }
 
 
 /* =========================================================
-   EVENT PLANNER MANAGEMENT CARD
-   ========================================================= */
+   ERROR MESSAGE
+========================================================= */
+
+.planner-error-message {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border: 1px solid #f1b5b5;
+  border-radius: 9px;
+  background: #fff2f2;
+  color: #c64545;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.planner-statistics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.planner-stat-card {
+  background: #ffffff;
+  border: 1px solid #f0e3e0;
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(100, 70, 60, 0.05);
+  transition: all 0.2s ease;
+}
+
+.planner-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(100, 70, 60, 0.08);
+}
+
+.planner-stat-number {
+  margin-bottom: 6px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2f2f2f;
+}
+
+.planner-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  color: #888;
+}
+
+
+/* =========================================================
+   MAIN PLANNER CARD
+========================================================= */
 
 .event-planner-management-card {
   background: #ffffff;
-  border: 1px solid #eeeeee;
-  border-radius: 16px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+  border: 1px solid #f0e3e0;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 28px;
+  box-shadow: 0 3px 12px rgba(100, 70, 60, 0.04);
 }
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
 
 .management-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 25px 28px;
-  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 22px;
 }
 
 .management-card-header h2 {
-  margin: 0 0 6px;
-  color: #333333;
-  font-size: 20px;
+  margin: 0 0 5px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 .management-card-header p {
   margin: 0;
-  color: #888888;
+  font-size: 13px;
+  color: #888;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.planner-loading-state {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: #888;
+}
+
+.planner-loading-state p {
+  margin: 0;
   font-size: 14px;
+}
+
+.planner-loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f5dede;
+  border-top-color: #f58b8b;
+  border-radius: 50%;
+  animation: plannerSpin 0.8s linear infinite;
+}
+
+@keyframes plannerSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 
 /* =========================================================
    EMPTY STATE
-   ========================================================= */
+========================================================= */
 
 .empty-planners-state {
+  padding: 55px 20px;
   text-align: center;
-  padding: 70px 30px;
 }
 
 .empty-planner-icon {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 18px;
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff0ef;
   border-radius: 50%;
-  font-size: 30px;
+  background: #fff1ef;
+  color: #f58b8b;
+  font-size: 25px;
 }
 
 .empty-planners-state h3 {
   margin: 0 0 8px;
-  color: #333333;
-  font-size: 19px;
+  font-size: 18px;
+  color: #333;
 }
 
 .empty-planners-state p {
-  max-width: 450px;
-  margin: 0 auto 22px;
-  color: #888888;
+  max-width: 420px;
+  margin: 0 auto 20px;
+  color: #888;
   font-size: 14px;
   line-height: 1.6;
 }
 
 .add-planner-empty-btn {
   border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
   background: #f58b8b;
   color: #ffffff;
-  padding: 11px 20px;
-  border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .add-planner-empty-btn:hover {
-  background: #ed7474;
+  background: #ed7777;
 }
 
 
 /* =========================================================
-   EVENT PLANNER LIST
-   ========================================================= */
+   PLANNER PROFILE LIST
+========================================================= */
 
 .event-planners-list {
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
+
+
+/* =========================================================
+   PLANNER PROFILE ITEM
+========================================================= */
 
 .event-planner-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 28px;
-  border-bottom: 1px solid #eeeeee;
+  gap: 20px;
+  padding: 18px 20px;
+  border: 1px solid #eee4e1;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.2s ease;
 }
 
-.event-planner-item:last-child {
+.event-planner-item:hover {
+  border-color: #f2caca;
+  box-shadow: 0 4px 14px rgba(100, 70, 60, 0.06);
+}
+
+
+/* =========================================================
+   PLANNER INFO
+========================================================= */
+
+.planner-item-info {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.planner-photo-wrapper {
+  flex-shrink: 0;
+}
+
+.planner-profile-photo,
+.planner-photo-placeholder {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+}
+
+.planner-profile-photo {
+  display: block;
+  object-fit: cover;
+  border: 2px solid #f6dddd;
+}
+
+.planner-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff0ee;
+  color: #e97878;
+  font-size: 21px;
+  font-weight: 700;
+  border: 2px solid #f6dddd;
+}
+
+
+/* =========================================================
+   PLANNER DETAILS
+========================================================= */
+
+.planner-profile-details {
+  min-width: 0;
+}
+
+.planner-profile-details strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+}
+
+.planner-profile-details p {
+  margin: 0 0 9px;
+  font-size: 13px;
+  color: #777;
+}
+
+.planner-joined-date {
+  display: block;
+  margin-top: 9px;
+  color: #999;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   QUALIFICATION TAGS
+========================================================= */
+
+.planner-qualifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.qualification-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 10px;
+  border: 1px solid #eee1de;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #555;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PLANNER ACTIONS
+========================================================= */
+
+.planner-item-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.planner-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.planner-status.active {
+  border: 1px solid #b8e3c3;
+  background: #eaf8ed;
+  color: #278342;
+}
+
+.planner-status.inactive {
+  border: 1px solid #e5c0c0;
+  background: #fff0f0;
+  color: #c45a5a;
+}
+
+
+/* =========================================================
+   DEACTIVATE BUTTON
+========================================================= */
+
+.deactivate-planner-btn {
+  border: 1px solid #f1a2a2;
+  border-radius: 7px;
+  padding: 8px 14px;
+  background: #ffffff;
+  color: #dc6262;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deactivate-planner-btn:hover {
+  background: #fff1f1;
+  border-color: #e87b7b;
+}
+
+.deactivate-planner-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   DETAILS TABLE CARD
+========================================================= */
+
+.planner-details-table-card {
+  background: #ffffff;
+  border: 1px solid #f0e3e0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(100, 70, 60, 0.04);
+  margin-bottom: 30px;
+}
+
+.details-table-header {
+  padding: 22px 25px;
+  border-bottom: 1px solid #eee5e2;
+}
+
+.details-table-header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.planner-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.planner-details-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+}
+
+.planner-details-table thead {
+  background: #fffaf8;
+}
+
+.planner-details-table th {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee5e2;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #777;
+  letter-spacing: 0.4px;
+}
+
+.planner-details-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #f1ecea;
+  font-size: 12px;
+  color: #555;
+  vertical-align: middle;
+}
+
+.planner-details-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.event-planner-item strong {
-  display: block;
-  margin-bottom: 5px;
-  color: #333333;
-  font-size: 15px;
+.planner-details-table tbody tr:hover {
+  background: #fffdfc;
 }
 
-.event-planner-item p {
-  margin: 0;
-  color: #888888;
+
+/* =========================================================
+   TABLE PLANNER NAME
+========================================================= */
+
+.table-planner-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 170px;
+}
+
+.table-planner-photo,
+.table-planner-placeholder {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.table-planner-photo {
+  object-fit: cover;
+  border: 1px solid #f1dddd;
+}
+
+.table-planner-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff0ee;
+  color: #e97878;
   font-size: 13px;
+  font-weight: 700;
 }
 
-.event-planner-item > span {
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #eaf7ed;
-  color: #2e7d32;
+.table-planner-name span {
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* =========================================================
+   TABLE STATUS
+========================================================= */
+
+.table-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 12px;
   font-weight: 600;
+}
+
+.table-status.active {
+  color: #278342;
+}
+
+.table-status.inactive {
+  color: #c45a5a;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #35a852;
+}
+
+.table-status.inactive .status-dot {
+  background: #d96b6b;
 }
 
 
 /* =========================================================
    MODAL OVERLAY
-   ========================================================= */
+========================================================= */
 
 .planner-modal-overlay {
   position: fixed;
@@ -227,502 +617,447 @@
 
   padding: 25px;
 
-  background: rgba(35, 35, 35, 0.55);
+  background: rgba(48, 36, 33, 0.48);
 
   overflow-y: auto;
 }
 
 
 /* =========================================================
-   ADD EVENT PLANNER OPTIONS MODAL
-   ========================================================= */
-
-.add-planner-options-modal {
-  position: relative;
-
-  width: 100%;
-  max-width: 760px;
-
-  padding: 40px;
-
-  background: #ffffff;
-  border-radius: 20px;
-
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-
-  box-sizing: border-box;
-}
-
-
-/* =========================================================
    MODAL CLOSE BUTTON
-   ========================================================= */
+========================================================= */
 
 .planner-modal-close {
   position: absolute;
-  top: 16px;
-  right: 20px;
+  top: 14px;
+  right: 16px;
 
-  width: 35px;
-  height: 35px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 32px;
+  height: 32px;
 
   border: none;
-  background: transparent;
+  border-radius: 50%;
 
-  color: #777777;
+  background: #fff4f2;
+  color: #b96a6a;
 
-  font-size: 28px;
+  font-size: 22px;
   line-height: 1;
 
   cursor: pointer;
-
-  border-radius: 50%;
-
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .planner-modal-close:hover {
-  background: #fff0ef;
-  color: #333333;
+  background: #fbe1de;
+  color: #d55e5e;
 }
 
 
 /* =========================================================
-   ADD PLANNER OPTIONS HEADER
-   ========================================================= */
+   ADD OPTIONS MODAL
+========================================================= */
+
+.add-planner-options-modal {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+
+  padding: 32px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 20px 60px rgba(50, 35, 30, 0.2);
+}
 
 .add-planner-options-header {
+  margin-bottom: 25px;
   text-align: center;
-  margin-bottom: 30px;
 }
 
 .add-planner-options-header h2 {
   margin: 0 0 8px;
-
-  color: #333333;
-
-  font-size: 26px;
-  font-weight: 700;
+  color: #333;
+  font-size: 22px;
 }
 
 .add-planner-options-header p {
   margin: 0;
-
-  color: #777777;
-
-  font-size: 15px;
+  color: #888;
+  font-size: 13px;
 }
-
-
-/* =========================================================
-   ADD PLANNER OPTIONS
-   ========================================================= */
 
 .add-planner-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 18px;
 }
 
-
-/* =========================================================
-   OPTION CARD
-   ========================================================= */
-
 .add-planner-option-card {
-  padding: 30px 25px;
-
+  padding: 24px;
+  border: 1px solid #eee2df;
+  border-radius: 13px;
   text-align: center;
-
-  border: 1px solid #eeeeee;
-  border-radius: 16px;
-
-  background: #ffffff;
-
-  transition: 0.2s ease;
+  background: #fffdfc;
+  transition: all 0.2s ease;
 }
 
 .add-planner-option-card:hover {
-  border-color: #f58b8b;
-
-  box-shadow: 0 8px 25px rgba(245, 139, 139, 0.12);
-
-  transform: translateY(-2px);
+  border-color: #f1b5b5;
+  box-shadow: 0 5px 16px rgba(245, 139, 139, 0.1);
 }
 
-
-/* =========================================================
-   OPTION ICON
-   ========================================================= */
-
 .option-icon {
-  width: 64px;
-  height: 64px;
-
-  margin: 0 auto 18px;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #fff0ef;
-
   border-radius: 50%;
+  background: #fff0ee;
 
-  font-size: 30px;
+  font-size: 22px;
 }
 
-
-/* =========================================================
-   OPTION CARD TEXT
-   ========================================================= */
-
 .add-planner-option-card h3 {
-  margin: 0 0 10px;
-
-  color: #333333;
-
-  font-size: 18px;
-  font-weight: 600;
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #333;
 }
 
 .add-planner-option-card p {
-  min-height: 45px;
-
-  margin: 0 0 22px;
-
-  color: #777777;
-
-  font-size: 14px;
+  min-height: 40px;
+  margin: 0 0 18px;
+  color: #888;
+  font-size: 12px;
   line-height: 1.6;
 }
 
-
-/* =========================================================
-   OPTION SELECT BUTTON
-   ========================================================= */
-
 .option-select-btn {
+  width: 100%;
   border: none;
+  border-radius: 7px;
+  padding: 10px 15px;
 
   background: #f58b8b;
   color: #ffffff;
 
-  padding: 11px 25px;
-
-  border-radius: 8px;
-
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
 
   cursor: pointer;
-
-  transition: 0.2s ease;
 }
 
 .option-select-btn:hover {
-  background: #ed7474;
+  background: #ed7777;
 }
 
 
 /* =========================================================
-   INVITE PLANNER MODAL
-   ========================================================= */
+   INVITATION MODAL
+========================================================= */
 
 .invite-planner-modal {
   position: relative;
-
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
 
-  padding: 38px;
+  padding: 32px;
 
   background: #ffffff;
+  border-radius: 16px;
 
-  border-radius: 18px;
-
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-
-  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgba(50, 35, 30, 0.2);
 }
 
-
-/* =========================================================
-   INVITE MODAL HEADER
-   ========================================================= */
-
 .invite-modal-header {
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
 .invite-modal-header h2 {
-  margin: 0 0 8px;
-
-  color: #333333;
-
-  font-size: 23px;
-  font-weight: 700;
+  margin: 0 0 7px;
+  font-size: 21px;
+  color: #333;
 }
 
 .invite-modal-header p {
   margin: 0;
-
-  color: #777777;
-
-  font-size: 14px;
-  line-height: 1.6;
+  color: #888;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 
 /* =========================================================
    FORM GROUP
-   ========================================================= */
+========================================================= */
 
 .planner-form-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .planner-form-group label {
   display: block;
+  margin-bottom: 7px;
 
-  margin-bottom: 8px;
-
-  color: #333333;
-
-  font-size: 14px;
+  color: #444;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .planner-form-group label span {
   margin-left: 3px;
-
-  color: #e85d75;
+  color: #e36d6d;
 }
-
-
-/* =========================================================
-   FORM INPUT
-   ========================================================= */
 
 .planner-form-group input,
 .planner-form-group textarea {
   width: 100%;
-
-  padding: 12px 14px;
-
   box-sizing: border-box;
 
-  border: 1px solid #dddddd;
-
+  border: 1px solid #ddd2cf;
   border-radius: 8px;
 
-  background: #ffffff;
+  padding: 11px 12px;
 
-  color: #333333;
+  background: #ffffff;
+  color: #333;
 
   font-family: inherit;
-
-  font-size: 14px;
+  font-size: 13px;
 
   outline: none;
 
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .planner-form-group input:focus,
 .planner-form-group textarea:focus {
-  border-color: #f58b8b;
-
-  box-shadow: 0 0 0 3px rgba(245, 139, 139, 0.12);
+  border-color: #f19a9a;
+  box-shadow: 0 0 0 3px rgba(245, 139, 139, 0.1);
 }
 
-.planner-form-group input::placeholder,
-.planner-form-group textarea::placeholder {
-  color: #aaaaaa;
-}
-
-
-/* =========================================================
-   INVITE MODAL ACTIONS
-   ========================================================= */
-
-.invite-modal-actions {
-  display: flex;
-
-  justify-content: flex-end;
-
-  gap: 12px;
-
-  margin-top: 25px;
-}
-
-
-/* =========================================================
-   CANCEL BUTTON
-   ========================================================= */
-
-.planner-cancel-btn {
-  border: none;
-
-  background: #eeeeee;
-  color: #444444;
-
-  padding: 12px 20px;
-
-  border-radius: 8px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.planner-cancel-btn:hover {
-  background: #dddddd;
-}
-
-
-/* =========================================================
-   SUBMIT BUTTON
-   ========================================================= */
-
-.planner-submit-btn {
-  border: none;
-
-  background: #f58b8b;
-  color: #ffffff;
-
-  padding: 12px 22px;
-
-  border-radius: 8px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.planner-submit-btn:hover {
-  background: #ed7474;
-}
-
-
-/* =========================================================
-   DISABLED BUTTONS
-   ========================================================= */
-
-.planner-cancel-btn:disabled,
-.planner-submit-btn:disabled,
-.option-select-btn:disabled {
-  opacity: 0.6;
-
+.planner-form-group input:disabled,
+.planner-form-group textarea:disabled {
+  background: #f8f6f5;
   cursor: not-allowed;
 }
 
 
 /* =========================================================
-   RESPONSIVE DESIGN
-   ========================================================= */
+   INVITE MODAL ACTIONS
+========================================================= */
 
-@media (max-width: 900px) {
-  .event-planner-management-page {
-    padding: 30px 25px;
-  }
+.invite-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
 
-  .add-planner-options-modal {
-    max-width: 680px;
-  }
+.planner-cancel-btn,
+.planner-submit-btn {
+  border-radius: 7px;
+  padding: 10px 17px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.planner-cancel-btn {
+  border: 1px solid #ddd2cf;
+  background: #ffffff;
+  color: #666;
+}
+
+.planner-cancel-btn:hover {
+  background: #f8f5f4;
+}
+
+.planner-submit-btn {
+  border: none;
+  background: #f58b8b;
+  color: #ffffff;
+}
+
+.planner-submit-btn:hover {
+  background: #ed7777;
+}
+
+.planner-submit-btn:disabled,
+.planner-cancel-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 
-@media (max-width: 700px) {
-  .event-planner-page-header {
-    flex-direction: column;
+/* =========================================================
+   DIRECT ADD MODAL
+========================================================= */
+
+.direct-add-planner-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 700px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 20px 60px rgba(50, 35, 30, 0.2);
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .event-planner-management-page {
+    padding: 24px;
+  }
+
+  .planner-statistics {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .planner-stat-card {
+    padding: 20px 12px;
+  }
+
+  .event-planner-item {
     align-items: flex-start;
   }
 
-  .add-planner-btn {
-    width: 100%;
+  .planner-item-actions {
+    flex-direction: column;
+    align-items: flex-end;
   }
 
-  .add-planner-options {
-    grid-template-columns: 1fr;
-  }
-
-  .add-planner-options-modal {
-    padding: 35px 25px;
-  }
 }
 
 
-@media (max-width: 500px) {
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
   .event-planner-management-page {
-    padding: 25px 15px;
+    padding: 18px;
+  }
+
+  .event-planner-page-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .event-planner-page-header h1 {
     font-size: 25px;
   }
 
-  .management-card-header {
-    padding: 20px;
+  .add-planner-btn {
+    width: 100%;
   }
 
-  .empty-planners-state {
-    padding: 50px 20px;
+  .planner-statistics {
+    grid-template-columns: 1fr;
   }
 
-  .add-planner-options-modal {
-    padding: 30px 18px;
+  .event-planner-management-card {
+    padding: 18px;
   }
 
+  .management-card-header h2 {
+    font-size: 16px;
+  }
+
+  .event-planner-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .planner-item-actions {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #f0e7e4;
+  }
+
+  .planner-profile-photo,
+  .planner-photo-placeholder {
+    width: 52px;
+    height: 52px;
+  }
+
+  .add-planner-options {
+    grid-template-columns: 1fr;
+  }
+
+  .add-planner-options-modal,
   .invite-planner-modal {
-    padding: 30px 20px;
+    padding: 25px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+  .event-planner-management-page {
+    padding: 14px;
+  }
+
+  .planner-item-info {
+    align-items: flex-start;
+  }
+
+  .planner-profile-details strong {
+    font-size: 14px;
+  }
+
+  .planner-qualifications {
+    gap: 5px;
+  }
+
+  .qualification-tag {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .planner-item-actions {
+    flex-wrap: wrap;
+  }
+
+  .deactivate-planner-btn {
+    flex: 1;
   }
 
   .invite-modal-actions {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .planner-cancel-btn,
   .planner-submit-btn {
     width: 100%;
   }
-}
-/* =========================================================
-   DIRECT ADD EVENT PLANNER MODAL
-   ========================================================= */
 
-.direct-add-planner-modal {
-  position: relative;
-
-  width: 100%;
-  max-width: 720px;
-
-  max-height: 90vh;
-
-  background: #ffffff;
-
-  border-radius: 18px;
-
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-
-  overflow-y: auto;
-
-  box-sizing: border-box;
-}
-
-.direct-add-planner-modal .event-planner-form-container {
-  margin: 0;
-  max-width: none;
-  box-shadow: none;
-  border-radius: 18px;
 }

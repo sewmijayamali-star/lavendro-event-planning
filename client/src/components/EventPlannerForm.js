@@ -84,16 +84,13 @@ const EventPlannerForm = ({
 
       const data = new FormData();
 
-      data.append("firstName", formData.firstName.trim());
+     data.append("firstName", formData.firstName.trim());
       data.append("lastName", formData.lastName.trim());
       data.append("email", formData.email.trim());
       data.append("password", formData.password);
-      data.append(
-        "qualifications",
-        formData.qualifications.trim()
-      );
+      data.append("confirmPassword", formData.confirmPassword);
+      data.append("qualifications", formData.qualifications.trim());
       data.append("profilePhoto", profilePhoto);
-
       let response;
 
       if (mode === "invitation") {
