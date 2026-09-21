@@ -67,12 +67,12 @@ const AdminDashboard = () => {
             <span>Dashboard</span>
           </a>
 
-          <a href="#events" className="admin-nav-item">
+          <a href="/admin/events" className="admin-nav-item">
             <Event />
             <span>Events</span>
           </a>
 
-          <a href="#bookings" className="admin-nav-item">
+          <a href="/admin/bookings" className="admin-nav-item">
             <EventAvailable />
             <span>Bookings</span>
           </a>
@@ -82,12 +82,12 @@ const AdminDashboard = () => {
             <span>Packages</span>
           </a>
 
-          <a href="#menus" className="admin-nav-item">
+          <a href="/admin/menus" className="admin-nav-item">
             <RestaurantMenu />
             <span>Menus</span>
           </a>
 
-          <a href="#venues" className="admin-nav-item">
+          <a href="/admin/venues" className="admin-nav-item">
             <LocationOn />
             <span>Venues</span>
           </a>
@@ -515,7 +515,7 @@ const AdminDashboard = () => {
   <span>Add Package</span>
 </button>
 
-              <button>
+              <button  onClick={() => navigate("/admin/menus")}>
                 <div className="quick-icon">
                   <RestaurantMenu />
                 </div>

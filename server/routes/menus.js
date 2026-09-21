@@ -1,7 +1,14 @@
 const express = require("express");
+
 const router = express.Router();
 
 const upload = require("../middleware/upload");
+
+const {
+  protect,
+  adminOnly,
+} = require("../middleware/authMiddleware");
+
 const {
   createMenu,
   getMenus,
@@ -10,19 +17,51 @@ const {
   deleteMenu,
 } = require("../controllers/menuController");
 
-// Get all menus
+// ==========================================
+// GET ALL MENUS
+// Public - customers can view menus
+// ==========================================
 router.get("/", getMenus);
 
-// Get menu by ID
+// ==========================================
+// GET MENU BY ID
+// Public - customers can view menu details
+// ==========================================
 router.get("/:id", getMenuById);
 
-// Create menu with image
-router.post("/", upload.single("image"), createMenu);
+// ==========================================
+// CREATE MENU
+// Admin only
+// ==========================================
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  createMenu
+);
 
-// Update menu with optional new image
-router.put("/:id", upload.single("image"), updateMenu);
+// ==========================================
+// UPDATE MENU
+// Admin only
+// ==========================================
+router.put(
+  "/:id",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  updateMenu
+);
 
-// Delete menu
-router.delete("/:id", deleteMenu);
+// ==========================================
+// DELETE MENU
+// Admin only
+// ==========================================
+router.delete(
+  "/:id",
+  protect,
+  adminOnly,
+  deleteMenu
+);
 
 module.exports = router;

@@ -30,6 +30,7 @@ import ResetPassword from './pages/ResetPassword';
 import AdminDashboard from './pages/admin/dashboard.js';
 import AcceptAdminInvite from './pages/AcceptAdminInvite';
 import PackageManagement from './pages/admin/PackageManagement';
+import MenuManagement from "./pages/admin/MenuManagement";
 
 // Customer
 import UserDashboard from './pages/Dashboard';
@@ -60,6 +61,7 @@ const AppContent = () => {
   location.pathname === "/admin/dashboard" ||
   location.pathname.startsWith("/admin/event-planners") ||
   location.pathname.startsWith("/support/dashboard")||
+   location.pathname.startsWith("/admin/menus") ||
    location.pathname.startsWith("/admin/packages")
   
 
@@ -161,6 +163,11 @@ const AppContent = () => {
 <Route
   path="/admin/packages"
   element={<PackageManagement />}
+/>
+
+<Route
+  path="/admin/menus"
+  element={<MenuManagement />}
 />
 
 

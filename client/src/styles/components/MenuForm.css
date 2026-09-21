@@ -1,0 +1,530 @@
+/* =========================================================
+   MENU FORM
+========================================================= */
+
+.menu-form {
+  width: 100%;
+  background: #ffffff;
+  color: #3f302d;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.menu-form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 28px 30px 22px;
+
+  border-bottom: 1px solid #f0e0dc;
+}
+
+.menu-form-label {
+  margin: 0 0 5px;
+
+  color: #df6873;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.menu-form-header h2 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 27px;
+  font-weight: 600;
+
+  color: #3f302d;
+}
+
+.menu-form-header p:last-child {
+  margin: 7px 0 0;
+
+  color: #8b7772;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.menu-form-close {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid #eadbd7;
+  border-radius: 8px;
+
+  background: #fffaf9;
+  color: #8b7772;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.menu-form-close:hover {
+  background: #fbe8e5;
+  color: #df6873;
+}
+
+.menu-form-close svg {
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.menu-form-error {
+  margin: 20px 30px 0;
+
+  padding: 12px 14px;
+
+  border: 1px solid #f2b8b8;
+  border-radius: 8px;
+
+  background: #fff0ef;
+  color: #b84d57;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.menu-form form {
+  padding: 0 30px 30px;
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.menu-form-section {
+  padding: 25px 0;
+
+  border-bottom: 1px solid #f3e7e4;
+}
+
+.menu-form-section:last-of-type {
+  border-bottom: none;
+}
+
+.menu-form-section h3 {
+  margin: 0 0 18px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: #4a3834;
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.menu-form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.menu-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.menu-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.menu-form-group label {
+  color: #5f4d48;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.menu-form-group label span {
+  color: #df6873;
+}
+
+.menu-form-group input,
+.menu-form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #eadbd7;
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #fffdfc;
+
+  color: #3f302d;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.menu-form-group input {
+  height: 44px;
+}
+
+.menu-form-group textarea {
+  resize: vertical;
+
+  min-height: 100px;
+
+  line-height: 1.5;
+}
+
+.menu-form-group input::placeholder,
+.menu-form-group textarea::placeholder {
+  color: #b7a7a2;
+}
+
+.menu-form-group input:focus,
+.menu-form-group textarea:focus {
+  border-color: #ed7b82;
+
+  box-shadow:
+    0 0 0 3px rgba(237, 123, 130, 0.1);
+
+  background: #ffffff;
+}
+
+.menu-form-group input:disabled,
+.menu-form-group textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.menu-form-group small {
+  color: #9a8882;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+.menu-image-upload {
+  width: 100%;
+}
+
+.menu-image-dropzone {
+  min-height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  border: 1.5px dashed #e7c8c4;
+  border-radius: 10px;
+
+  background: #fffaf9;
+
+  color: #8b7772;
+
+  cursor: pointer;
+
+  text-align: center;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.menu-image-dropzone:hover {
+  border-color: #ed7b82;
+  background: #fff6f4;
+}
+
+.menu-image-dropzone svg {
+  font-size: 38px;
+
+  color: #df6873;
+}
+
+.menu-image-dropzone strong {
+  color: #5a4742;
+
+  font-size: 14px;
+}
+
+.menu-image-dropzone span {
+  color: #a28f89;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.menu-image-preview {
+  position: relative;
+
+  width: 100%;
+  height: 230px;
+
+  overflow: hidden;
+
+  border: 1px solid #eadbd7;
+  border-radius: 10px;
+
+  background: #fffaf9;
+}
+
+.menu-image-preview img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.menu-remove-image {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(63, 48, 45, 0.75);
+  color: #ffffff;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.menu-remove-image:hover {
+  background: #df6873;
+}
+
+.menu-remove-image svg {
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   ACTIVE TOGGLE
+========================================================= */
+
+.menu-active-toggle {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #62514c;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.menu-active-toggle input {
+  width: 17px;
+  height: 17px;
+
+  accent-color: #ed7b82;
+
+  cursor: pointer;
+}
+
+.menu-active-toggle span {
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.menu-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10px;
+
+  padding-top: 24px;
+}
+
+.menu-form-cancel,
+.menu-form-submit {
+  min-height: 42px;
+
+  padding: 0 20px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.menu-form-cancel {
+  border: 1px solid #e4d3cf;
+
+  background: #ffffff;
+  color: #806d67;
+}
+
+.menu-form-cancel:hover {
+  background: #fff7f5;
+  border-color: #d8bcb7;
+}
+
+.menu-form-submit {
+  border: 1px solid #ed7b82;
+
+  background: #ed7b82;
+  color: #ffffff;
+}
+
+.menu-form-submit:hover {
+  background: #df6873;
+  border-color: #df6873;
+
+  transform: translateY(-1px);
+}
+
+.menu-form-cancel:disabled,
+.menu-form-submit:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .menu-form-header {
+    padding: 22px 20px 18px;
+  }
+
+  .menu-form form {
+    padding: 0 20px 24px;
+  }
+
+  .menu-form-error {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .menu-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-form-group.full-width {
+    grid-column: auto;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .menu-form-header h2 {
+    font-size: 23px;
+  }
+
+  .menu-form-header p:last-child {
+    font-size: 12px;
+  }
+
+  .menu-form-section {
+    padding: 20px 0;
+  }
+
+  .menu-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .menu-form-cancel,
+  .menu-form-submit {
+    width: 100%;
+  }
+
+}
