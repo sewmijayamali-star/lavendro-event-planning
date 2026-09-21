@@ -8,23 +8,69 @@ const {
   deletePackage,
 } = require("../controllers/packageController");
 
+const { protect, adminOnly } = require("../middleware/authMiddleware");
+
 const upload = require("../middleware/upload");
 
 const router = express.Router();
 
-// Create package
-router.post("/", upload.single("image"), createPackage);
 
-// Get all packages
-router.get("/", getPackages);
+// ==========================================
+// CREATE PACKAGE
+// POST /api/packages
+// ==========================================
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  createPackage
+);
 
-// Get one package
-router.get("/:id", getPackageById);
 
-// Update package
-router.put("/:id", upload.single("image"), updatePackage);
+// ==========================================
+// GET ALL PACKAGES
+// GET /api/packages
+// ==========================================
+router.get(
+  "/",
+  getPackages
+);
 
-// Delete package
-router.delete("/:id", deletePackage);
+
+// ==========================================
+// GET SINGLE PACKAGE
+// GET /api/packages/:id
+// ==========================================
+router.get(
+  "/:id",
+  getPackageById
+);
+
+
+// ==========================================
+// UPDATE PACKAGE
+// PUT /api/packages/:id
+// ==========================================
+router.put(
+  "/:id",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  updatePackage
+);
+
+
+// ==========================================
+// DELETE PACKAGE
+// DELETE /api/packages/:id
+// ==========================================
+router.delete(
+  "/:id",
+  protect,
+  adminOnly,
+  deletePackage
+);
+
 
 module.exports = router;

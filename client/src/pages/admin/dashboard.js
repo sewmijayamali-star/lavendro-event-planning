@@ -77,7 +77,7 @@ const AdminDashboard = () => {
             <span>Bookings</span>
           </a>
 
-          <a href="#packages" className="admin-nav-item">
+          <a href="/admin/packages" className="admin-nav-item">
             <Inventory2 />
             <span>Packages</span>
           </a>
@@ -505,14 +505,15 @@ const AdminDashboard = () => {
 
             <div className="quick-actions">
 
-              <button>
-                <div className="quick-icon">
-                  <Inventory2 />
-                </div>
+              <button
+  onClick={() => navigate("/admin/packages")}
+>
+  <div className="quick-icon">
+    <Inventory2 />
+  </div>
 
-                <span>Add Package</span>
-              </button>
-
+  <span>Add Package</span>
+</button>
 
               <button>
                 <div className="quick-icon">

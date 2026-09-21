@@ -6,7 +6,8 @@ const upload = require('../middleware/upload');
 
 const {
   getEventPlanners,
-  createEventPlanner
+  createEventPlanner,
+  deactivateEventPlanner
 } = require('../controllers/eventPlannerController');
 
 
@@ -26,6 +27,13 @@ router.post(
   adminOnly,
   upload.single('profilePhoto'),
   createEventPlanner
+);
+
+router.patch(
+  '/:id/deactivate',
+  protect,
+  adminOnly,
+  deactivateEventPlanner
 );
 
 

@@ -207,7 +207,89 @@ const createEventPlanner = async (req, res) => {
 };
 
 
+// ======================================================
+// DEACTIVATE EVENT PLANNER
+// ======================================================
+
+const deactivateEventPlanner = async (req, res) => {
+  try {
+
+    // Get planner ID from URL
+    const { id } = req.params;
+
+
+    // -----------------------------------------------
+    // 1. Find the Event Planner User
+    // -----------------------------------------------
+
+    const planner = await User.findOne({
+      _id: id,
+      role: 'event_planner'
+    });
+
+    if (!planner) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event planner not found.'
+      });
+    }
+
+
+    // -----------------------------------------------
+    // 2. Find Event Planner Profile
+    // -----------------------------------------------
+
+    const profile = await EventPlannerProfile.findOne({
+      user: planner._id
+    });
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event planner profile not found.'
+      });
+    }
+
+
+    // -----------------------------------------------
+    // 3. Deactivate Planner
+    // -----------------------------------------------
+
+    profile.isActive = false;
+
+    await profile.save();
+
+
+    // -----------------------------------------------
+    // 4. Return Success
+    // -----------------------------------------------
+
+    return res.status(200).json({
+      success: true,
+      message: 'Event planner deactivated successfully.'
+    });
+
+  } catch (error) {
+
+    console.error(
+      'Deactivate event planner error:',
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to deactivate event planner.'
+    });
+  }
+};
+
+
+// ======================================================
+// EXPORT CONTROLLERS
+// ======================================================
+
 module.exports = {
   getEventPlanners,
-  createEventPlanner
+  createEventPlanner,
+  deactivateEventPlanner
 };

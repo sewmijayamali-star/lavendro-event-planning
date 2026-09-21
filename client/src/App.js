@@ -29,6 +29,7 @@ import ResetPassword from './pages/ResetPassword';
 // Admin
 import AdminDashboard from './pages/admin/dashboard.js';
 import AcceptAdminInvite from './pages/AcceptAdminInvite';
+import PackageManagement from './pages/admin/PackageManagement';
 
 // Customer
 import UserDashboard from './pages/Dashboard';
@@ -58,7 +59,8 @@ const AppContent = () => {
  const hideNavbar =
   location.pathname === "/admin/dashboard" ||
   location.pathname.startsWith("/admin/event-planners") ||
-  location.pathname.startsWith("/support/dashboard");
+  location.pathname.startsWith("/support/dashboard")||
+   location.pathname.startsWith("/admin/packages")
   
 
   return (
@@ -154,6 +156,11 @@ const AppContent = () => {
 <Route
   path="/support/accept-invite/:token"
   element={<AcceptSupportInvite />}
+/>
+
+<Route
+  path="/admin/packages"
+  element={<PackageManagement />}
 />
 
 
