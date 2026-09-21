@@ -2,10 +2,10 @@
 
 
 /* =========================================
-   SERVICES PAGE
+   VENUE PAGE
 ========================================= */
 
-.services-page {
+.venue-page {
   font-family: 'Poppins', sans-serif;
 }
 
@@ -14,7 +14,7 @@
    HERO
 ========================================= */
 
-.services-hero {
+.venue-hero {
   font-family: 'Playfair Display', serif;
 
   background: linear-gradient(
@@ -40,7 +40,7 @@
   overflow: hidden;
 }
 
-.services-hero::before {
+.venue-hero::before {
   content: '';
 
   position: absolute;
@@ -57,13 +57,13 @@
   opacity: 0.15;
 }
 
-.services-hero-content {
+.venue-hero-content {
   position: relative;
 
   z-index: 1;
 }
 
-.services-hero h1 {
+.venue-hero h1 {
   font-size: 4rem;
 
   font-weight: 800;
@@ -76,7 +76,7 @@
     3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-.services-hero p {
+.venue-hero p {
   font-size: 1.6rem;
 
   color: var(--light-color);
@@ -86,10 +86,10 @@
 
 
 /* =========================================
-   PACKAGES SECTION
+   VENUE SECTION
 ========================================= */
 
-.packages-section {
+.venue-packages-section {
   padding: 100px 20px;
 
   max-width: 1400px;
@@ -99,10 +99,10 @@
 
 
 /* =========================================
-   PACKAGE GRID
+   VENUE GRID
 ========================================= */
 
-.packages-grid {
+.venue-packages-grid {
   display: grid;
 
   grid-template-columns:
@@ -115,10 +115,10 @@
 
 
 /* =========================================
-   PACKAGE CARD
+   VENUE CARD
 ========================================= */
 
-.service-package-card {
+.venue-package-card {
   position: relative;
 
   border-radius: 25px;
@@ -137,7 +137,7 @@
     all 0.4s ease;
 }
 
-.service-package-card:hover {
+.venue-package-card:hover {
   box-shadow:
     0 25px 70px
     rgba(240, 135, 135, 0.3);
@@ -145,10 +145,10 @@
 
 
 /* =========================================
-   PACKAGE IMAGE
+   IMAGE
 ========================================= */
 
-.service-package-image {
+.venue-package-image {
   width: 100%;
 
   height: 100%;
@@ -158,7 +158,7 @@
   overflow: hidden;
 }
 
-.service-package-image img {
+.venue-package-image img {
   width: 100%;
 
   height: 100%;
@@ -171,17 +171,17 @@
     transform 0.5s ease;
 }
 
-.service-package-card:hover
-.service-package-image img {
+.venue-package-card:hover
+.venue-package-image img {
   transform: scale(1.08);
 }
 
 
 /* =========================================
-   IMAGE OVERLAY
+   OVERLAY
 ========================================= */
 
-.service-package-overlay {
+.venue-package-overlay {
   position: absolute;
 
   top: 0;
@@ -213,42 +213,10 @@
 
 
 /* =========================================
-   CATEGORY
+   VENUE NAME
 ========================================= */
 
-.package-category {
-  display: inline-block;
-
-  margin-bottom: 15px;
-
-  padding: 7px 18px;
-
-  border-radius: 30px;
-
-  background:
-    rgba(255, 255, 255, 0.2);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.45);
-
-  backdrop-filter: blur(5px);
-
-  font-size: 0.8rem;
-
-  font-weight: 600;
-
-  text-transform: uppercase;
-
-  letter-spacing: 1px;
-}
-
-
-/* =========================================
-   PACKAGE NAME
-========================================= */
-
-.service-package-overlay h3 {
+.venue-package-overlay h3 {
   font-family:
     'Playfair Display',
     serif;
@@ -257,7 +225,7 @@
 
   color: var(--light-color);
 
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 
   font-weight: 800;
 
@@ -268,18 +236,20 @@
 
 
 /* =========================================
-   PACKAGE SUMMARY
+   VENUE SUMMARY
 ========================================= */
 
-.package-summary {
+.venue-summary {
   width: 100%;
 
-  max-width: 430px;
+  max-width: 470px;
 
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    1.3fr
+    1fr
+    1.2fr;
 
   gap: 10px;
 
@@ -296,7 +266,7 @@
     rgba(255, 255, 255, 0.4);
 }
 
-.package-summary-item {
+.venue-summary-item {
   display: flex;
 
   flex-direction: column;
@@ -304,9 +274,11 @@
   align-items: center;
 
   gap: 5px;
+
+  min-width: 0;
 }
 
-.package-summary-item span {
+.venue-summary-item span {
   font-size: 0.75rem;
 
   text-transform: uppercase;
@@ -316,20 +288,28 @@
   opacity: 0.85;
 }
 
-.package-summary-item strong {
-  font-size: 0.95rem;
+.venue-summary-item strong {
+  font-size: 0.9rem;
 
   font-weight: 600;
 
   color: var(--light-color);
+
+  max-width: 140px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 }
 
 
 /* =========================================
-   VIEW MORE BUTTON
+   VIEW MORE
 ========================================= */
 
-.btn-view-package {
+.btn-view-venue {
   padding: 14px 38px;
 
   background:
@@ -360,7 +340,7 @@
     rgba(0, 0, 0, 0.2);
 }
 
-.btn-view-package:hover {
+.btn-view-venue:hover {
   transform:
     translateY(-3px);
 
@@ -374,7 +354,7 @@
    NO IMAGE
 ========================================= */
 
-.package-no-image {
+.venue-no-image {
   width: 100%;
 
   height: 100%;
@@ -390,16 +370,14 @@
 
   color:
     var(--dark-color);
-
-  font-size: 1rem;
 }
 
 
 /* =========================================
-   LOADING / EMPTY
+   MESSAGE
 ========================================= */
 
-.packages-message {
+.venue-message {
   text-align: center;
 
   padding: 50px;
@@ -415,7 +393,7 @@
    MODAL OVERLAY
 ========================================= */
 
-.package-modal-overlay {
+.venue-modal-overlay {
   position: fixed;
 
   top: 0;
@@ -444,7 +422,7 @@
    MODAL
 ========================================= */
 
-.package-modal {
+.venue-modal {
   background:
     var(--light-color);
 
@@ -475,7 +453,7 @@
    MODAL IMAGE
 ========================================= */
 
-.package-modal-image {
+.venue-modal-image {
   min-height: 600px;
 
   height: 100%;
@@ -486,7 +464,7 @@
     var(--secondary-color);
 }
 
-.package-modal-image img {
+.venue-modal-image img {
   width: 100%;
 
   height: 100%;
@@ -501,37 +479,13 @@
    MODAL CONTENT
 ========================================= */
 
-.package-modal-content {
+.venue-modal-content {
   padding: 50px;
 
   overflow-y: auto;
 }
 
-.modal-package-category {
-  display: inline-block;
-
-  padding: 7px 15px;
-
-  border-radius: 30px;
-
-  background:
-    var(--secondary-color);
-
-  color:
-    var(--primary-color);
-
-  font-size: 0.8rem;
-
-  font-weight: 600;
-
-  text-transform: uppercase;
-
-  letter-spacing: 1px;
-
-  margin-bottom: 15px;
-}
-
-.package-modal-content h2 {
+.venue-modal-content h2 {
   font-family:
     'Playfair Display',
     serif;
@@ -548,13 +502,58 @@
   line-height: 1.25;
 }
 
-.modal-package-description {
-  font-size: 1rem;
 
-  line-height: 1.7;
+/* =========================================
+   LOCATION
+========================================= */
+
+.venue-location {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 15px 18px;
+
+  margin-bottom: 25px;
+
+  background:
+    var(--secondary-color);
+
+  border-radius: 12px;
+}
+
+.venue-location span {
+  font-size: 0.75rem;
+
+  text-transform: uppercase;
 
   color:
     var(--text-light);
+
+  letter-spacing: 0.6px;
+}
+
+.venue-location strong {
+  font-size: 1rem;
+
+  color:
+    var(--primary-color);
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.venue-description {
+  color:
+    var(--text-light);
+
+  font-size: 1rem;
+
+  line-height: 1.7;
 
   margin-bottom: 30px;
 }
@@ -564,19 +563,19 @@
    MODAL INFO
 ========================================= */
 
-.modal-package-info {
+.venue-modal-info {
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(2, 1fr);
 
   gap: 15px;
 
   margin-bottom: 35px;
 }
 
-.modal-info-item {
-  padding: 15px;
+.venue-info-item {
+  padding: 18px;
 
   background:
     var(--secondary-color);
@@ -586,7 +585,7 @@
   text-align: center;
 }
 
-.modal-info-item span {
+.venue-info-item span {
   display: block;
 
   font-size: 0.75rem;
@@ -599,7 +598,7 @@
   margin-bottom: 7px;
 }
 
-.modal-info-item strong {
+.venue-info-item strong {
   display: block;
 
   font-size: 1rem;
@@ -612,14 +611,14 @@
 
 
 /* =========================================
-   MODAL FEATURES
+   AMENITIES
 ========================================= */
 
-.modal-package-features {
+.venue-amenities {
   margin-bottom: 35px;
 }
 
-.modal-package-features h3 {
+.venue-amenities h3 {
   font-family:
     'Playfair Display',
     serif;
@@ -632,7 +631,7 @@
   margin-bottom: 20px;
 }
 
-.modal-package-features ul {
+.venue-amenities ul {
   list-style: none;
 
   padding: 0;
@@ -647,20 +646,20 @@
   gap: 12px 20px;
 }
 
-.modal-package-features li {
+.venue-amenities li {
+  display: flex;
+
+  gap: 10px;
+
   font-size: 0.95rem;
 
   color:
     var(--text-light);
 
-  display: flex;
-
-  gap: 10px;
-
   line-height: 1.5;
 }
 
-.modal-package-features li span {
+.venue-amenities li span {
   color:
     var(--primary-color);
 
@@ -671,10 +670,10 @@
 
 
 /* =========================================
-   BOOK PACKAGE BUTTON
+   BOOK BUTTON
 ========================================= */
 
-.btn-book-package {
+.btn-book-venue {
   display: block;
 
   width: 100%;
@@ -705,7 +704,7 @@
     rgba(240, 135, 135, 0.25);
 }
 
-.btn-book-package:hover {
+.btn-book-venue:hover {
   background:
     var(--secondary-color);
 
@@ -721,7 +720,7 @@
    CLOSE BUTTON
 ========================================= */
 
-.package-modal-close {
+.venue-modal-close {
   position: absolute;
 
   top: 20px;
@@ -760,7 +759,7 @@
     rgba(240, 135, 135, 0.3);
 }
 
-.package-modal-close:hover {
+.venue-modal-close:hover {
   transform:
     rotate(90deg);
 
@@ -776,7 +775,7 @@
    CTA
 ========================================= */
 
-.services-book-cta {
+.venue-book-cta {
   padding: 100px 20px;
 
   background:
@@ -789,7 +788,7 @@
   text-align: center;
 }
 
-.services-cta-content h2 {
+.venue-cta-content h2 {
   font-family:
     'Playfair Display',
     serif;
@@ -804,7 +803,7 @@
   font-weight: 800;
 }
 
-.services-cta-content p {
+.venue-cta-content p {
   font-size: 1.3rem;
 
   color:
@@ -820,23 +819,23 @@
 
 @media screen and (max-width: 900px) {
 
-  .service-package-card {
+  .venue-package-card {
     height: 480px;
   }
 
-  .package-modal {
+  .venue-modal {
     grid-template-columns: 1fr;
 
     max-width: 700px;
   }
 
-  .package-modal-image {
+  .venue-modal-image {
     min-height: 300px;
 
     height: 300px;
   }
 
-  .package-modal-content {
+  .venue-modal-content {
     padding: 35px;
   }
 }
@@ -844,67 +843,61 @@
 
 @media screen and (max-width: 768px) {
 
-  .services-hero h1 {
+  .venue-hero h1 {
     font-size: 2.5rem;
   }
 
-  .services-hero p {
+  .venue-hero p {
     font-size: 1.2rem;
   }
 
-  .packages-grid {
+  .venue-packages-grid {
     grid-template-columns: 1fr;
   }
 
-  .service-package-card {
+  .venue-package-card {
     height: 480px;
   }
 
-  .service-package-overlay h3 {
+  .venue-package-overlay h3 {
     font-size: 2rem;
   }
 
-  .package-summary {
-    max-width: 380px;
-  }
-
-  .package-modal {
+  .venue-modal {
     max-height: 92vh;
-
-    border-radius: 20px;
   }
 
-  .package-modal-image {
+  .venue-modal-image {
     min-height: 250px;
 
     height: 250px;
   }
 
-  .package-modal-content {
+  .venue-modal-content {
     padding: 30px 25px;
   }
 
-  .package-modal-content h2 {
+  .venue-modal-content h2 {
     font-size: 2rem;
   }
 
-  .modal-package-info {
+  .venue-modal-info {
     grid-template-columns: 1fr;
   }
 
-  .modal-package-features ul {
+  .venue-amenities ul {
     grid-template-columns: 1fr;
   }
 
-  .services-book-cta {
+  .venue-book-cta {
     padding: 70px 20px;
   }
 
-  .services-cta-content h2 {
+  .venue-cta-content h2 {
     font-size: 2.3rem;
   }
 
-  .services-cta-content p {
+  .venue-cta-content p {
     font-size: 1.1rem;
   }
 }
@@ -912,44 +905,44 @@
 
 @media screen and (max-width: 500px) {
 
-  .packages-section {
+  .venue-packages-section {
     padding: 70px 20px;
   }
 
-  .packages-grid {
+  .venue-packages-grid {
     grid-template-columns: 1fr;
 
     gap: 25px;
   }
 
-  .service-package-card {
+  .venue-package-card {
     height: 450px;
   }
 
-  .service-package-overlay {
+  .venue-package-overlay {
     padding: 30px 20px;
   }
 
-  .service-package-overlay h3 {
+  .venue-package-overlay h3 {
     font-size: 1.8rem;
   }
 
-  .package-summary {
+  .venue-summary {
     grid-template-columns:
       repeat(3, 1fr);
 
     padding: 15px 5px;
   }
 
-  .package-summary-item span {
+  .venue-summary-item span {
     font-size: 0.65rem;
   }
 
-  .package-summary-item strong {
-    font-size: 0.8rem;
+  .venue-summary-item strong {
+    font-size: 0.75rem;
   }
 
-  .btn-view-package {
+  .btn-view-venue {
     padding: 12px 30px;
 
     font-size: 0.9rem;

@@ -10,29 +10,29 @@ const About = () => {
     { 
       name: 'Sewmini Samarasinghe', 
       role: 'Founder & CEO',
-      image: '/images/team/Sewmini.jpg',
+      image: '/images/team/img3.jpg',
       
     },
     { 
-      name: 'Shanoli Dhanushri', 
+      name: 'Adhil Rashid', 
       role: 'Creative Director',
-      image: '/images/team/Shanoli.jpg',
+      image: '/images/team/img1.jpg',
     },
     { 
-      name: 'Vishmi Vinodhya', 
+      name: 'Shaurya Perera', 
       role: 'Event Coordinator',
-      image: '/images/team/Vishmi.jpg',
+      image: '/images/team/img2.jpg',
     },
     { 
-      name: 'Rangana Prasad', 
+      name: 'Sahilya Randenigala', 
       role: 'Venue Specialist',
-      image: '/images/team/Rangana.jpg',
+      image: '/images/team/img4.jpg',
     },
     { 
-      name: 'Hashini Imasha', 
+      name: 'Aryan Wijesinghe', 
       role: 'Catering Manager',
 
-      image: '/images/team/Hashini.jpg',
+      image: '/images/team/img5.jpg',
     }
   ];
 

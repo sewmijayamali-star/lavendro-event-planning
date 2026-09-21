@@ -1,182 +1,515 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Close } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import '../styles/Venues.css';
+import '../styles/Venue.css';
 
-const Venues = () => {
-  const indoorVenues = [
-    {
-  name: 'Grand Ballroom',
-  capacity: '500 guests',
-  description: 'Elegant ballroom with crystal chandeliers and premium sound system',
-  image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800'
-},
-    {
-      name: 'Luxury Banquet Hall',
-      capacity: '300 guests',
-      description: 'Modern venue with state-of-the-art lighting and audio equipment',
-      image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800'
-    },
-    {
-      name: 'Classic Conference Center',
-      capacity: '200 guests',
-      description: 'Perfect for corporate events and professional gatherings',
-      image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800'
-    },
-    {
-      name: 'Intimate Function Room',
-      capacity: '100 guests',
-      description: 'Cozy space ideal for private celebrations and small gatherings',
-      image: 'https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=800'
-    },
-    {
-      name: 'Royal Heritage Hall',
-      capacity: '600 guests',
-      description: 'Majestic colonial architecture with vintage charm and grand staircase',
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800'
-    },
-    {
-      name: 'Contemporary Studio Space',
-      capacity: '150 guests',
-      description: 'Minimalist industrial design perfect for modern celebrations and art exhibitions',
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800'
-    }
-  ];
+const Venue = () => {
+  const [selectedVenue, setSelectedVenue] = useState(null);
+  const [venues, setVenues] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const outdoorVenues = [
-    {
-      name: 'Garden Paradise',
-      capacity: '400 guests',
-      description: 'Beautiful garden setting with natural landscape and fountain',
-      image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800'
-    },
-    {
-      name: 'Beachfront Venue',
-      capacity: '350 guests',
-      description: 'Stunning ocean views with sunset ceremony options',
-      image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800'
-    },
-    {
-      name: 'Rooftop Terrace',
-      capacity: '250 guests',
-      description: 'Panoramic city views with modern outdoor amenities',
-      image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800'
-    },
-    {
-      name: 'Vineyard Estate',
-      capacity: '300 guests',
-      description: 'Rustic charm with rolling hills and wine country ambiance',
-      image: 'https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800'
-    },
-    {
-      name: 'Lakeside Pavilion',
-      capacity: '450 guests',
-      description: 'Serene waterfront location with covered pavilion and scenic lake views',
-      image: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800'
-    },
-    {
-      name: 'Mountain Resort Deck',
-      capacity: '200 guests',
-      description: 'Elevated wooden deck surrounded by lush mountains and natural beauty',
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800'
+  useEffect(() => {
+    fetchVenues();
+  }, []);
+
+  const fetchVenues = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/venues`
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch venues');
+      }
+
+      const data = await response.json();
+
+      console.log('Venues API response:', data);
+
+      /*
+        Backend response:
+
+        {
+          success: true,
+          count: ...,
+          venues: [...]
+        }
+      */
+
+      const venueList = Array.isArray(data.venues)
+        ? data.venues
+        : [];
+
+      // Only show active venues to customers
+      const activeVenues = venueList.filter(
+        (venue) => venue.isActive !== false
+      );
+
+      setVenues(activeVenues);
+    } catch (error) {
+      console.error('Error fetching venues:', error);
+      setVenues([]);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   return (
-    <div className="venues-page">
+    <div className="venue-page">
       <Navbar />
-      
-      
-      <section className="venues-hero">
-        <motion.div 
-          className="venues-hero-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+
+      {/* ================= HERO ================= */}
+
+      <section className="venue-hero">
+        <motion.div
+          className="venue-hero-content"
+          initial={{
+            opacity: 0,
+            y: 30
+          }}
+          animate={{
+            opacity: 1,
+            y: 0
+          }}
+          transition={{
+            duration: 0.8
+          }}
         >
-          <h1>Our Stunning Venues</h1>
-          <p>Perfect spaces for your perfect moments</p>
+          <h1>Our Event Venues</h1>
+
+          <p>
+            Beautiful spaces designed for your unforgettable moments
+          </p>
         </motion.div>
       </section>
 
-      <section className="venues-section">
-        <h2 className="section-title">Indoor Venues</h2>
-        <p className="section-subtitle">Elegant indoor spaces with modern amenities</p>
-        
-        <div className="venues-grid">
-          {indoorVenues.map((venue, index) => (
-            <motion.div 
-              key={index}
-              className="venue-card"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-            >
-              <div className="venue-image">
-                <img src={venue.image} alt={venue.name} />
-                <div className="venue-overlay">
-                  <div className="venue-capacity">{venue.capacity}</div>
+      {/* ================= VENUES SECTION ================= */}
+
+      <section className="venue-packages-section">
+
+        <h2 className="section-title">
+          Find Your Perfect Venue
+        </h2>
+
+        <p className="section-subtitle">
+          Explore our carefully selected event spaces
+        </p>
+
+        {/* Loading */}
+
+        {loading ? (
+          <div className="venue-message">
+            <p>Loading venues...</p>
+          </div>
+
+        ) : venues.length === 0 ? (
+
+          /* Empty */
+
+          <div className="venue-message">
+            <p>
+              No venues available at the moment.
+            </p>
+          </div>
+
+        ) : (
+
+          /* Venue Cards */
+
+          <div className="venue-packages-grid">
+
+            {venues.map((venue, index) => (
+
+              <motion.div
+                key={venue._id}
+                className="venue-package-card"
+
+                initial={{
+                  opacity: 0,
+                  scale: 0.9
+                }}
+
+                whileInView={{
+                  opacity: 1,
+                  scale: 1
+                }}
+
+                transition={{
+                  delay: index * 0.15,
+                  duration: 0.6
+                }}
+
+                viewport={{
+                  once: true
+                }}
+              >
+
+                {/* IMAGE */}
+
+                <div className="venue-package-image">
+
+                  {venue.image ? (
+                    <img
+                      src={venue.image}
+                      alt={venue.name}
+                    />
+                  ) : (
+                    <div className="venue-no-image">
+                      No Image Available
+                    </div>
+                  )}
+
+                  {/* OVERLAY */}
+
+                  <div className="venue-package-overlay">
+
+                    <h3>
+                      {venue.name}
+                    </h3>
+
+                    {/* BASIC INFORMATION */}
+
+                    <div className="venue-summary">
+
+                      <div className="venue-summary-item">
+
+                        <span>
+                          Location
+                        </span>
+
+                        <strong>
+                          {venue.location || '—'}
+                        </strong>
+
+                      </div>
+
+                      <div className="venue-summary-item">
+
+                        <span>
+                          Capacity
+                        </span>
+
+                        <strong>
+                          {venue.capacity || '—'}
+                        </strong>
+
+                      </div>
+
+                      <div className="venue-summary-item">
+
+                        <span>
+                          Price / Day
+                        </span>
+
+                        <strong>
+                          LKR{' '}
+                          {Number(
+                            venue.pricePerDay || 0
+                          ).toLocaleString()}
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+                    {/* VIEW MORE */}
+
+                    <button
+                      type="button"
+                      className="btn-view-venue"
+
+                      onClick={() =>
+                        setSelectedVenue(venue)
+                      }
+                    >
+                      View More
+                    </button>
+
+                  </div>
+
                 </div>
-              </div>
-              <div className="venue-content">
-                <h3>{venue.name}</h3>
-                <p>{venue.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+        )}
+
       </section>
 
-      <section className="venues-section outdoor-section">
-        <h2 className="section-title">Outdoor Venues</h2>
-        <p className="section-subtitle">Breathtaking outdoor locations for memorable events</p>
-        
-        <div className="venues-grid">
-          {outdoorVenues.map((venue, index) => (
-            <motion.div 
-              key={index}
-              className="venue-card"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
+      {/* ================= VENUE DETAILS MODAL ================= */}
+
+      <AnimatePresence>
+
+        {selectedVenue && (
+
+          <motion.div
+            className="venue-modal-overlay"
+
+            initial={{
+              opacity: 0
+            }}
+
+            animate={{
+              opacity: 1
+            }}
+
+            exit={{
+              opacity: 0
+            }}
+
+            onClick={() =>
+              setSelectedVenue(null)
+            }
+          >
+
+            <motion.div
+              className="venue-modal"
+
+              initial={{
+                scale: 0.8,
+                opacity: 0
+              }}
+
+              animate={{
+                scale: 1,
+                opacity: 1
+              }}
+
+              exit={{
+                scale: 0.8,
+                opacity: 0
+              }}
+
+              transition={{
+                duration: 0.3
+              }}
+
+              onClick={(e) =>
+                e.stopPropagation()
+              }
             >
-              <div className="venue-image">
-                <img src={venue.image} alt={venue.name} />
-                <div className="venue-overlay">
-                  <div className="venue-capacity">{venue.capacity}</div>
+
+              {/* CLOSE */}
+
+              <button
+                className="venue-modal-close"
+
+                onClick={() =>
+                  setSelectedVenue(null)
+                }
+
+                aria-label="Close venue details"
+              >
+                <Close />
+              </button>
+
+              {/* IMAGE */}
+
+              <div className="venue-modal-image">
+
+                {selectedVenue.image ? (
+                  <img
+                    src={selectedVenue.image}
+                    alt={selectedVenue.name}
+                  />
+                ) : (
+                  <div className="venue-no-image">
+                    No Image Available
+                  </div>
+                )}
+
+              </div>
+
+              {/* CONTENT */}
+
+              <div className="venue-modal-content">
+
+                <h2>
+                  {selectedVenue.name}
+                </h2>
+
+                {/* LOCATION */}
+
+                <div className="venue-location">
+
+                  <span>
+                    Location
+                  </span>
+
+                  <strong>
+                    {selectedVenue.location ||
+                      'Location not specified'}
+                  </strong>
+
                 </div>
+
+                {/* DESCRIPTION */}
+
+                {selectedVenue.description && (
+                  <p className="venue-description">
+                    {selectedVenue.description}
+                  </p>
+                )}
+
+                {/* INFORMATION */}
+
+                <div className="venue-modal-info">
+
+                  <div className="venue-info-item">
+
+                    <span>
+                      Capacity
+                    </span>
+
+                    <strong>
+                      {selectedVenue.capacity
+                        ? `${selectedVenue.capacity} Guests`
+                        : '—'}
+                    </strong>
+
+                  </div>
+
+                  <div className="venue-info-item">
+
+                    <span>
+                      Price Per Day
+                    </span>
+
+                    <strong>
+                      LKR{' '}
+                      {Number(
+                        selectedVenue.pricePerDay || 0
+                      ).toLocaleString()}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+                {/* AMENITIES */}
+
+                <div className="venue-amenities">
+
+                  <h3>
+                    Venue Amenities
+                  </h3>
+
+                  {Array.isArray(
+                    selectedVenue.amenities
+                  ) &&
+                  selectedVenue.amenities.length > 0 ? (
+
+                    <ul>
+
+                      {selectedVenue.amenities.map(
+                        (amenity, index) => (
+
+                          <li key={index}>
+
+                            <span>
+                              ✓
+                            </span>
+
+                            {amenity}
+
+                          </li>
+
+                        )
+                      )}
+
+                    </ul>
+
+                  ) : (
+
+                    <p>
+                      Venue amenities are
+                      available upon request.
+                    </p>
+
+                  )}
+
+                </div>
+
+                {/* BOOK BUTTON */}
+
+                <Link
+                  to="/contact"
+                  className="btn-book-venue"
+
+                  onClick={() =>
+                    setSelectedVenue(null)
+                  }
+                >
+                  Book This Venue
+                </Link>
+
               </div>
-              <div className="venue-content">
-                <h3>{venue.name}</h3>
-                <p>{venue.description}</p>
-              </div>
+
             </motion.div>
-          ))}
-        </div>
-      </section>
+
+          </motion.div>
+
+        )}
+
+      </AnimatePresence>
+
+      {/* ================= CTA ================= */}
 
       <section className="venue-book-cta">
-        <motion.div 
+
+        <motion.div
           className="venue-cta-content"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+
+          initial={{
+            opacity: 0,
+            scale: 0.9
+          }}
+
+          whileInView={{
+            opacity: 1,
+            scale: 1
+          }}
+
+          transition={{
+            duration: 0.8
+          }}
+
+          viewport={{
+            once: true
+          }}
         >
-          <h2>Book Your Perfect Venue</h2>
-          <p>Contact us to schedule a site visit and reserve your date</p>
-          <Link to="/contact" className="btn btn-large">Contact Us</Link>
+
+          <h2>
+            Ready to Choose Your Venue?
+          </h2>
+
+          <p>
+            Let us help you find the perfect
+            space for your special event
+          </p>
+
+          <Link
+            to="/contact"
+            className="btn btn-large"
+          >
+            Contact Us
+          </Link>
+
         </motion.div>
+
       </section>
+
       <Footer />
+
     </div>
   );
 };
 
-export default Venues;
+export default Venue;
