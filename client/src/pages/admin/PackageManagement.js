@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PackageForm from "../../components/PackageForm";
 
 import {
   Inventory2,
@@ -19,6 +20,12 @@ const PackageManagement = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editingPackage, setEditingPackage] = useState(null);
+
+  // ==========================================
+  // CHECK ADMIN AUTHENTICATION
+  // ==========================================
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
@@ -37,11 +44,17 @@ const PackageManagement = () => {
       }
     } catch (error) {
       console.error("User data error:", error);
+
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
+
       navigate("/login");
     }
   }, [navigate]);
 
+  // ==========================================
+  // GET ALL PACKAGES
+  // ==========================================
   const fetchPackages = async () => {
     try {
       setLoading(true);
@@ -64,14 +77,85 @@ const PackageManagement = () => {
     }
   };
 
+  // ==========================================
+  // LOAD PACKAGES
+  // ==========================================
   useEffect(() => {
     fetchPackages();
   }, []);
 
+  // ==========================================
+  // ADD PACKAGE SUCCESS
+  // ==========================================
+  const handleAddPackageSuccess = async () => {
+    setShowAddModal(false);
+    await fetchPackages();
+  };
+
+  // ==========================================
+  // OPEN EDIT PACKAGE
+  // ==========================================
+  const handleEditPackage = (packageItem) => {
+    setError("");
+    setEditingPackage(packageItem);
+  };
+
+  // ==========================================
+  // EDIT PACKAGE SUCCESS
+  // ==========================================
+  const handleEditPackageSuccess = async () => {
+    setEditingPackage(null);
+    await fetchPackages();
+  };
+
+  // ==========================================
+  // DELETE PACKAGE
+  // ==========================================
+  const handleDeletePackage = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this package?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setError("");
+
+      const token = localStorage.getItem("token");
+
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/packages/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      await fetchPackages();
+    } catch (error) {
+      console.error("Delete package error:", error);
+
+      setError(
+        error.response?.data?.message ||
+          "Failed to delete package."
+      );
+    }
+  };
+
+  // ==========================================
+  // CLOSE EDIT MODAL
+  // ==========================================
+  const handleCloseEditModal = () => {
+    setEditingPackage(null);
+  };
+
   return (
     <div className="package-management-page">
 
-      {/* ================= HEADER ================= */}
+      {/* =========================================
+          PAGE HEADER
+      ========================================= */}
 
       <div className="package-page-header">
 
@@ -95,10 +179,14 @@ const PackageManagement = () => {
 
         </div>
 
+        {/* ADD PACKAGE BUTTON */}
+
         <button
+          type="button"
           className="package-add-button"
           onClick={() => {
-            // We will add the form next
+            setError("");
+            setShowAddModal(true);
           }}
         >
           <Add />
@@ -107,8 +195,9 @@ const PackageManagement = () => {
 
       </div>
 
-
-      {/* ================= ERROR ================= */}
+      {/* =========================================
+          ERROR MESSAGE
+      ========================================= */}
 
       {error && (
         <div className="package-error-message">
@@ -116,8 +205,9 @@ const PackageManagement = () => {
         </div>
       )}
 
-
-      {/* ================= TOOLBAR ================= */}
+      {/* =========================================
+          TOOLBAR
+      ========================================= */}
 
       <div className="package-toolbar">
 
@@ -133,24 +223,37 @@ const PackageManagement = () => {
         </div>
 
         <div className="package-count">
-          {packages.length} Packages
+          {packages.length}{" "}
+          {packages.length === 1
+            ? "Package"
+            : "Packages"}
         </div>
 
       </div>
 
-
-      {/* ================= CONTENT ================= */}
+      {/* =========================================
+          PACKAGE CONTENT
+      ========================================= */}
 
       <div className="package-management-card">
 
         {loading ? (
 
+          /* LOADING */
+
           <div className="package-loading">
+
             <div className="package-spinner"></div>
-            <p>Loading packages...</p>
+
+            <p>
+              Loading packages...
+            </p>
+
           </div>
 
         ) : packages.length === 0 ? (
+
+          /* EMPTY STATE */
 
           <div className="package-empty">
 
@@ -158,16 +261,21 @@ const PackageManagement = () => {
               <Inventory2 />
             </div>
 
-            <h2>No Packages Yet</h2>
+            <h2>
+              No Packages Yet
+            </h2>
 
             <p>
-              Add your first event package to the Lavendro system.
+              Add your first event package to the
+              Lavendro system.
             </p>
 
             <button
+              type="button"
               className="package-empty-button"
               onClick={() => {
-                // We will add the form next
+                setError("");
+                setShowAddModal(true);
               }}
             >
               <Add />
@@ -178,12 +286,16 @@ const PackageManagement = () => {
 
         ) : (
 
+          /* PACKAGE TABLE */
+
           <div className="package-table-wrapper">
 
             <table className="package-table">
 
               <thead>
+
                 <tr>
+
                   <th>PACKAGE</th>
                   <th>CATEGORY</th>
                   <th>PRICE</th>
@@ -191,7 +303,9 @@ const PackageManagement = () => {
                   <th>GUESTS</th>
                   <th>STATUS</th>
                   <th>ACTIONS</th>
+
                 </tr>
+
               </thead>
 
               <tbody>
@@ -200,23 +314,30 @@ const PackageManagement = () => {
 
                   <tr key={packageItem._id}>
 
+                    {/* PACKAGE */}
+
                     <td>
 
                       <div className="package-name-cell">
 
                         {packageItem.image ? (
+
                           <img
                             src={packageItem.image}
                             alt={packageItem.name}
                             className="package-image"
                           />
+
                         ) : (
+
                           <div className="package-image-placeholder">
                             <Inventory2 />
                           </div>
+
                         )}
 
                         <div>
+
                           <strong>
                             {packageItem.name}
                           </strong>
@@ -224,28 +345,41 @@ const PackageManagement = () => {
                           <span>
                             {packageItem.description}
                           </span>
+
                         </div>
 
                       </div>
 
                     </td>
 
+                    {/* CATEGORY */}
+
                     <td>
                       {packageItem.category}
                     </td>
 
+                    {/* PRICE */}
+
                     <td>
                       Rs.{" "}
-                      {Number(packageItem.price).toLocaleString()}
+                      {Number(
+                        packageItem.price
+                      ).toLocaleString()}
                     </td>
+
+                    {/* DURATION */}
 
                     <td>
                       {packageItem.duration}
                     </td>
 
+                    {/* GUESTS */}
+
                     <td>
                       {packageItem.guests}
                     </td>
+
+                    {/* STATUS */}
 
                     <td>
 
@@ -256,31 +390,47 @@ const PackageManagement = () => {
                             : "package-status inactive"
                         }
                       >
+
                         <span className="package-status-dot"></span>
 
                         {packageItem.isActive
                           ? "Active"
                           : "Inactive"}
+
                       </span>
 
                     </td>
+
+                    {/* ACTIONS */}
 
                     <td>
 
                       <div className="package-actions">
 
+                        {/* EDIT */}
+
                         <button
                           type="button"
                           className="package-edit-button"
                           title="Edit package"
+                          onClick={() =>
+                            handleEditPackage(packageItem)
+                          }
                         >
                           <Edit />
                         </button>
+
+                        {/* DELETE */}
 
                         <button
                           type="button"
                           className="package-delete-button"
                           title="Delete package"
+                          onClick={() =>
+                            handleDeletePackage(
+                              packageItem._id
+                            )
+                          }
                         >
                           <Delete />
                         </button>
@@ -302,6 +452,51 @@ const PackageManagement = () => {
         )}
 
       </div>
+
+      {/* =========================================
+          ADD PACKAGE MODAL
+      ========================================= */}
+
+      {showAddModal && (
+
+        <div className="package-modal-overlay">
+
+          <div className="package-modal">
+
+            <PackageForm
+              onSuccess={handleAddPackageSuccess}
+              onCancel={() =>
+                setShowAddModal(false)
+              }
+            />
+
+          </div>
+
+        </div>
+
+      )}
+
+      {/* =========================================
+          EDIT PACKAGE MODAL
+      ========================================= */}
+
+      {editingPackage && (
+
+        <div className="package-modal-overlay">
+
+          <div className="package-modal">
+
+            <PackageForm
+              packageData={editingPackage}
+              onSuccess={handleEditPackageSuccess}
+              onCancel={handleCloseEditModal}
+            />
+
+          </div>
+
+        </div>
+
+      )}
 
     </div>
   );

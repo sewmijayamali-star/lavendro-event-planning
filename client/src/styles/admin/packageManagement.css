@@ -814,3 +814,42 @@
     font-size: 11px;
   }
 }
+
+/* =========================================
+   PACKAGE MODAL
+========================================= */
+
+.package-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background: rgba(48, 36, 33, 0.48);
+
+  overflow-y: auto;
+}
+
+.package-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 760px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 20px 60px rgba(50, 35, 30, 0.2);
+}
