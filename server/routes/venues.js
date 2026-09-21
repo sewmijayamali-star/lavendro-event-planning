@@ -5,6 +5,11 @@ const router = express.Router();
 const upload = require("../middleware/upload");
 
 const {
+  protect,
+  adminOnly,
+} = require("../middleware/authMiddleware");
+
+const {
   createVenue,
   getVenues,
   getVenueById,
@@ -12,19 +17,51 @@ const {
   deleteVenue,
 } = require("../controllers/venueController");
 
-// Get all venues
+// ==========================================
+// GET ALL VENUES
+// Public
+// ==========================================
 router.get("/", getVenues);
 
-// Get venue by ID
+// ==========================================
+// GET VENUE BY ID
+// Public
+// ==========================================
 router.get("/:id", getVenueById);
 
-// Create venue with image
-router.post("/", upload.single("image"), createVenue);
+// ==========================================
+// CREATE VENUE
+// Admin only
+// ==========================================
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  createVenue
+);
 
-// Update venue with optional new image
-router.put("/:id", upload.single("image"), updateVenue);
+// ==========================================
+// UPDATE VENUE
+// Admin only
+// ==========================================
+router.put(
+  "/:id",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  updateVenue
+);
 
-// Delete venue
-router.delete("/:id", deleteVenue);
+// ==========================================
+// DELETE VENUE
+// Admin only
+// ==========================================
+router.delete(
+  "/:id",
+  protect,
+  adminOnly,
+  deleteVenue
+);
 
 module.exports = router;

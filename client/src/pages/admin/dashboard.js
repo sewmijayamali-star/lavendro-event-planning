@@ -524,7 +524,7 @@ const AdminDashboard = () => {
               </button>
 
 
-              <button>
+              <button onClick={() => navigate("/admin/venues")}>
                 <div className="quick-icon">
                   <LocationOn />
                 </div>

@@ -31,6 +31,8 @@ import AdminDashboard from './pages/admin/dashboard.js';
 import AcceptAdminInvite from './pages/AcceptAdminInvite';
 import PackageManagement from './pages/admin/PackageManagement';
 import MenuManagement from "./pages/admin/MenuManagement";
+import VenueManagement from "./pages/admin/VenueManagement";
+
 
 // Customer
 import UserDashboard from './pages/Dashboard';
@@ -62,6 +64,7 @@ const AppContent = () => {
   location.pathname.startsWith("/admin/event-planners") ||
   location.pathname.startsWith("/support/dashboard")||
    location.pathname.startsWith("/admin/menus") ||
+   location.pathname.startsWith("/admin/venues") ||
    location.pathname.startsWith("/admin/packages")
   
 
@@ -169,6 +172,11 @@ const AppContent = () => {
   path="/admin/menus"
   element={<MenuManagement />}
 />
+<Route
+  path="/admin/venues"
+  element={<VenueManagement />}
+/>
+
 
 
         {/* =====================================

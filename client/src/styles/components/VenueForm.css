@@ -1,0 +1,506 @@
+/* =========================================================
+   VENUE FORM
+========================================================= */
+
+.venue-form {
+  width: 100%;
+
+  background: #ffffff;
+  color: #3f302d;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.venue-form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 28px 30px 22px;
+
+  border-bottom: 1px solid #f0e0dc;
+}
+
+.venue-form-label {
+  margin: 0 0 5px;
+
+  color: #df6873;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.venue-form-header h2 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 27px;
+  font-weight: 600;
+
+  color: #3f302d;
+}
+
+.venue-form-header p:last-child {
+  margin: 7px 0 0;
+
+  color: #8b7772;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.venue-form-close {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid #eadbd7;
+  border-radius: 8px;
+
+  background: #fffaf9;
+  color: #8b7772;
+
+  cursor: pointer;
+}
+
+.venue-form-close:hover {
+  background: #fbe8e5;
+  color: #df6873;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.venue-form-error {
+  margin: 20px 30px 0;
+
+  padding: 12px 14px;
+
+  border: 1px solid #f2b8b8;
+  border-radius: 8px;
+
+  background: #fff0ef;
+  color: #b84d57;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.venue-form form {
+  padding: 0 30px 30px;
+}
+
+.venue-form-section {
+  padding: 25px 0;
+
+  border-bottom: 1px solid #f3e7e4;
+}
+
+.venue-form-section:last-of-type {
+  border-bottom: none;
+}
+
+.venue-form-section h3 {
+  margin: 0 0 18px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: #4a3834;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.venue-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   GROUP
+========================================================= */
+
+.venue-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.venue-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.venue-form-group label {
+  color: #5f4d48;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.venue-form-group label span {
+  color: #df6873;
+}
+
+.venue-form-group input,
+.venue-form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid #eadbd7;
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #fffdfc;
+
+  color: #3f302d;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.venue-form-group input {
+  height: 44px;
+}
+
+.venue-form-group textarea {
+  min-height: 100px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+.venue-form-group input::placeholder,
+.venue-form-group textarea::placeholder {
+  color: #b7a7a2;
+}
+
+.venue-form-group input:focus,
+.venue-form-group textarea:focus {
+  border-color: #ed7b82;
+
+  box-shadow:
+    0 0 0 3px rgba(237, 123, 130, 0.1);
+
+  background: #ffffff;
+}
+
+.venue-form-group small {
+  color: #9a8882;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   LOCATION INPUT
+========================================================= */
+
+.venue-location-input {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+.venue-location-input svg {
+  position: absolute;
+
+  left: 13px;
+
+  color: #df6873;
+
+  font-size: 20px;
+
+  pointer-events: none;
+}
+
+.venue-location-input input {
+  padding-left: 42px;
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+.venue-image-upload {
+  width: 100%;
+}
+
+.venue-image-dropzone {
+  min-height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  border: 1.5px dashed #e7c8c4;
+  border-radius: 10px;
+
+  background: #fffaf9;
+
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.venue-image-dropzone:hover {
+  border-color: #ed7b82;
+  background: #fff6f4;
+}
+
+.venue-image-dropzone svg {
+  color: #df6873;
+
+  font-size: 38px;
+}
+
+.venue-image-dropzone strong {
+  color: #5a4742;
+
+  font-size: 14px;
+}
+
+.venue-image-dropzone span {
+  color: #a28f89;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.venue-image-preview {
+  position: relative;
+
+  width: 100%;
+  height: 230px;
+
+  overflow: hidden;
+
+  border: 1px solid #eadbd7;
+  border-radius: 10px;
+
+  background: #fffaf9;
+}
+
+.venue-image-preview img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.venue-remove-image {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(63, 48, 45, 0.75);
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+.venue-remove-image:hover {
+  background: #df6873;
+}
+
+
+/* =========================================================
+   ACTIVE STATUS
+========================================================= */
+
+.venue-active-toggle {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #62514c;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.venue-active-toggle input {
+  width: 17px;
+  height: 17px;
+
+  accent-color: #ed7b82;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.venue-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 24px;
+}
+
+.venue-form-cancel,
+.venue-form-submit {
+  min-height: 42px;
+
+  padding: 0 20px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.venue-form-cancel {
+  border: 1px solid #e4d3cf;
+
+  background: #ffffff;
+  color: #806d67;
+}
+
+.venue-form-cancel:hover {
+  background: #fff7f5;
+}
+
+.venue-form-submit {
+  border: 1px solid #ed7b82;
+
+  background: #ed7b82;
+  color: #ffffff;
+}
+
+.venue-form-submit:hover {
+  background: #df6873;
+  border-color: #df6873;
+}
+
+.venue-form-cancel:disabled,
+.venue-form-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .venue-form-header {
+    padding: 22px 20px 18px;
+  }
+
+  .venue-form form {
+    padding: 0 20px 24px;
+  }
+
+  .venue-form-error {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .venue-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .venue-form-group.full-width {
+    grid-column: auto;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .venue-form-header h2 {
+    font-size: 23px;
+  }
+
+  .venue-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .venue-form-cancel,
+  .venue-form-submit {
+    width: 100%;
+  }
+
+}
