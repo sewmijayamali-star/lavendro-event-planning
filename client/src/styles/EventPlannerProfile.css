@@ -1,0 +1,968 @@
+/* =====================================================
+   EVENT PLANNER PROFILE PAGE
+===================================================== */
+
+.planner-profile-page {
+  min-height: 100vh;
+
+  background: #fffaf8;
+
+  color: #3d3030;
+}
+
+
+/* =====================================================
+   PROFILE HERO
+===================================================== */
+
+.planner-profile-hero {
+  padding: 100px 20px 90px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff8f6,
+      #f9e5e0
+    );
+}
+
+.planner-profile-container {
+  max-width: 1150px;
+
+  margin: auto;
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.back-planners-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 35px;
+
+  color: #b86f6f;
+
+  text-decoration: none;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: 0.3s ease;
+}
+
+.back-planners-link:hover {
+  color: #8f5555;
+
+  transform: translateX(-3px);
+}
+
+.back-planners-link svg {
+  font-size: 18px;
+}
+
+
+/* =====================================================
+   PROFILE MAIN
+===================================================== */
+
+.planner-profile-main {
+  display: grid;
+
+  grid-template-columns:
+    0.9fr 1.1fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+
+/* =====================================================
+   PROFILE IMAGE
+===================================================== */
+
+.planner-profile-image-wrapper {
+  position: relative;
+
+  height: 560px;
+
+  overflow: hidden;
+
+  border-radius: 28px;
+
+  background: #f5dfdb;
+
+  box-shadow:
+    0 20px 50px rgba(87, 54, 54, 0.15);
+}
+
+.planner-profile-image {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.planner-profile-placeholder {
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #c98f8f;
+}
+
+.planner-profile-placeholder svg {
+  font-size: 120px;
+}
+
+
+/* =====================================================
+   ACTIVE BADGE
+===================================================== */
+
+.profile-active-badge {
+  position: absolute;
+
+  bottom: 20px;
+
+  left: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 10px 17px;
+
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  color: #7b6868;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.profile-active-badge svg {
+  color: #d98282;
+
+  font-size: 18px;
+}
+
+
+/* =====================================================
+   PROFILE INFORMATION
+===================================================== */
+
+.planner-profile-info {
+  padding: 15px 0;
+}
+
+.profile-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: #d98282;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+}
+
+.planner-profile-info h1 {
+  margin: 0 0 20px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 55px;
+
+  line-height: 1.1;
+
+  color: #3d3030;
+}
+
+.profile-intro {
+  margin: 0 0 35px;
+
+  max-width: 550px;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+
+  color: #756565;
+}
+
+
+/* =====================================================
+   QUALIFICATIONS
+===================================================== */
+
+.profile-qualifications {
+  padding: 25px;
+
+  margin-bottom: 30px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.75);
+
+  border: 1px solid #f2d9d4;
+}
+
+.qualification-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.qualification-heading svg {
+  color: #d98282;
+}
+
+.qualification-heading h3 {
+  margin: 0;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 21px;
+
+  color: #433535;
+}
+
+.qualification-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.qualification-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-size: 13px;
+
+  color: #695959;
+}
+
+.qualification-item svg {
+  flex-shrink: 0;
+
+  font-size: 18px;
+
+  color: #d98282;
+}
+
+
+/* =====================================================
+   BOOK BUTTON
+===================================================== */
+
+.profile-actions {
+  margin-top: 10px;
+}
+
+.book-planner-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 16px 27px;
+
+  border-radius: 11px;
+
+  background: #d98282;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 10px 25px rgba(217, 130, 130, 0.25);
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.book-planner-button:hover {
+  background: #c86f6f;
+
+  transform: translateY(-3px);
+}
+
+.book-planner-button svg {
+  font-size: 20px;
+}
+
+
+/* =====================================================
+   ABOUT SECTION
+===================================================== */
+
+.planner-about-section {
+  padding: 90px 20px;
+
+  background: #ffffff;
+}
+
+.planner-about-container {
+  max-width: 1100px;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+.about-label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  color: #d98282;
+}
+
+.planner-about-content h2 {
+  margin: 0 0 20px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 40px;
+
+  color: #3d3030;
+}
+
+.planner-about-content p {
+  margin: 0;
+
+  font-size: 15px;
+
+  line-height: 1.9;
+
+  color: #756565;
+}
+
+
+/* =====================================================
+   ABOUT FEATURES
+===================================================== */
+
+.planner-about-features {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.about-feature {
+  display: flex;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  border-radius: 13px;
+
+  background: #fff8f6;
+}
+
+.about-feature > svg {
+  flex-shrink: 0;
+
+  color: #d98282;
+}
+
+.about-feature h3 {
+  margin: 0 0 5px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 19px;
+
+  color: #443535;
+}
+
+.about-feature p {
+  margin: 0;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  color: #796969;
+}
+
+
+/* =====================================================
+   CUSTOMER REVIEWS SECTION
+===================================================== */
+
+.planner-reviews-section {
+  padding: 100px 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffaf8,
+      #fdf0ed
+    );
+}
+
+.planner-reviews-container {
+  max-width: 1100px;
+
+  margin: auto;
+}
+
+
+/* =====================================================
+   REVIEWS HEADING
+===================================================== */
+
+.planner-reviews-heading {
+  max-width: 700px;
+
+  margin: 0 auto 45px;
+
+  text-align: center;
+}
+
+.planner-reviews-heading > span {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  color: #d98282;
+}
+
+.planner-reviews-heading h2 {
+  margin: 0 0 15px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 42px;
+
+  color: #3d3030;
+}
+
+.planner-reviews-heading p {
+  margin: 0;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  color: #756565;
+}
+
+
+/* =====================================================
+   RATING SUMMARY
+===================================================== */
+
+.rating-summary {
+  width: fit-content;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  padding: 20px 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #f2d9d4;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 8px 25px rgba(87, 54, 54, 0.06);
+}
+
+.rating-number {
+  font-family: 'Playfair Display', serif;
+
+  font-size: 48px;
+
+  font-weight: 600;
+
+  color: #3d3030;
+}
+
+.rating-details p {
+  margin: 5px 0 0;
+
+  font-size: 12px;
+
+  color: #827272;
+}
+
+.stars {
+  display: flex;
+
+  gap: 3px;
+}
+
+.rating-star {
+  font-size: 20px;
+
+  color: #e0a04f;
+}
+
+
+/* =====================================================
+   DEMO NOTE
+===================================================== */
+
+.demo-review-note {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin: 0 auto 45px;
+
+  text-align: center;
+}
+
+.demo-review-note span {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background: #f6d9d4;
+
+  color: #a66565;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.demo-review-note p {
+  margin: 0;
+
+  font-size: 11px;
+
+  color: #8b7b7b;
+}
+
+
+/* =====================================================
+   REVIEW GRID
+===================================================== */
+
+.planner-reviews-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 25px;
+}
+
+
+/* =====================================================
+   REVIEW CARD
+===================================================== */
+
+.customer-review-card {
+  padding: 27px;
+
+  background: #ffffff;
+
+  border: 1px solid #f1ded9;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 10px 30px rgba(87, 54, 54, 0.07);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.customer-review-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 15px 35px rgba(87, 54, 54, 0.11);
+}
+
+
+/* =====================================================
+   CUSTOMER INFORMATION
+===================================================== */
+
+.review-customer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.customer-avatar {
+  width: 45px;
+
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f5c5bf;
+
+  color: #8c5959;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 19px;
+
+  font-weight: 600;
+}
+
+.review-customer h3 {
+  margin: 0 0 3px;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 14px;
+
+  color: #433535;
+}
+
+.review-customer span {
+  font-size: 11px;
+
+  color: #968686;
+}
+
+
+/* =====================================================
+   REVIEW RATING
+===================================================== */
+
+.review-rating {
+  display: flex;
+
+  align-items: center;
+
+  gap: 2px;
+
+  margin-bottom: 15px;
+}
+
+.star {
+  font-size: 16px;
+
+  color: #ddd;
+}
+
+.star.active {
+  color: #e0a04f;
+}
+
+.rating-value {
+  margin-left: 7px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  color: #766565;
+}
+
+
+/* =====================================================
+   REVIEW COMMENT
+===================================================== */
+
+.review-comment {
+  margin: 0;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+  color: #6f6060;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.planner-profile-loading {
+  min-height: 650px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  color: #756565;
+}
+
+.profile-spinner {
+  width: 45px;
+
+  height: 45px;
+
+  border: 4px solid #f2d9d4;
+
+  border-top-color: #d98282;
+
+  border-radius: 50%;
+
+  animation: profileSpin 1s linear infinite;
+}
+
+@keyframes profileSpin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.planner-profile-error {
+  min-height: 650px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 40px;
+}
+
+.planner-profile-error > svg {
+  font-size: 70px;
+
+  color: #d99a9a;
+}
+
+.planner-profile-error h2 {
+  margin: 15px 0 8px;
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 32px;
+}
+
+.planner-profile-error p {
+  color: #756565;
+
+  margin-bottom: 25px;
+}
+
+.back-planners-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 13px 20px;
+
+  border-radius: 9px;
+
+  background: #d98282;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 850px) {
+
+  .planner-profile-main {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+
+  .planner-profile-image-wrapper {
+    height: 500px;
+  }
+
+
+  .planner-profile-info h1 {
+    font-size: 45px;
+  }
+
+
+  .planner-about-container {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+  }
+
+
+  .planner-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 550px) {
+
+  .planner-profile-hero {
+    padding: 70px 20px;
+  }
+
+
+  .planner-profile-image-wrapper {
+    height: 430px;
+  }
+
+
+  .planner-profile-info h1 {
+    font-size: 38px;
+  }
+
+
+  .planner-about-content h2 {
+    font-size: 32px;
+  }
+
+
+  .planner-reviews-section {
+    padding: 70px 20px;
+  }
+
+
+  .planner-reviews-heading h2 {
+    font-size: 34px;
+  }
+
+
+  .rating-summary {
+    width: auto;
+
+    justify-content: center;
+  }
+
+
+  .demo-review-note {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+
+  .book-planner-button {
+    width: 100%;
+  }
+
+}

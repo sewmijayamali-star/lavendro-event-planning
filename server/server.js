@@ -131,7 +131,13 @@ app.use(
   '/api/admin/event-planners',
   eventPlannerRoutes
 );
+ const publicEventPlannerRoutes =
+  require('./routes/publicEventPlannerRoutes');
 
+app.use(
+  '/api/event-planners',
+  publicEventPlannerRoutes
+);
 
 
 

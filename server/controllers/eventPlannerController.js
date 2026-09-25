@@ -283,6 +283,126 @@ const deactivateEventPlanner = async (req, res) => {
   }
 };
 
+// ======================================================
+// GET ACTIVE EVENT PLANNERS - PUBLIC
+// ======================================================
+
+const getPublicEventPlanners = async (req, res) => {
+  try {
+    // 1. Get only Event Planner users
+    const eventPlanners = await User.find({
+      role: 'event_planner'
+    })
+      .select('_id fullName')
+      .sort({ createdAt: -1 });
+
+    // 2. Get profiles and keep only active planners
+    const activePlanners = [];
+
+    for (const planner of eventPlanners) {
+      const profile = await EventPlannerProfile.findOne({
+        user: planner._id,
+        isActive: true
+      });
+
+      // Skip planners who do not have an active profile
+      if (!profile) {
+        continue;
+      }
+
+      activePlanners.push({
+        _id: planner._id,
+        fullName: planner.fullName,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        profilePhoto: profile.profilePhoto,
+        qualifications: profile.qualifications,
+        isActive: profile.isActive
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      count: activePlanners.length,
+      eventPlanners: activePlanners
+    });
+
+  } catch (error) {
+    console.error(
+      'Get public event planners error:',
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch event planners.'
+    });
+  }
+};
+
+
+// ======================================================
+// GET SINGLE EVENT PLANNER - PUBLIC
+// ======================================================
+
+const getPublicEventPlannerById = async (req, res) => {
+  try {
+    // 1. Get planner ID from URL
+    const { id } = req.params;
+
+    // 2. Find Event Planner
+    const planner = await User.findOne({
+      _id: id,
+      role: 'event_planner'
+    }).select('_id fullName');
+
+    if (!planner) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event planner not found.'
+      });
+    }
+
+    // 3. Find active planner profile
+    const profile = await EventPlannerProfile.findOne({
+      user: planner._id,
+      isActive: true
+    });
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event planner is not available.'
+      });
+    }
+
+    // 4. Return public information only
+    return res.status(200).json({
+      success: true,
+      eventPlanner: {
+        _id: planner._id,
+        fullName: planner.fullName,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        profilePhoto: profile.profilePhoto,
+        qualifications: profile.qualifications,
+        isActive: profile.isActive
+      }
+    });
+
+  } catch (error) {
+    console.error(
+      'Get public event planner error:',
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch event planner.'
+    });
+  }
+};
+
 
 // ======================================================
 // EXPORT CONTROLLERS
@@ -291,5 +411,7 @@ const deactivateEventPlanner = async (req, res) => {
 module.exports = {
   getEventPlanners,
   createEventPlanner,
-  deactivateEventPlanner
+  deactivateEventPlanner,
+  getPublicEventPlanners,
+  getPublicEventPlannerById
 };

@@ -1,170 +1,246 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import {
+  ChatBubbleOutline,
+  Event,
+  CreditCard,
+  PersonOutline,
+  ArrowForward
+} from '@mui/icons-material';
+
 import '../styles/Support.css';
 
 const Support = () => {
-  const reasons = [
-    {
-      icon: '🌟',
-      title: 'Community Growth',
-      description: 'Your support helps us expand our services and reach more communities, creating jobs and opportunities.'
-    },
-    {
-      icon: '💼',
-      title: 'Quality Enhancement',
-      description: 'Contributions enable us to upgrade our facilities, equipment, and training programs for better service.'
-    },
-    {
-      icon: '🎓',
-      title: 'Education & Training',
-      description: 'We invest in training programs for aspiring event planners and hospitality professionals.'
-    },
-    {
-      icon: '🤝',
-      title: 'Social Impact',
-      description: 'Supporting charitable events and community initiatives at reduced or no cost.'
-    }
-  ];
-
-  const sponsorshipLevels = [
-    {
-      level: 'Platinum Sponsor',
-      amount: 'LKR 1,000,000+',
-      benefits: [
-        'Premier logo placement on all marketing materials',
-        'VIP access to all Lavendro events',
-        'Dedicated feature in annual report',
-        'Exclusive partnership opportunities',
-        'Social media recognition campaign'
-      ],
-      color: 'platinum'
-    },
-    {
-      level: 'Gold Sponsor',
-      amount: 'LKR 500,000 - 999,999',
-      benefits: [
-        'Logo on website and major events',
-        'Recognition in quarterly newsletters',
-        'Invitation to exclusive networking events',
-        'Social media mentions',
-        'Annual appreciation certificate'
-      ],
-      color: 'gold'
-    },
-    {
-      level: 'Silver Sponsor',
-      amount: 'LKR 250,000 - 499,999',
-      benefits: [
-        'Logo on website sponsor page',
-        'Recognition at sponsored events',
-        'Newsletter mentions',
-        'Appreciation certificate'
-      ],
-      color: 'silver'
-    },
-    {
-      level: 'Bronze Sponsor',
-      amount: 'LKR 100,000 - 249,999',
-      benefits: [
-        'Name listing on website',
-        'Recognition at events',
-        'Thank you certificate'
-      ],
-      color: 'bronze'
-    }
-  ];
-
   return (
     <div className="support-page">
-      <Navbar />
-      
 
+      {/* ==========================================
+          NAVIGATION
+      ========================================== */}
+      <header className="support-navbar">
+
+        <div className="support-navbar-inner">
+
+          {/* Logo */}
+          <Link to="/" className="support-logo">
+            Lavendro
+          </Link>
+
+          {/* Navigation Links */}
+          <nav className="support-nav-links">
+
+            <Link to="/">
+              Home
+            </Link>
+
+            <Link to="/contact">
+              Contact
+            </Link>
+
+            <Link to="/login" className="support-login-link">
+              Login
+            </Link>
+
+          </nav>
+
+        </div>
+
+      </header>
+
+
+      {/* ==========================================
+          HERO SECTION
+      ========================================== */}
       <section className="support-hero">
-        <motion.div 
-          className="support-hero-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1>Support Lavendro</h1>
-          <p>Join us in creating unforgettable moments for everyone</p>
-        </motion.div>
-      </section>
 
-      <section className="why-support-section">
-        <h2 className="section-title">Why Support Us?</h2>
-        <p className="section-subtitle">Your contribution makes a real difference</p>
-        
-        <div className="reasons-grid">
-          {reasons.map((reason, index) => (
-            <motion.div 
-              key={index}
-              className="reason-card"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-            >
-              <div className="reason-icon">{reason.icon}</div>
-              <h3>{reason.title}</h3>
-              <p>{reason.description}</p>
-            </motion.div>
-          ))}
+        <div className="support-hero-content">
+
+          <span className="support-eyebrow">
+            ✦ LAVENDRO SUPPORT
+          </span>
+
+          <h1>
+            How Can We
+            <span> Help You?</span>
+          </h1>
+
+          <p>
+            Our support team is here to help you plan,
+            manage, and enjoy your perfect event.
+          </p>
+
+          <Link
+            to="/support/chat"
+            className="support-start-button"
+          >
+            <ChatBubbleOutline />
+
+            <span>
+              Start a Conversation
+            </span>
+
+            <ArrowForward />
+          </Link>
+
         </div>
+
       </section>
 
-      <section className="sponsorship-section">
-        <h2 className="section-title">Sponsorship Opportunities</h2>
-        <p className="section-subtitle">Choose a level that works for you</p>
-        
-        <div className="sponsorship-grid">
-          {sponsorshipLevels.map((sponsor, index) => (
-            <motion.div 
-              key={index}
-              className={`sponsorship-card ${sponsor.color}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.15, duration: 0.6 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -15 }}
-            >
-              <div className="sponsor-header">
-                <h3>{sponsor.level}</h3>
-                <div className="sponsor-amount">{sponsor.amount}</div>
-              </div>
-              <ul className="sponsor-benefits">
-                {sponsor.benefits.map((benefit, i) => (
-                  <li key={i}>
-                    <span className="benefit-check">✓</span>
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/contact" className="btn-sponsor">Become a Sponsor</Link>
-            </motion.div>
-          ))}
+
+      {/* ==========================================
+          SUPPORT CATEGORIES
+      ========================================== */}
+      <section className="support-categories">
+
+        <div className="support-section-heading">
+
+          <span>
+            WHAT CAN WE HELP WITH?
+          </span>
+
+          <h2>
+            We're Here For You
+          </h2>
+
+          <p>
+            Choose a topic or start a conversation
+            with our support team.
+          </p>
+
         </div>
+
+
+        <div className="support-category-grid">
+
+          {/* Event Booking */}
+          <div className="support-category-card">
+
+            <div className="support-category-icon">
+              <ChatBubbleOutline />
+            </div>
+
+            <h3>
+              Event Booking
+            </h3>
+
+            <p>
+              Get help with your event booking,
+              reservations, and booking-related questions.
+            </p>
+
+          </div>
+
+
+          {/* Planning Help */}
+          <div className="support-category-card">
+
+            <div className="support-category-icon">
+              <Event />
+            </div>
+
+            <h3>
+              Planning Help
+            </h3>
+
+            <p>
+              Talk to our team about event planning,
+              packages, venues, menus, and services.
+            </p>
+
+          </div>
+
+
+          {/* Payments */}
+          <div className="support-category-card">
+
+            <div className="support-category-icon">
+              <CreditCard />
+            </div>
+
+            <h3>
+              Payments
+            </h3>
+
+            <p>
+              Have questions about payments,
+              transactions, or your booking payment?
+            </p>
+
+          </div>
+
+
+          {/* Account */}
+          <div className="support-category-card">
+
+            <div className="support-category-icon">
+              <PersonOutline />
+            </div>
+
+            <h3>
+              Account Support
+            </h3>
+
+            <p>
+              Need help with your Lavendro account,
+              login, or account-related issues?
+            </p>
+
+          </div>
+
+        </div>
+
       </section>
 
-     
-      <section className="support-cta-section">
-        <motion.div 
-          className="support-cta-content"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2>Ready to Make an Impact?</h2>
-          <p>Contact us to discuss how we can work together to create meaningful experiences</p>
-          <Link to="/contact" className="btn btn-large">Get in Touch</Link>
-        </motion.div>
+
+      {/* ==========================================
+          BOTTOM CTA
+      ========================================== */}
+      <section className="support-bottom-cta">
+
+        <div className="support-cta-content">
+
+          <span className="support-cta-icon">
+            💬
+          </span>
+
+          <div>
+
+            <h2>
+              Need immediate assistance?
+            </h2>
+
+            <p>
+              Our support team is ready to help you
+              through live chat.
+            </p>
+
+          </div>
+
+          <Link
+            to="/support/chat"
+            className="support-cta-button"
+          >
+            Chat With Us
+            <ArrowForward />
+          </Link>
+
+        </div>
+
       </section>
-      <Footer />
+
+
+      {/* ==========================================
+          FOOTER
+      ========================================== */}
+      <footer className="support-footer">
+
+        <p>
+          © {new Date().getFullYear()} Lavendro Event Planning.
+          All rights reserved.
+        </p>
+
+      </footer>
+
     </div>
   );
 };

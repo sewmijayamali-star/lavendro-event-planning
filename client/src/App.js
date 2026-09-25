@@ -42,7 +42,8 @@ import SupportChat from './pages/SupportChat';
 import AcceptSupportInvite from "./pages/AcceptSupportInvite";
 import SupportDashboard from './pages/support/SupportDashboard';
 
-
+import EventPlanners from './pages/EventPlanners';
+import EventPlannerProfile from './pages/EventPlannerProfile';
 
 import EventPlannerManagement from "./pages/admin/EventPlannerManagement";
 
@@ -238,9 +239,22 @@ const AppContent = () => {
         <Route
   path="/event-planner/accept-invite/:token"
   element={<AcceptEventPlannerInvite />}
+  
+/>
+
+<Route
+  path="/event-planners"
+  element={<EventPlanners />}
+/>
+
+<Route
+  path="/event-planners/:id"
+  element={<EventPlannerProfile />}
 />
 
       </Routes>
+
+      
     </>
   );
 };
@@ -249,6 +263,9 @@ const AppContent = () => {
 /* =========================================
    APP
 ========================================= */
+
+
+
 
 function App() {
 

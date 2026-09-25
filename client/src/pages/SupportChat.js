@@ -1,629 +1,896 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import socket from "../socket";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { io } from 'socket.io-client';
 
-import SendIcon from "@mui/icons-material/Send";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import SupportAgentIcon from "@mui/icons-material/SupportAgent";
-import CircleIcon from "@mui/icons-material/Circle";
+import {
+  ArrowBack,
+  Send,
+  SupportAgent,
+  Close,
+  CheckCircle
+} from '@mui/icons-material';
 
-import "../styles/SupportChat.css";
-
-const API_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:5000";
+import '../styles/SupportChat.css';
 
 const SupportChat = () => {
+  const navigate = useNavigate();
+
+  const messagesEndRef = useRef(null);
+  const socketRef = useRef(null);
+
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState(null);
+
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
+
+  const [messageText, setMessageText] = useState('');
 
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
 
-  const [error, setError] = useState("");
-  const [connected, setConnected] = useState(false);
-
-  const messagesEndRef = useRef(null);
-
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [error, setError] = useState('');
 
   // ==========================================
-  // AUTO SCROLL
+  // GET LOGGED-IN USER
   // ==========================================
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+
+    if (!storedToken || !storedUser) {
+      navigate('/login', {
+        state: {
+          from: '/support/chat'
+        }
+      });
+
+      return;
+    }
+
+    try {
+      const parsedUser = JSON.parse(storedUser);
+
+      setToken(storedToken);
+      setUser(parsedUser);
+    } catch (error) {
+      console.error('Invalid stored user:', error);
+
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+
+      navigate('/login', {
+        state: {
+          from: '/support/chat'
+        }
+      });
+    }
+  }, [navigate]);
+
 
   // ==========================================
-  // START SUPPORT CHAT
+  // LOAD CUSTOMER CONVERSATION
   // ==========================================
-
   useEffect(() => {
-    const startChat = async () => {
+    if (!token) return;
+
+    const loadConversation = async () => {
       try {
         setLoading(true);
+        setError('');
 
-        const token = localStorage.getItem("token");
+        /*
+         * Your backend:
+         *
+         * GET /api/support/conversations/me
+         */
 
-        if (!token) {
-          setError(
-            "Please login to access the support chat."
-          );
-
-          setLoading(false);
-          return;
-        }
-
-        // ------------------------------------------
-        // CONNECT SOCKET
-        // ------------------------------------------
-
-        socket.connect();
-
-        socket.on("connect", () => {
-          console.log(
-            "Socket connected:",
-            socket.id
-          );
-
-          setConnected(true);
-        });
-
-        socket.on("disconnect", () => {
-          console.log(
-            "Socket disconnected"
-          );
-
-          setConnected(false);
-        });
-
-        // ------------------------------------------
-        // CREATE / GET CONVERSATION
-        // ------------------------------------------
-
-        const response = await axios.post(
-          `${API_URL}/api/support/conversations`,
-          {},
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/support/conversations/me`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
-            },
+              Authorization: `Bearer ${token}`
+            }
           }
         );
 
-        const conversationData =
-          response.data.conversation;
+        const conversationData = response.data.conversation;
 
         setConversation(conversationData);
 
-        // ------------------------------------------
-        // JOIN SOCKET ROOM
-        // ------------------------------------------
-
-        socket.emit(
-          "join_conversation",
-          conversationData._id
-        );
-
-        console.log(
-          "Joined conversation:",
-          conversationData._id
-        );
-
-        // ------------------------------------------
-        // LOAD OLD MESSAGES
-        // ------------------------------------------
-
-        const messagesResponse =
-          await axios.get(
-            `${API_URL}/api/support/conversations/${conversationData._id}/messages`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-        setMessages(
-          messagesResponse.data.messages || []
-        );
-
-        setLoading(false);
+        // Load previous messages
+        await loadMessages(conversationData._id);
 
       } catch (error) {
-        console.error(
-          "Support chat error:",
-          error
-        );
 
-        setError(
-          error.response?.data?.message ||
-            "Unable to start support chat."
-        );
+        /*
+         * 404 means:
+         * Customer does not have an active conversation.
+         *
+         * This is NOT an actual error for our UI.
+         */
 
+        if (error.response?.status === 404) {
+          setConversation(null);
+          setMessages([]);
+        } else {
+          console.error(
+            'Load conversation error:',
+            error
+          );
+
+          setError(
+            error.response?.data?.message ||
+            'Unable to load your support conversation.'
+          );
+        }
+
+      } finally {
         setLoading(false);
       }
     };
 
-    startChat();
+    loadConversation();
 
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("receive_message");
+  }, [token]);
 
-      socket.disconnect();
-    };
-  }, []);
 
   // ==========================================
-  // RECEIVE REAL-TIME MESSAGE
+  // LOAD MESSAGES
   // ==========================================
+  const loadMessages = async (conversationId) => {
+    try {
 
-  useEffect(() => {
-    const handleReceiveMessage = (data) => {
-      console.log(
-        "New real-time message:",
-        data
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/support/conversations/${conversationId}/messages`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
-      if (
-        conversation &&
-        data.conversationId === conversation._id
-      ) {
+      setMessages(response.data.messages || []);
+
+    } catch (error) {
+
+      console.error(
+        'Load messages error:',
+        error
+      );
+
+      setError(
+        error.response?.data?.message ||
+        'Unable to load messages.'
+      );
+    }
+  };
+
+
+  // ==========================================
+  // SOCKET.IO
+  // ==========================================
+  useEffect(() => {
+
+    if (!conversation?._id) return;
+
+    /*
+     * Connect to your Express + Socket.IO server.
+     */
+
+    const socket = io(
+      process.env.REACT_APP_API_URL,
+      {
+        transports: ['websocket', 'polling']
+      }
+    );
+
+    socketRef.current = socket;
+
+    // ------------------------------------------
+    // SOCKET CONNECTED
+    // ------------------------------------------
+
+    socket.on('connect', () => {
+
+      console.log(
+        'Connected to Lavendro Support Socket:',
+        socket.id
+      );
+
+      /*
+       * Your server:
+       *
+       * socket.on('join_conversation', ...)
+       */
+
+      socket.emit(
+        'join_conversation',
+        conversation._id
+      );
+    });
+
+
+    // ------------------------------------------
+    // RECEIVE MESSAGE
+    // ------------------------------------------
+
+    /*
+     * Your backend emits:
+     *
+     * receive_message
+     */
+
+    socket.on(
+      'receive_message',
+      (newMessage) => {
+
+        console.log(
+          'New support message:',
+          newMessage
+        );
+
         setMessages((previousMessages) => {
 
-          // Prevent duplicate messages
-          const alreadyExists =
-            previousMessages.some(
-              (msg) =>
-                msg._id === data.message._id
-            );
+          /*
+           * Prevent duplicate messages.
+           */
 
-          if (alreadyExists) {
+          const exists = previousMessages.some(
+            (message) =>
+              message._id === newMessage._id
+          );
+
+          if (exists) {
             return previousMessages;
           }
 
           return [
             ...previousMessages,
-            data.message,
+            newMessage
           ];
         });
       }
-    };
-
-    socket.on(
-      "receive_message",
-      handleReceiveMessage
     );
 
-    return () => {
-      socket.off(
-        "receive_message",
-        handleReceiveMessage
+
+    // ------------------------------------------
+    // SOCKET ERROR
+    // ------------------------------------------
+
+    socket.on('connect_error', (error) => {
+
+      console.error(
+        'Socket connection error:',
+        error
       );
+    });
+
+
+    // ------------------------------------------
+    // CLEANUP
+    // ------------------------------------------
+
+    return () => {
+
+      console.log(
+        'Disconnecting support socket...'
+      );
+
+      socket.disconnect();
+
+      socketRef.current = null;
     };
-  }, [conversation]);
+
+  }, [conversation?._id]);
+
+
+  // ==========================================
+  // AUTO SCROLL
+  // ==========================================
+  useEffect(() => {
+
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth'
+    });
+
+  }, [messages]);
+
+
+  // ==========================================
+  // CREATE CONVERSATION
+  // ==========================================
+  const createConversation = async () => {
+
+    try {
+
+      setError('');
+
+      /*
+       * Your backend:
+       *
+       * POST /api/support/conversations
+       */
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/support/conversations`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const newConversation =
+        response.data.conversation;
+
+      setConversation(newConversation);
+
+      setMessages([]);
+
+      return newConversation;
+
+    } catch (error) {
+
+      console.error(
+        'Create conversation error:',
+        error
+      );
+
+      setError(
+        error.response?.data?.message ||
+        'Unable to start the support conversation.'
+      );
+
+      return null;
+    }
+  };
+
 
   // ==========================================
   // SEND MESSAGE
   // ==========================================
+  const handleSendMessage = async (e) => {
 
- // ==========================================
-// SEND MESSAGE
-// ==========================================
+    e.preventDefault();
 
-const handleSendMessage = async () => {
-  const trimmedMessage = message.trim();
+    const trimmedMessage =
+      messageText.trim();
 
-  if (!trimmedMessage) {
-    return;
-  }
+    if (!trimmedMessage || sending) {
+      return;
+    }
 
-  if (!conversation) {
-    return;
-  }
+    try {
 
-  try {
-    setSending(true);
-    setError("");
+      setSending(true);
+      setError('');
 
-    const token = localStorage.getItem("token");
+      let activeConversation =
+        conversation;
 
-    const response = await axios.post(
-      `${API_URL}/api/support/conversations/${conversation._id}/messages`,
-      {
-        message: trimmedMessage,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+      // ----------------------------------------
+      // CREATE CONVERSATION IF NEEDED
+      // ----------------------------------------
+
+      if (!activeConversation) {
+
+        activeConversation =
+          await createConversation();
+
+        if (!activeConversation) {
+          return;
+        }
       }
-    );
 
-    const newMessage = response.data.data;
 
-    console.log(
-      "Message sent successfully:",
-      newMessage
-    );
+      // ----------------------------------------
+      // SEND MESSAGE
+      // ----------------------------------------
 
-    setMessages((previousMessages) => {
-      const exists = previousMessages.some(
-        (msg) => msg._id === newMessage._id
+      /*
+       * Your backend:
+       *
+       * POST
+       * /api/support/conversations/:id/messages
+       */
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/support/conversations/${activeConversation._id}/messages`,
+        {
+          message: trimmedMessage
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
-      if (exists) {
-        return previousMessages;
-      }
-
-      return [
-        ...previousMessages,
-        newMessage,
-      ];
-    });
-
-    setMessage("");
-
-  } catch (error) {
-    console.error(
-      "Send message error:",
-      error
-    );
-
-    setError(
-      error.response?.data?.message ||
-        "Failed to send message."
-    );
-
-  } finally {
-    setSending(false);
-  }
-};
+      const sentMessage =
+        response.data.data;
 
 
-// ==========================================
-// ENTER KEY TO SEND
-// ==========================================
+      /*
+       * The backend also emits the message
+       * through Socket.IO.
+       *
+       * Therefore check for duplicates
+       * before adding it locally.
+       */
 
-const handleKeyDown = (event) => {
-  if (
-    event.key === "Enter" &&
-    !event.shiftKey
-  ) {
-    event.preventDefault();
+      setMessages((previousMessages) => {
 
-    handleSendMessage();
-  }
-};
+        const exists =
+          previousMessages.some(
+            (message) =>
+              message._id === sentMessage._id
+          );
+
+        if (exists) {
+          return previousMessages;
+        }
+
+        return [
+          ...previousMessages,
+          sentMessage
+        ];
+      });
+
+
+      setMessageText('');
+
+    } catch (error) {
+
+      console.error(
+        'Send message error:',
+        error
+      );
+
+      setError(
+        error.response?.data?.message ||
+        'Unable to send your message.'
+      );
+
+    } finally {
+
+      setSending(false);
+    }
+  };
+
+
+  // ==========================================
+  // ENTER KEY
+  // ==========================================
+  const handleKeyDown = (e) => {
+
+    if (
+      e.key === 'Enter' &&
+      !e.shiftKey
+    ) {
+
+      e.preventDefault();
+
+      handleSendMessage(e);
+    }
+  };
+
+
+  // ==========================================
+  // QUICK MESSAGE
+  // ==========================================
+  const setQuickMessage = (message) => {
+
+    setMessageText(message);
+  };
+
 
   // ==========================================
   // FORMAT TIME
   // ==========================================
-
   const formatTime = (date) => {
-    if (!date) return "";
 
-    return new Date(
-      date
-    ).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+    if (!date) return '';
 
-  // ==========================================
-  // CHECK MESSAGE OWNER
-  // ==========================================
-
-  const isMyMessage = (msg) => {
-    if (!user) return false;
-
-    const senderId =
-      typeof msg.sender === "object"
-        ? msg.sender._id
-        : msg.sender;
-
-    return (
-      senderId === user._id ||
-      senderId === user.id
+    return new Date(date).toLocaleTimeString(
+      [],
+      {
+        hour: '2-digit',
+        minute: '2-digit'
+      }
     );
   };
 
-  // ==========================================
-  // LOADING
-  // ==========================================
 
+  // ==========================================
+  // LOADING SCREEN
+  // ==========================================
   if (loading) {
+
     return (
-      <div className="support-page">
-        <div className="support-loading">
+      <div className="support-chat-loading">
 
-          <div className="loading-spinner"></div>
+        <div className="support-chat-spinner"></div>
 
-          <h3>
-            Connecting to Lavendro Support...
-          </h3>
-
-          <p>
-            Please wait a moment.
-          </p>
-
-        </div>
-      </div>
-    );
-  }
-
-  // ==========================================
-  // ERROR
-  // ==========================================
-
-  if (error && !conversation) {
-    return (
-      <div className="support-page">
-
-        <div className="support-error">
-
-          <SupportAgentIcon
-            className="error-icon"
-          />
-
-          <h2>
-            Unable to Connect
-          </h2>
-
-          <p>
-            {error}
-          </p>
-
-        </div>
+        <p>
+          Connecting to Lavendro Support...
+        </p>
 
       </div>
     );
   }
 
-  // ==========================================
-  // MAIN CHAT
-  // ==========================================
 
+  // ==========================================
+  // MAIN PAGE
+  // ==========================================
   return (
-    <div className="support-page">
 
-      <div className="support-chat-container">
+    <div className="support-chat-page">
 
-        {/* ============================= */}
-        {/* CHAT HEADER */}
-        {/* ============================= */}
 
-        <div className="support-chat-header">
+      {/* ======================================
+          HEADER
+      ====================================== */}
 
-          <div className="support-header-left">
+      <header className="support-chat-navbar">
 
-            <button
-              className="back-button"
-              onClick={() =>
-                window.history.back()
-              }
-            >
-              <ArrowBackIcon />
-            </button>
+        <div className="support-chat-navbar-inner">
 
-            <div className="support-avatar">
+          <Link
+            to="/support"
+            className="support-chat-back"
+          >
+            <ArrowBack />
 
-              <SupportAgentIcon />
+            <span>
+              Back to Support
+            </span>
+          </Link>
 
-            </div>
 
-            <div>
+          <Link
+            to="/"
+            className="support-chat-logo"
+          >
+            Lavendro
+          </Link>
 
-              <h2>
-                Lavendro Support
-              </h2>
 
-              <div className="connection-status">
+          <div className="support-chat-user">
 
-                <CircleIcon
-                  className={
-                    connected
-                      ? "status-online"
-                      : "status-offline"
-                  }
-                />
-
-                <span>
-                  {connected
-                    ? "Connected"
-                    : "Connecting..."}
-                </span>
-
-              </div>
-
-            </div>
+            <span>
+              {user?.fullName || 'Customer'}
+            </span>
 
           </div>
 
         </div>
 
+      </header>
 
-        {/* ============================= */}
-        {/* MESSAGES */}
-        {/* ============================= */}
 
-        <div className="messages-container">
+      {/* ======================================
+          CHAT CONTAINER
+      ====================================== */}
 
-          {/* Welcome message */}
+      <main className="support-chat-main">
 
-          {messages.length === 0 && (
+        <div className="support-chat-container">
 
-            <div className="chat-welcome">
 
-              <div className="welcome-icon">
+          {/* ====================================
+              CHAT HEADER
+          ==================================== */}
 
-                <SupportAgentIcon />
+          <div className="support-chat-header">
+
+            <div className="support-agent-icon">
+
+              <SupportAgent />
+
+            </div>
+
+
+            <div className="support-chat-header-info">
+
+              <h1>
+                Lavendro Support
+              </h1>
+
+              <div className="support-chat-status">
+
+                <span className="online-dot"></span>
+
+                {conversation?.assignedSupport
+                  ? `Connected with ${conversation.assignedSupport.fullName}`
+                  : 'Support team is available'}
 
               </div>
 
-              <h2>
-                Welcome to Lavendro Support 👋
-              </h2>
+            </div>
 
-              <p>
-                Have a question about our
-                services, packages, bookings,
-                or events?
-              </p>
 
-              <p>
-                Send us a message and our team
-                will be happy to assist you.
-              </p>
+            <div className="support-chat-live">
+
+              <span></span>
+
+              Live Support
+
+            </div>
+
+          </div>
+
+
+          {/* ====================================
+              ERROR
+          ==================================== */}
+
+          {error && (
+
+            <div className="support-chat-error">
+
+              <span>
+                {error}
+              </span>
+
+              <button
+                type="button"
+                onClick={() => setError('')}
+              >
+                <Close />
+              </button>
 
             </div>
 
           )}
 
 
-          {/* Messages */}
+          {/* ====================================
+              MESSAGES AREA
+          ==================================== */}
 
-          {messages.map((msg) => {
+          <div className="support-chat-messages">
 
-            const mine =
-              isMyMessage(msg);
 
-            return (
+            {/* ----------------------------------
+                NO CONVERSATION
+            ---------------------------------- */}
 
-              <div
-                key={msg._id}
-                className={`message-row ${
-                  mine
-                    ? "my-message-row"
-                    : "support-message-row"
-                }`}
-              >
+            {!conversation && messages.length === 0 && (
 
-                <div
-                  className={`message-bubble ${
-                    mine
-                      ? "my-message"
-                      : "support-message"
-                  }`}
-                >
+              <div className="support-chat-empty">
 
-                  {!mine && (
+                <div className="support-empty-icon">
 
-                    <div className="sender-name">
+                  <SupportAgent />
 
-                      {msg.sender?.fullName ||
-                        "Lavendro Support"}
+                </div>
 
-                    </div>
+                <h2>
+                  How can we help you?
+                </h2>
 
-                  )}
+                <p>
+                  Start a conversation with
+                  the Lavendro support team.
+                </p>
 
-                  <div className="message-text">
 
-                    {msg.message}
+                <div className="support-quick-actions">
 
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuickMessage(
+                        'I need help with an event booking.'
+                      )
+                    }
+                  >
+                    Event Booking
+                  </button>
 
-                  <div className="message-time">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuickMessage(
+                        'I have a question about your packages.'
+                      )
+                    }
+                  >
+                    Packages
+                  </button>
 
-                    {formatTime(
-                      msg.createdAt
-                    )}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuickMessage(
+                        'I have a question about payment.'
+                      )
+                    }
+                  >
+                    Payments
+                  </button>
 
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuickMessage(
+                        'I need help with my account.'
+                      )
+                    }
+                  >
+                    Account Help
+                  </button>
 
                 </div>
 
               </div>
 
-            );
-          })}
+            )}
 
 
-          <div ref={messagesEndRef} />
+            {/* ----------------------------------
+                EXISTING CONVERSATION
+            ---------------------------------- */}
 
-        </div>
+            {conversation &&
+              messages.length === 0 && (
+
+                <div className="support-chat-empty">
+
+                  <div className="support-empty-icon">
+
+                    <CheckCircle />
+
+                  </div>
+
+                  <h2>
+                    Start the conversation
+                  </h2>
+
+                  <p>
+                    Send a message and our
+                    support team will assist you.
+                  </p>
+
+                </div>
+
+              )}
 
 
-        {/* ============================= */}
-        {/* ERROR MESSAGE */}
-        {/* ============================= */}
+            {/* ----------------------------------
+                MESSAGES
+            ---------------------------------- */}
 
-        {error && conversation && (
+            {messages.map((message) => {
 
-          <div className="chat-error">
+              const isMine =
+                message.sender?._id === user?._id;
 
-            {error}
+              return (
+
+                <div
+                  key={message._id}
+                  className={`support-message-row ${
+                    isMine
+                      ? 'support-message-mine'
+                      : 'support-message-other'
+                  }`}
+                >
+
+                  {!isMine && (
+
+                    <div className="support-message-avatar">
+
+                      <SupportAgent />
+
+                    </div>
+
+                  )}
+
+
+                  <div
+                    className={`support-message-bubble ${
+                      isMine
+                        ? 'mine'
+                        : 'other'
+                    }`}
+                  >
+
+                    {!isMine && (
+
+                      <span className="support-message-sender">
+                        {message.sender?.fullName ||
+                          'Lavendro Support'}
+                      </span>
+
+                    )}
+
+                    <p>
+                      {message.message}
+                    </p>
+
+                    <span className="support-message-time">
+                      {formatTime(
+                        message.createdAt
+                      )}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              );
+            })}
+
+
+            <div ref={messagesEndRef}></div>
 
           </div>
 
-        )}
 
+          {/* ====================================
+              MESSAGE INPUT
+          ==================================== */}
 
-        {/* ============================= */}
-        {/* MESSAGE INPUT */}
-        {/* ============================= */}
-
-        <div className="message-input-container">
-
-          <textarea
-            value={message}
-
-            onChange={(event) =>
-              setMessage(
-                event.target.value
-              )
-            }
-
-            onKeyDown={handleKeyDown}
-
-            placeholder="Type your message..."
-
-            rows="1"
-
-            disabled={sending}
-
-            className="message-input"
-          />
-
-
-          <button
-            onClick={
-              handleSendMessage
-            }
-
-            disabled={
-              sending ||
-              !message.trim()
-            }
-
-            className="send-button"
+          <form
+            className="support-chat-input-area"
+            onSubmit={handleSendMessage}
           >
 
-            <SendIcon />
+            <textarea
+              value={messageText}
+              onChange={(e) =>
+                setMessageText(e.target.value)
+              }
+              onKeyDown={handleKeyDown}
+              placeholder="Type your message..."
+              rows={1}
+              disabled={sending}
+            />
 
-          </button>
+
+            <button
+              type="submit"
+              className="support-chat-send"
+              disabled={
+                !messageText.trim() ||
+                sending
+              }
+            >
+
+              {sending ? (
+                <span className="send-loading">
+                  ...
+                </span>
+              ) : (
+                <Send />
+              )}
+
+            </button>
+
+          </form>
+
+
+          <div className="support-chat-input-footer">
+
+            <span>
+              Press Enter to send
+            </span>
+
+            <span>
+              Your conversation is private
+            </span>
+
+          </div>
 
         </div>
 
-        <div className="chat-footer">
-
-          Your conversation is private and
-          securely handled by Lavendro.
-
-        </div>
-
-      </div>
+      </main>
 
     </div>
   );
