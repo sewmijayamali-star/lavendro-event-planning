@@ -203,7 +203,7 @@ const Contact = () => {
               <div className="social-icons">
 
                 <a
-                  href="#"
+                  type="button"
                   className="social-icon"
                   aria-label="Facebook"
                 >
@@ -211,7 +211,7 @@ const Contact = () => {
                 </a>
 
                 <a
-                  href="#"
+                  type="button"
                   className="social-icon"
                   aria-label="Instagram"
                 >
@@ -219,7 +219,7 @@ const Contact = () => {
                 </a>
 
                 <a
-                  href="#"
+                  type="button"
                   className="social-icon"
                   aria-label="Twitter"
                 >
@@ -227,7 +227,7 @@ const Contact = () => {
                 </a>
 
                 <a
-                  href="#"
+                  type="button"
                   className="social-icon"
                   aria-label="LinkedIn"
                 >
