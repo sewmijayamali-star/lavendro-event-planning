@@ -41,6 +41,7 @@ import UserDashboard from './pages/Dashboard';
 import SupportChat from './pages/SupportChat';
 import AcceptSupportInvite from "./pages/AcceptSupportInvite";
 import SupportDashboard from './pages/support/SupportDashboard';
+import SupportDashboardChat from './pages/support/SupportDashboardChat';
 
 import EventPlanners from './pages/EventPlanners';
 import EventPlannerProfile from './pages/EventPlannerProfile';
@@ -198,7 +199,10 @@ const AppContent = () => {
           path="/support/chat"
           element={<SupportChat />}
         />
-
+              <Route
+        path="/support/dashboard/chat/:id"
+        element={<SupportDashboardChat />}
+      />
 
         {/* =====================================
             PROTECTED ADMIN
