@@ -7,7 +7,7 @@ import EventPlannerForm from "../../components/EventPlannerForm";
 const EventPlannerManagement = () => {
   const navigate = useNavigate();
 
-  const [eventPlanners, setEventPlanners] = useState([]);
+  const [eventPlanners] = useState([]);
 
   // Add Event Planner options modal
   const [showAddOptionsModal, setShowAddOptionsModal] = useState(false);
