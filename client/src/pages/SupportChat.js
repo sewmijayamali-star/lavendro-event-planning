@@ -8,8 +8,8 @@ import {
   Send,
   SupportAgent,
   Close,
-  CheckCircle,
-  TokenOutlined
+  CheckCircle
+  
 } from '@mui/icons-material';
 
 import '../styles/SupportChat.css';
