@@ -133,7 +133,9 @@ const SupportChat = () => {
 
     loadConversation();
 
-  }, [token]);
+
+
+  }, [token,loadMessages]);
 
 
   // ==========================================
