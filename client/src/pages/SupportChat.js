@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { io } from 'socket.io-client';
@@ -8,7 +8,8 @@ import {
   Send,
   SupportAgent,
   Close,
-  CheckCircle
+  CheckCircle,
+  TokenOutlined
 } from '@mui/icons-material';
 
 import '../styles/SupportChat.css';
@@ -31,6 +32,38 @@ const SupportChat = () => {
   const [sending, setSending] = useState(false);
 
   const [error, setError] = useState('');
+
+  // ==========================================
+  // LOAD MESSAGES
+  // ==========================================
+  const loadMessages = useCallback(async (conversationId) => {
+    try {
+
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/support/conversations/${conversationId}/messages`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      setMessages(response.data.messages || []);
+
+    } catch (error) {
+
+      console.error(
+        'Load messages error:',
+        error
+      );
+
+      setError(
+        error.response?.data?.message ||
+        'Unable to load messages.'
+      );
+    }
+  }, [token]);
+
 
   // ==========================================
   // GET LOGGED-IN USER
@@ -133,41 +166,7 @@ const SupportChat = () => {
 
     loadConversation();
 
-
-
-  }, [token,loadMessages]);
-
-
-  // ==========================================
-  // LOAD MESSAGES
-  // ==========================================
-  const loadMessages = async (conversationId) => {
-    try {
-
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/support/conversations/${conversationId}/messages`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-
-      setMessages(response.data.messages || []);
-
-    } catch (error) {
-
-      console.error(
-        'Load messages error:',
-        error
-      );
-
-      setError(
-        error.response?.data?.message ||
-        'Unable to load messages.'
-      );
-    }
-  };
+  }, [token, loadMessages]);
 
 
   // ==========================================
