@@ -193,51 +193,50 @@ const Contact = () => {
             {/* =================================
                 SOCIAL MEDIA
             ================================= */}
-
             <div className="social-media">
 
-              <h3>
-                Follow Us
-              </h3>
+  <h3>
+    Follow Us
+  </h3>
 
-              <div className="social-icons">
+  <div className="social-icons">
 
-                <a
-                  type="button"
-                  className="social-icon"
-                  aria-label="Facebook"
-                >
-                  <Facebook />
-                </a>
+    <button
+      type="button"
+      className="social-icon"
+      aria-label="Facebook"
+    >
+      <Facebook />
+    </button>
 
-                <a
-                  type="button"
-                  className="social-icon"
-                  aria-label="Instagram"
-                >
-                  <Instagram />
-                </a>
+    <button
+      type="button"
+      className="social-icon"
+      aria-label="Instagram"
+    >
+      <Instagram />
+    </button>
 
-                <a
-                  type="button"
-                  className="social-icon"
-                  aria-label="Twitter"
-                >
-                  <Twitter />
-                </a>
+    <button
+      type="button"
+      className="social-icon"
+      aria-label="Twitter"
+    >
+      <Twitter />
+    </button>
 
-                <a
-                  type="button"
-                  className="social-icon"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedIn />
-                </a>
+    <button
+      type="button"
+      className="social-icon"
+      aria-label="LinkedIn"
+    >
+      <LinkedIn />
+    </button>
 
-              </div>
+  </div>
 
-            </div>
-
+</div>
+           
 
             {/* =================================
                 BUSINESS HOURS
