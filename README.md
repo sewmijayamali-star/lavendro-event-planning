@@ -1,197 +1,97 @@
-# Lavendro Event Planning System
+# Lavendro Event Planning 🌸
 
-A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application for managing event planning services. This system allows users to browse services, make inquiries, and plan their events seamlessly.
+A full-stack event planning platform built with the MERN stack, designed to simplify event service discovery, booking management, and communication between customers and event planners.
 
----
+## 🌐 Live Demo
 
-## Live Deployment
+**Live Application:** https://lavendro-event-planning.vercel.app/
 
-- **Frontend:** [https://lavendroeventplanning.vercel.app](https://lavendroeventplanning.vercel.app)
-- **Backend API:** [https://lavendro-event-planning-2.onrender.com](https://lavendro-event-planning-2.onrender.com)
+- Frontend: Vercel
+- Backend: AWS EC2
+- Database: MongoDB Atlas
+- Image Storage: Supabase Storage
 
----
+## ✨ Key Features
 
-## Features
+- **User Authentication** — Secure access for different user roles.
+- **Event Packages** — Explore event planning packages and services.
+- **Venue & Menu Management** — Manage event venues, menus, and related images.
+- **Booking Management** — Support event booking workflows.
+- **Event Planner Interaction** — Connect customers with event planners.
+- **Customer Support** — Dedicated support conversation management.
+- **Admin Management** — Administrative operations and account invitation workflow.
 
-### User Features
-- User authentication (Email/Password & Google OAuth)
-- Browse event planning services
-- View and select menus
-- Explore available venues
-- Submit inquiries for events
-- Read blogs and event planning tips
+## 🛠️ Tech Stack
 
-### Admin Features
-- User management
-- Package management
-- Menu customization
-- Inquiry handling
+| Layer | Technologies |
+|---|---|
+| Frontend | React.js, Vite, JavaScript |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas, Mongoose |
+| Image Storage | Supabase Storage |
+| Frontend Hosting | Vercel |
+| Backend Hosting | AWS EC2 |
+| API | REST API |
 
----
+## 🏗️ Architecture
 
-## Technologies Used
-
-### Frontend
-- **React.js** - UI library
-- **Vite** - Build tool
-- **React Router** - Navigation
-- **CSS3** - Styling
-- **Google OAuth** - Third-party authentication
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - ODM for MongoDB
-- **JWT** - Authentication tokens
-- **bcrypt** - Password hashing
-- **CORS** - Cross-origin resource sharing
-
-### Deployment
-- **Vercel** - Frontend hosting
-- **Render** - Backend hosting
-- **MongoDB Atlas** - Database hosting
-
----
-
-## Project Structure
-
-```
-lavendro-event-planning/
-├── client/                 # Frontend React application
-│   ├── public/            # Static assets
-│   │   └── images/        # Image files
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── pages/         # Page components
-│   │   ├── styles/        # CSS files
-│   │   └── App.js         # Main app component
-│   └── package.json
-│
-├── server/                # Backend Node.js application
-│   ├── config/           # Configuration files
-│   ├── models/           # MongoDB models
-│   ├── routes/           # API routes
-│   ├── server.js         # Entry point
-│   └── package.json
-│
-└── README.md
+```text
+React + Vite (Vercel)
+        |
+        | REST API / HTTP
+        v
+Node.js + Express (AWS EC2)
+        |
+        +------ MongoDB Atlas
+        |
+        +------ Supabase Storage
 ```
 
----
+## 🚀 Getting Started
 
-## Installation & Setup
+**Prerequisites:** Node.js, npm, MongoDB Atlas, and Supabase credentials.
 
-### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB Atlas account
-- Google Cloud Console project (for OAuth)
-
-### 1. Clone the Repository
+Clone the repository:
 
 ```bash
-git clone https://github.com/sewmijayamali-star/lavendro-event-planning.git
-cd lavendro-event-planning
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd Lavendro
 ```
 
-### 2. Backend Setup
+Install dependencies and start the backend:
 
 ```bash
-cd server
+cd backend
 npm install
+npm run dev
 ```
 
-Create `.env` file in `server/` directory:
-
-```
-PORT=5000
-MONGODB_URI=mongodb+srv://avendro_user:Admin12345@cluster0.zaijv5m.mongodb.net/avendro?retryWrites=true&w=majority&appName=Cluster0
-JWT_SECRET=avendro_event_planning_secret_key_2025
-EMAIL_USERNAME=your_email@gmail.com
-EMAIL_PASSWORD=your_app_password
-CLIENT_URL=https://lavendroeventplanning.vercel.app
-CORS_ORIGIN=https://lavendroeventplanning.vercel.app
-REACT_APP_API_URL=http://localhost:5000 
-
-
-```
-
-Start backend server:
+Start the frontend in a separate terminal:
 
 ```bash
-npm start
-```
-
-### 3. Frontend Setup
-
-```bash
-cd client
+cd frontend
 npm install
-npm start
+npm run dev
 ```
 
-Create `.env` file in `client/` directory:
+Configure the required environment variables for the frontend and backend before running the application. Use the project's existing variable names and keep sensitive credentials out of source control.
 
-```
-REACT_APP_API_URL=https://lavendro-event-planning-2.onrender.com
+## 🔐 Environment Variables
 
-**Note:** You can use `http://localhost:5000` if running backend locally.
+Configure the variables required by your implementation, including:
 
-```
+- MongoDB connection string
+- JWT secret
+- Supabase project credentials
+- Email service credentials, if enabled
+- Frontend API base URL
 
----
+Never commit `.env` files or expose backend secrets in frontend code.
 
-## API Endpoints
+## 👩‍💻 Project Purpose
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-- `POST /api/auth/google` - Google OAuth login
-
-### Inquiries
-- `GET /api/inquiries` - Get all inquiries
-- `POST /api/inquiries` - Create new inquiry
-
-### Packages
-- `GET /api/packages` - Get all packages
-- `GET /api/packages/:id` - Get package by ID
-
-### Menus
-- `GET /api/menus` - Get all menus
-- `GET /api/menus/:id` - Get menu by ID
+Lavendro Event Planning demonstrates full-stack web development, REST API integration, database management, cloud deployment, authentication, and external storage integration.
 
 ---
 
-## Known Issues
-
-- Render free tier: Backend may sleep after 15 minutes of inactivity (50-second wake-up time)
-- First request after deployment may be slower
-
----
-
-## Future Enhancements
-
-- Real-time chat support
-- Payment gateway integration
-- Email notifications for bookings
-- Admin analytics dashboard
-- Event calendar integration
-
----
-
-## Contributors
-
-**Group Members:**
-
-- S.J.Samarasinghe - ICT23921
-- S.H. Imasha Sayakkara - ICT23927
-- H.S.D.Gunarathna - ICT23835
-- M.A.V.V.M.Arachchi - ICT23809
-- G.A.G.R.P.Nawarathne - ICT23885
-
----
-
-## Contact
-
-- **Email:** sewmijayamali369@gmail.com
-- **GitHub:** @sewmijayamali-star
+**Developed as a full-stack web development project.**
