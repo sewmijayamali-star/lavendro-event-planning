@@ -15,9 +15,9 @@ const server = http.createServer(app);
 
 // CORS
 const allowedOrigins = [
-  'http://localhost:3000',
+   'http://localhost:3000',
   'http://localhost:5173',
-  'https://lavendroeventplanning.vercel.app'
+  'https://lavendro-event-planning.vercel.app'
 ];
 
 app.use(cors({
